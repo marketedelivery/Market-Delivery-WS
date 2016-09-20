@@ -79,6 +79,7 @@ public class ControladorProduto implements IControladorProduto
 				}
 			}
 		}
+		DAOFactory.close();
 		return "";
 	}
 
@@ -121,6 +122,7 @@ public class ControladorProduto implements IControladorProduto
 				}
 			}
 		}
+		DAOFactory.close();
 		return "";
 	}
 
@@ -159,6 +161,7 @@ public class ControladorProduto implements IControladorProduto
 		{
 			// e.printStackTrace();
 		}
+		DAOFactory.close();
 		return "";
 	}
 
@@ -196,6 +199,7 @@ public class ControladorProduto implements IControladorProduto
 		{
 			// e.printStackTrace();
 		}
+		DAOFactory.close();
 		return null;
 	}
 
@@ -216,6 +220,11 @@ public class ControladorProduto implements IControladorProduto
 		new DAOFactory();
 		produtoDAO = DAOFactory.getProdutoDAO();
 		Produto p = produtoDAO.pesquisarProdutoPorNome(nome);
+		if (p == null)
+		{
+			return null;
+		}
+		DAOFactory.close();
 		return p;
 	}
 
@@ -264,6 +273,7 @@ public class ControladorProduto implements IControladorProduto
 		{
 			// e.printStackTrace();
 		}
+		DAOFactory.close();
 		return null;
 	}
 }

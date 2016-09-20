@@ -50,14 +50,13 @@ public class ControladorCliente implements IControladorCliente
 	@Path("/cadastrarCliente")
 	public String cadastrarCliente(Cliente cliente)
 	{
-		new DAOFactory();
-		clienteDAO = DAOFactory.getClienteDAO();
 		// Falta validar os campos
 		boolean existe = rnCliente.verificarClienteExistente(cliente);
 		if (existe == false)
 		{
 			try
 			{
+				clienteDAO = DAOFactory.getClienteDAO();
 				clienteDAO.inserir(cliente);
 				return msg.getMsg_cliente_cadastrado_com_sucesso();
 			}
@@ -79,6 +78,7 @@ public class ControladorCliente implements IControladorCliente
 				// e.printStackTrace();
 			}
 		}
+		DAOFactory.close();
 		return "";
 	}
 
@@ -97,6 +97,7 @@ public class ControladorCliente implements IControladorCliente
 		{
 			try
 			{
+				clienteDAO = DAOFactory.getClienteDAO();
 				clienteDAO.alterar(cliente);
 				return msg.getMsg_cliente_alterado_com_sucesso();
 			}
@@ -118,6 +119,7 @@ public class ControladorCliente implements IControladorCliente
 				// e.printStackTrace();
 			}
 		}
+		DAOFactory.close();
 		return "";
 	}
 
@@ -163,6 +165,7 @@ public class ControladorCliente implements IControladorCliente
 		{
 			// e.printStackTrace();
 		}
+		DAOFactory.close();
 		return "";
 	}
 
@@ -200,6 +203,7 @@ public class ControladorCliente implements IControladorCliente
 		{
 			// e.printStackTrace();
 		}
+		DAOFactory.close();
 		return null;
 	}
 
@@ -224,6 +228,7 @@ public class ControladorCliente implements IControladorCliente
 		{
 			return null;
 		}
+		DAOFactory.close();
 		return c;
 	}
 
@@ -273,6 +278,7 @@ public class ControladorCliente implements IControladorCliente
 		{
 			// e.printStackTrace();
 		}
+		DAOFactory.close();
 		return null;
 	}
 }

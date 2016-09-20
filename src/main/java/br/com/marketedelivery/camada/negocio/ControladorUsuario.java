@@ -87,6 +87,7 @@ public class ControladorUsuario implements IControladorUsuario
 			e.printStackTrace();
 			return e.getMessage();
 		}
+		DAOFactory.close();
 		return mensagem;
 	}
 
@@ -135,6 +136,7 @@ public class ControladorUsuario implements IControladorUsuario
 			e.printStackTrace();
 			return e.getMessage();
 		}
+		DAOFactory.close();
 		return "";
 	}
 
@@ -172,6 +174,7 @@ public class ControladorUsuario implements IControladorUsuario
 			e.printStackTrace();
 			e.getMessage();
 		}
+		DAOFactory.close();
 		return null;
 	}
 
@@ -210,6 +213,40 @@ public class ControladorUsuario implements IControladorUsuario
 			e.printStackTrace();
 			return e.getMessage();
 		}
+		DAOFactory.close();
 		return "";
+	}
+
+	/**
+	 * Esse método lista todos os Usuários cadastrados na base
+	 */
+	@GET
+	@Produces("application/json; charset=UTF-8")
+	@Consumes("application/json; charset=UTF-8")
+	@Path("/efetuarLogin")
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * br.com.marketedelivery.camada.interfaces.negocio.IControladorUsuario#
+	 * efetuarLogin(br.com.marketedelivery.camada.classesBasicas.Usuario)
+	 */
+	@Override
+	public Usuario efetuarLogin(Usuario usuario)
+	{
+		new DAOFactory();
+		usuarioDAO = DAOFactory.getUsuarioDAO();
+		Usuario u;
+		try
+		{
+			u = usuarioDAO.efetuarLogin(usuario);
+			return u;
+		}
+		catch (UsuarioInexistenteException e)
+		{
+			e.printStackTrace();
+			e.getMessage();
+		}
+		DAOFactory.close();
+		return null;
 	}
 }

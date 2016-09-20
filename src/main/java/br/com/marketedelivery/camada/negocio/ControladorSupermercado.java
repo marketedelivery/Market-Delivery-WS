@@ -54,36 +54,39 @@ public class ControladorSupermercado implements IControladorSupermercado
 	@Path("/cadastrarSupermercado")
 	public String cadastrarSupermercado(Supermercado supermercado)
 	{
-		String resultado = rnSupermercado.validarCampos(supermercado);
-		if (!resultado.equals("") || resultado.length() != 0)
+		/*
+		 * String resultado = rnSupermercado.validarCampos(supermercado); if
+		 * (!resultado.equals("") || resultado.length() != 0) {
+		 */
+		boolean existe = rnSupermercado.verificarSupermercadoExistente(supermercado);
+		if (existe == false)
 		{
-			boolean existe = rnSupermercado.verificarSupermercadoExistente(supermercado);
-			if (existe == false)
+			try
 			{
-				try
-				{
-					supermercadoDAO.inserir(supermercado);
-					return msg.getMsg_supermercado_cadastrado_com_sucesso();
-				}
-				catch (ClienteExistenteException e)
-				{
-					// e.printStackTrace();
-				}
-				catch (ProdutoExistenteException e)
-				{
-					// e.printStackTrace();
-				}
-				catch (SupermercadoExistenteException e)
-				{
-					e.printStackTrace();
-					return e.getMessage();
-				}
-				catch (UsuarioExistenteException e)
-				{
-					// e.printStackTrace();
-				}
+				supermercadoDAO = DAOFactory.getSupermercadoDAO();
+				supermercadoDAO.inserir(supermercado);
+				return msg.getMsg_supermercado_cadastrado_com_sucesso();
+			}
+			catch (ClienteExistenteException e)
+			{
+				// e.printStackTrace();
+			}
+			catch (ProdutoExistenteException e)
+			{
+				// e.printStackTrace();
+			}
+			catch (SupermercadoExistenteException e)
+			{
+				e.printStackTrace();
+				return e.getMessage();
+			}
+			catch (UsuarioExistenteException e)
+			{
+				// e.printStackTrace();
 			}
 		}
+		// }
+		DAOFactory.close();
 		return "";
 	}
 
@@ -106,6 +109,7 @@ public class ControladorSupermercado implements IControladorSupermercado
 			{
 				try
 				{
+					supermercadoDAO = DAOFactory.getSupermercadoDAO();
 					supermercadoDAO.alterar(supermercado);
 					return msg.getMsg_cliente_alterado_com_sucesso();
 				}
@@ -128,6 +132,7 @@ public class ControladorSupermercado implements IControladorSupermercado
 				}
 			}
 		}
+		DAOFactory.close();
 		return "";
 	}
 
@@ -168,6 +173,7 @@ public class ControladorSupermercado implements IControladorSupermercado
 		{
 			// e.printStackTrace();
 		}
+		DAOFactory.close();
 		return "";
 	}
 
@@ -180,11 +186,15 @@ public class ControladorSupermercado implements IControladorSupermercado
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
 	@Path("/pesquisarSupermercadoPorCnpj/{cnpj}")
-	public Supermercado pesquisarSupermercadoPorCnpj(@PathParam("cnpj") String Cnpj)
+	public Supermercado pesquisarSupermercadoPorCnpj(@PathParam("cnpj") String cnpj)
 	{
 		new DAOFactory();
 		supermercadoDAO = DAOFactory.getSupermercadoDAO();
-		Supermercado s = supermercadoDAO.pesquisarSupermercadoPorCNPJ(Cnpj);
+		Supermercado s = supermercadoDAO.pesquisarSupermercadoPorCNPJ(cnpj);
+		if(s == null)
+		{
+			return null;
+		}
 		return s;
 	}
 
@@ -222,6 +232,7 @@ public class ControladorSupermercado implements IControladorSupermercado
 		{
 			// e.printStackTrace();
 		}
+		DAOFactory.close();
 		return null;
 	}
 
@@ -259,6 +270,7 @@ public class ControladorSupermercado implements IControladorSupermercado
 		{
 			// e.printStackTrace();
 		}
+		DAOFactory.close();
 		return null;
 	}
 }

@@ -6,6 +6,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -37,6 +38,9 @@ public class Endereco
 	@Enumerated(EnumType.STRING)
 	private Estado estado;
 
+	@ManyToOne
+	private Cliente cliente;
+
 	public Endereco()
 	{
 		this.cep = "";
@@ -45,10 +49,11 @@ public class Endereco
 		this.bairro = "";
 		this.cidade = "";
 		this.estado = null;
+		this.cliente = null;
 	}
 
 	public Endereco(Integer codigo, String cep, String logradouro, int numero, String complemento, String bairro,
-			String cidade, Estado estado)
+			String cidade, Estado estado, Cliente cliente)
 	{
 		super();
 		this.codigo = codigo;
@@ -59,6 +64,7 @@ public class Endereco
 		this.bairro = bairro;
 		this.cidade = cidade;
 		this.estado = estado;
+		this.cliente = cliente;
 	}
 
 	/**
@@ -153,5 +159,22 @@ public class Endereco
 	public void setEstado(Estado estado)
 	{
 		this.estado = estado;
+	}
+
+	/**
+	 * @return the cliente
+	 */
+	public Cliente getCliente()
+	{
+		return cliente;
+	}
+
+	/**
+	 * @param cliente
+	 *            the cliente to set
+	 */
+	public void setCliente(Cliente cliente)
+	{
+		this.cliente = cliente;
 	}
 }

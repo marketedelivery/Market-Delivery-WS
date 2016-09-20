@@ -56,8 +56,6 @@ public class Usuario
 		this.tipo_usuario = tipo_usuario;
 	}
 
-
-
 	// Métodos
 	@Override
 	public String toString()
@@ -115,7 +113,8 @@ public class Usuario
 	}
 
 	/**
-	 * @param tipo_usuario the tipo_usuario to set
+	 * @param tipo_usuario
+	 *            the tipo_usuario to set
 	 */
 	public void setTipo_usuario(Tipo tipo_usuario)
 	{

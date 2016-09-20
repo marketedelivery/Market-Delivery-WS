@@ -6,7 +6,7 @@ import br.com.marketedelivery.camada.exceptions.UsuarioInexistenteException;
 public interface IUsuarioDAO extends IDAOGenerico<Usuario>
 {
 	// Métodos
-	public Usuario validarUsuario(Usuario usuario);
+	public Usuario efetuarLogin(Usuario usuario) throws UsuarioInexistenteException;
 
 	public Usuario pesquisarUsuarioPorEmail(String email) throws UsuarioInexistenteException;
 }

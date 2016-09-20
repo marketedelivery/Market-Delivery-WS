@@ -18,7 +18,7 @@ public class Supermercado
 	@Column(name = "nome", length = 50, nullable = false)
 	private String nome;
 
-	@Column(length = 14, nullable = false, unique = true)
+	@Column(name = "cnpj", length = 14, nullable = false, unique = true)
 	private String cnpj;
 
 	@Column(length = 50, nullable = false)
@@ -27,7 +27,7 @@ public class Supermercado
 	@Column(name = "telefone", length = 11, nullable = false)
 	private String telefone;
 
-	@Column(name = "email", length = 50, nullable = true)
+	@Column(name = "email", length = 50, nullable = false)
 	private String email;
 
 	@Column(name = "estoque", length = 5, nullable = true)

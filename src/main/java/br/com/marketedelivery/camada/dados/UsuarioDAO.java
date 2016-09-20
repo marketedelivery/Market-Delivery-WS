@@ -20,9 +20,9 @@ public class UsuarioDAO extends DAOGenerico<Usuario> implements IUsuarioDAO
 	/**
 	 * faz a validação do usuario na base de dados
 	 * 
-	 * @see br.com.marketedelivery.camada.interfaces.dao.IUsuarioDAO#validarUsuario(br.com.marketedelivery.Usuario.Usuario)
+	 * @see br.com.marketedelivery.camada.interfaces.dao.IUsuarioDAO#efetuarLogin(br.com.marketedelivery.Usuario.Usuario)
 	 */
-	public Usuario validarUsuario(Usuario usuario)
+	public Usuario efetuarLogin(Usuario usuario)
 	{
 		EntityTransaction tx = getEntityManager().getTransaction();
 		try

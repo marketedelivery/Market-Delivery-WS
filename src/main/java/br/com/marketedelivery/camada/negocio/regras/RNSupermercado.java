@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.marketedelivery.camada.classesBasicas.Supermercado;
-import br.com.marketedelivery.camada.classesBasicas.Tipo;
+import br.com.marketedelivery.camada.dados.DAOFactory;
 import br.com.marketedelivery.camada.interfaces.dao.ISupermercadoDAO;
 import br.com.marketedelivery.camada.util.Mensagens;
 
@@ -35,16 +35,6 @@ public class RNSupermercado
 		if (supermercado.getEstoque() == 0) campos.add(String.valueOf(supermercado.getEstoque()));
 		if (supermercado.getTelefone() == null || (supermercado.getTelefone().equals("")))
 			campos.add(supermercado.getTelefone());
-		if (supermercado.getUsuario().getEmail() == null || (supermercado.getUsuario().getSenha().equals("")))
-			campos.add(supermercado.getUsuario().getEmail());
-		if (supermercado.getUsuario().getSenha() == null || (supermercado.getUsuario().getSenha().equals("")))
-			campos.add(supermercado.getUsuario().getSenha());
-		if (supermercado.getUsuario().getTipo_usuario() == null
-				|| (supermercado.getUsuario().getTipo_usuario().equals("")
-						|| (!supermercado.getUsuario().getTipo_usuario().equals(Tipo.SUPERMERCADO))))
-			campos.add(supermercado.getUsuario().getTipo_usuario().toString());
-		if (supermercado.getUsuario().getSenha() == null || (supermercado.getUsuario().getSenha().equals("")))
-			campos.add(supermercado.getUsuario().getSenha());
 		int tam = campos.size();
 		String resultado = "";
 		do
@@ -58,6 +48,8 @@ public class RNSupermercado
 
 	public boolean verificarSupermercadoExistente(Supermercado supermercado)
 	{
+		new DAOFactory();
+		supermercadoDAO = DAOFactory.getSupermercadoDAO();
 		Supermercado s = supermercadoDAO.pesquisarSupermercadoPorCNPJ(supermercado.getCnpj());
 		if (s == null)
 		{

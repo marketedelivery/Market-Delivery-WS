@@ -3,8 +3,10 @@ package br.com.marketedelivery.camada.classesBasicas;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -26,7 +28,7 @@ public class Cliente
 	@Column(name = "rg", length = 15, nullable = true)
 	private String rg;
 
-	@Column(name = "cpf", length = 11, nullable = false)
+	@Column(name = "cpf", length = 14, nullable = false)
 	private String cpf;
 
 	@Column(name = "telefone", length = 10, nullable = true)
@@ -35,10 +37,10 @@ public class Cliente
 	@Column(name = "celular", length = 11, nullable = false)
 	private String celular;
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	private Usuario usuario;
 
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente", targetEntity = Endereco.class, fetch = FetchType.LAZY)
 	private List<Endereco> endereco;
 
 	public Cliente()
