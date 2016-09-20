@@ -54,6 +54,7 @@ public class ControladorSupermercado implements IControladorSupermercado
 	@Path("/cadastrarSupermercado")
 	public String cadastrarSupermercado(Supermercado supermercado)
 	{
+		DAOFactory.abrir();
 		/*
 		 * String resultado = rnSupermercado.validarCampos(supermercado); if
 		 * (!resultado.equals("") || resultado.length() != 0) {
@@ -101,6 +102,7 @@ public class ControladorSupermercado implements IControladorSupermercado
 	@Path("/alterarSupermercado")
 	public String alterarSupermercado(Supermercado supermercado)
 	{
+		DAOFactory.abrir();
 		String resultado = rnSupermercado.validarCampos(supermercado);
 		if (!resultado.equals("") || resultado.length() != 0)
 		{
@@ -147,6 +149,7 @@ public class ControladorSupermercado implements IControladorSupermercado
 	@Path("/excluirSupermercado/{codigo}")
 	public String excluirSupermercado(@PathParam("codigo") int codigo)
 	{
+		DAOFactory.abrir();
 		new DAOFactory();
 		supermercadoDAO = DAOFactory.getSupermercadoDAO();
 		try
@@ -188,6 +191,7 @@ public class ControladorSupermercado implements IControladorSupermercado
 	@Path("/pesquisarSupermercadoPorCnpj/{cnpj}")
 	public Supermercado pesquisarSupermercadoPorCnpj(@PathParam("cnpj") String cnpj)
 	{
+		DAOFactory.abrir();
 		new DAOFactory();
 		supermercadoDAO = DAOFactory.getSupermercadoDAO();
 		Supermercado s = supermercadoDAO.pesquisarSupermercadoPorCNPJ(cnpj);
@@ -207,6 +211,7 @@ public class ControladorSupermercado implements IControladorSupermercado
 	@Path("/pesquisarSupermercadoPorId/{codigo}")
 	public Supermercado pesquisarSupermercadoPorId(@PathParam("codigo") int codigo)
 	{
+		DAOFactory.abrir();
 		new DAOFactory();
 		supermercadoDAO = DAOFactory.getSupermercadoDAO();
 		Supermercado s;
@@ -245,6 +250,7 @@ public class ControladorSupermercado implements IControladorSupermercado
 	@Path("/consultarTodosSupermercados")
 	public List<Supermercado> consultarTodosSupermercados()
 	{
+		DAOFactory.abrir();
 		new DAOFactory();
 		supermercadoDAO = DAOFactory.getSupermercadoDAO();
 		List<Supermercado> supermercados;

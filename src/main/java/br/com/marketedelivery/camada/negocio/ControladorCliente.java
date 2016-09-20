@@ -50,6 +50,7 @@ public class ControladorCliente implements IControladorCliente
 	@Path("/cadastrarCliente")
 	public String cadastrarCliente(Cliente cliente)
 	{
+		DAOFactory.abrir();
 		// Falta validar os campos
 		boolean existe = rnCliente.verificarClienteExistente(cliente);
 		if (existe == false)
@@ -91,6 +92,7 @@ public class ControladorCliente implements IControladorCliente
 	@Path("/alterarCliente")
 	public String alterarCliente(Cliente cliente)
 	{
+		DAOFactory.abrir();
 		// Falta validar os campos.
 		boolean existe = rnCliente.verificarClienteExistente(cliente);
 		if (existe == true)
@@ -139,6 +141,7 @@ public class ControladorCliente implements IControladorCliente
 	@Override
 	public String excluirCliente(@PathParam("codigo") int codigo)
 	{
+		DAOFactory.abrir();
 		new DAOFactory();
 		clienteDAO = DAOFactory.getClienteDAO();
 		try
@@ -178,6 +181,7 @@ public class ControladorCliente implements IControladorCliente
 	@Path("/consultarTodosClientes")
 	public List<Cliente> consultarTodosClientes()
 	{
+		DAOFactory.abrir();
 		new DAOFactory();
 		clienteDAO = DAOFactory.getClienteDAO();
 		List<Cliente> clientes = new ArrayList<>();
@@ -221,6 +225,7 @@ public class ControladorCliente implements IControladorCliente
 	@Path("/pesquisarCliente/{cpf}")
 	public Cliente pesquisarCliente(@PathParam("cpf") String cpf)
 	{
+		DAOFactory.abrir();
 		new DAOFactory();
 		clienteDAO = DAOFactory.getClienteDAO();
 		Cliente c = clienteDAO.pesquisarClientePorCPF(cpf);
@@ -253,6 +258,7 @@ public class ControladorCliente implements IControladorCliente
 	@Override
 	public Cliente pesquisarClientePorId(@PathParam("codigo") int codigo)
 	{
+		DAOFactory.abrir();
 		new DAOFactory();
 		clienteDAO = DAOFactory.getClienteDAO();
 		Cliente cliente;

@@ -49,6 +49,7 @@ public class ControladorProduto implements IControladorProduto
 	@Path("/cadastrarProduto")
 	public String cadastrarProduto(Produto produto)
 	{
+		DAOFactory.abrir();
 		String resultado = rnProduto.validarCampos(produto);
 		if (!resultado.equals("") || resultado.length() != 0)
 		{
@@ -92,6 +93,7 @@ public class ControladorProduto implements IControladorProduto
 	@Path("/alterarProduto")
 	public String alterarProduto(Produto produto)
 	{
+		DAOFactory.abrir();
 		String resultado = rnProduto.validarCampos(produto);
 		if (!resultado.equals("") || resultado.length() != 0)
 		{
@@ -135,6 +137,7 @@ public class ControladorProduto implements IControladorProduto
 	@Path("/excluirProduto/{codigo}")
 	public String excluirProduto(int codigo)
 	{
+		DAOFactory.abrir();
 		new DAOFactory();
 		produtoDAO = DAOFactory.getProdutoDAO();
 		try
@@ -174,6 +177,7 @@ public class ControladorProduto implements IControladorProduto
 	@Path("/consultarTodosProdutos")
 	public List<Produto> consultarTodosProdutos()
 	{
+		DAOFactory.abrir();
 		new DAOFactory();
 		produtoDAO = DAOFactory.getProdutoDAO();
 		List<Produto> produtos = new ArrayList<>();
@@ -217,6 +221,7 @@ public class ControladorProduto implements IControladorProduto
 	@Path("/pesquisarProdutoPorNome/{nome}")
 	public Produto pesquisarProdutoPorNome(@PathParam("nome") String nome)
 	{
+		DAOFactory.abrir();
 		new DAOFactory();
 		produtoDAO = DAOFactory.getProdutoDAO();
 		Produto p = produtoDAO.pesquisarProdutoPorNome(nome);
@@ -249,6 +254,7 @@ public class ControladorProduto implements IControladorProduto
 	@Override
 	public Produto pesquisarProdutoPorId(@PathParam("codigo") int codigo)
 	{
+		DAOFactory.abrir();
 		new DAOFactory();
 		produtoDAO = DAOFactory.getProdutoDAO();
 		try

@@ -49,6 +49,7 @@ public class ControladorUsuario implements IControladorUsuario
 	@Path("/cadastrarUsuario")
 	public String cadastrarUsuario(Usuario usuario)
 	{
+		DAOFactory.abrir();
 		boolean existe = false;
 		String mensagem = "";
 		try
@@ -100,6 +101,7 @@ public class ControladorUsuario implements IControladorUsuario
 	@Path("/alterarUsuario")
 	public String alterarUsuario(Usuario usuario)
 	{
+		DAOFactory.abrir();
 		boolean existe = false;
 		try
 		{
@@ -149,6 +151,7 @@ public class ControladorUsuario implements IControladorUsuario
 	@Path("/consultarTodosUsuarios")
 	public List<Usuario> consultarTodosUsuarios()
 	{
+		DAOFactory.abrir();
 		new DAOFactory();
 		usuarioDAO = DAOFactory.getUsuarioDAO();
 		List<Usuario> usuarios = new ArrayList<>();
@@ -187,6 +190,7 @@ public class ControladorUsuario implements IControladorUsuario
 	@Path("/excluirUsuario/{codigo}")
 	public String excluirUsuario(@PathParam("codigo") int codigo)
 	{
+		DAOFactory.abrir();
 		new DAOFactory();
 		usuarioDAO = DAOFactory.getUsuarioDAO();
 		try
@@ -233,6 +237,7 @@ public class ControladorUsuario implements IControladorUsuario
 	@Override
 	public Usuario efetuarLogin(Usuario usuario)
 	{
+		DAOFactory.abrir();
 		new DAOFactory();
 		usuarioDAO = DAOFactory.getUsuarioDAO();
 		Usuario u;

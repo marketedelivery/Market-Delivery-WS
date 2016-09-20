@@ -18,7 +18,7 @@ import br.com.marketedelivery.camada.interfaces.dao.IUsuarioDAO;
 public class DAOFactory
 {
 	// Atributos
-	private static final EntityManagerFactory factory;
+	private static EntityManagerFactory factory;
 
 	public static IClienteDAO clienteDAO;
 
@@ -31,6 +31,14 @@ public class DAOFactory
 	static
 	{
 		factory = Persistence.createEntityManagerFactory("market-delivery-db");
+	}
+
+	public static void abrir()
+	{
+		if (factory == null || !(factory.isOpen()))
+		{
+			factory = Persistence.createEntityManagerFactory("market-delivery-db");
+		}
 	}
 
 	public static IClienteDAO getClienteDAO()
