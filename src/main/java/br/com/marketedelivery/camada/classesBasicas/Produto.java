@@ -34,7 +34,7 @@ public class Produto
 	private Marca marca;
 
 	@ManyToOne
-	private UnidadeMedida UnidadeMedida;
+	private UnidadeMedida unidadeMedida;
 
 	@Column(name = "peso_produto", length = 50, nullable = false)
 	private int peso;
@@ -68,7 +68,7 @@ public class Produto
 		this.descricao = "";
 		this.descricao = "";
 		this.marca = new Marca();
-		this.UnidadeMedida = new UnidadeMedida();
+		this.unidadeMedida = new UnidadeMedida();
 		this.informaçãoNutricional = "";
 		this.dataValidade = Calendar.getInstance();
 		this.status = Status.ATIVO;
@@ -100,7 +100,7 @@ public class Produto
 		this.nome = nome;
 		this.descricao = descricao;
 		this.marca = marca;
-		this.UnidadeMedida = unidadeMedida;
+		this.unidadeMedida = unidadeMedida;
 		this.peso = peso;
 		this.quantidade = quantidade;
 		this.informaçãoNutricional = informaçãoNutricional;
@@ -154,12 +154,12 @@ public class Produto
 
 	public UnidadeMedida getUnidadeMedida()
 	{
-		return UnidadeMedida;
+		return unidadeMedida;
 	}
 
 	public void setUnidadeMedida(UnidadeMedida unidadeMedida)
 	{
-		this.UnidadeMedida = unidadeMedida;
+		this.unidadeMedida = unidadeMedida;
 	}
 
 	public int getPeso()
@@ -218,7 +218,7 @@ public class Produto
 	{
 		this.preco = preco;
 	}
-	
+
 	public Status getStatus()
 	{
 		return status;
