@@ -33,8 +33,8 @@ public class RNProduto
 		if (produto.getDataValidade() == null || (produto.getDataValidade().equals("")))
 			campos.add(produto.getDataValidade().toString());
 		if (produto.getPeso() == 0) campos.add(String.valueOf(produto.getPeso()));
-		if (produto.getInformaçãoNutricional() == null || (produto.getInformaçãoNutricional().equals("")))
-			campos.add(produto.getInformaçãoNutricional());
+		if (produto.getInformacaoNutricional() == null || (produto.getInformacaoNutricional().equals("")))
+			campos.add(produto.getInformacaoNutricional());
 		if (produto.getQuantidade() == 0) campos.add(String.valueOf(produto.getQuantidade()));
 		if (produto.getCategoria().getNome() == null || (produto.getCategoria().getNome().equals("")))
 			campos.add(produto.getCategoria().getNome());

@@ -18,6 +18,9 @@ public class ProdutoDAO extends DAOGenerico<Produto> implements IProdutoDAO
 		this.setManager(em);
 	}
 
+	// Aletrar o método de pesquisar nome para unir o produto com a marca.
+	// Fazendo o JOIN de Produto.marca com a tabela de Marca, consultando os
+	// códigos das tabelas.
 	public Produto pesquisarProdutoPorNome(String nome)
 	{
 		String consulta = "SELECT p FROM Produto p WHERE p.nome = :N";
@@ -34,7 +37,7 @@ public class ProdutoDAO extends DAOGenerico<Produto> implements IProdutoDAO
 			return null;
 		}
 	}
-	
+
 	public Produto pesquisarProdutoPorPreco(double preco)
 	{
 		String consulta = "SELECT p FROM Produto p WHERE p.preco = :N";

@@ -43,7 +43,7 @@ public class Produto
 	private int quantidade;
 
 	@Column(name = "inf_Nutri_produto", length = 50, nullable = false)
-	private String informaçãoNutricional;
+	private String informacaoNutricional;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name = "data_validade_produto", length = 50, nullable = false)
@@ -69,7 +69,7 @@ public class Produto
 		this.descricao = "";
 		this.marca = new Marca();
 		this.unidadeMedida = new UnidadeMedida();
-		this.informaçãoNutricional = "";
+		this.informacaoNutricional = "";
 		this.dataValidade = Calendar.getInstance();
 		this.status = Status.ATIVO;
 		this.categoria = new Categoria();
@@ -84,7 +84,7 @@ public class Produto
 	 * @param unidadeMedida
 	 * @param peso
 	 * @param quantidade
-	 * @param informaçãoNutricional
+	 * @param informacaoNutricional
 	 * @param dataValidade
 	 * @param status
 	 * @param categoria
@@ -92,7 +92,7 @@ public class Produto
 	 * @param preco
 	 */
 	public Produto(Integer codigo, String nome, String descricao, Marca marca, UnidadeMedida unidadeMedida, int peso,
-			int quantidade, String informaçãoNutricional, Calendar dataValidade, double preco, Status status,
+			int quantidade, String informacaoNutricional, Calendar dataValidade, double preco, Status status,
 			Categoria categoria, Supermercado supermercado)
 	{
 		super();
@@ -103,7 +103,7 @@ public class Produto
 		this.unidadeMedida = unidadeMedida;
 		this.peso = peso;
 		this.quantidade = quantidade;
-		this.informaçãoNutricional = informaçãoNutricional;
+		this.informacaoNutricional = informacaoNutricional;
 		this.dataValidade = dataValidade;
 		this.preco = preco;
 		this.status = status;
@@ -182,14 +182,14 @@ public class Produto
 		this.quantidade = quantidade;
 	}
 
-	public String getInformaçãoNutricional()
+	public String getInformacaoNutricional()
 	{
-		return informaçãoNutricional;
+		return informacaoNutricional;
 	}
 
-	public void setInformaçãoNutricional(String informaçãoNutricional)
+	public void setInformacaoNutricional(String informacaoNutricional)
 	{
-		this.informaçãoNutricional = informaçãoNutricional;
+		this.informacaoNutricional = informacaoNutricional;
 	}
 
 	public Calendar getDataValidade()

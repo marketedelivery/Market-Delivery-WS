@@ -224,7 +224,7 @@ public class ControladorUsuario implements IControladorUsuario
 	/**
 	 * Esse método lista todos os Usuários cadastrados na base
 	 */
-	@GET
+	@POST
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
 	@Path("/efetuarLogin")
