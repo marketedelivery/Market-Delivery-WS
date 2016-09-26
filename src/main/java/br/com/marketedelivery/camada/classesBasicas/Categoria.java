@@ -6,8 +6,8 @@ package br.com.marketedelivery.camada.classesBasicas;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 
 /**
  * @author Audry Martins
@@ -18,19 +18,19 @@ public class Categoria
 {
 	// Atributos
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer codigo;
 
-	@ManyToOne
-	private Categoria subcategoria;
+	@Column(length = 20, nullable = false)
+	private String subcategoria;
 
-	@Column(name = "nome_categoria", length = 25, nullable = false)
+	@Column(length = 25, nullable = false)
 	private String nome;
 	// Construtores
 
 	public Categoria()
 	{
-		this.subcategoria = null;
+		this.subcategoria = "";
 		this.nome = "";
 	}
 
@@ -39,7 +39,7 @@ public class Categoria
 	 * @param subcategoria
 	 * @param nome
 	 */
-	public Categoria(Integer codigo, Categoria subcategoria, String nome)
+	public Categoria(Integer codigo, String subcategoria, String nome)
 	{
 		super();
 		this.codigo = codigo;
@@ -68,7 +68,7 @@ public class Categoria
 	/**
 	 * @return the subcategoria
 	 */
-	public Categoria getSubcategoria()
+	public String getSubcategoria()
 	{
 		return subcategoria;
 	}
@@ -77,7 +77,7 @@ public class Categoria
 	 * @param subcategoria
 	 *            the subcategoria to set
 	 */
-	public void setSubcategoria(Categoria subcategoria)
+	public void setSubcategoria(String subcategoria)
 	{
 		this.subcategoria = subcategoria;
 	}

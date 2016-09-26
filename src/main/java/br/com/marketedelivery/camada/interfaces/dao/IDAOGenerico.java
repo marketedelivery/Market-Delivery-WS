@@ -2,12 +2,15 @@ package br.com.marketedelivery.camada.interfaces.dao;
 
 import java.util.List;
 
+import br.com.marketedelivery.camada.exceptions.CategoriaInexistenteException;
 import br.com.marketedelivery.camada.exceptions.ClienteExistenteException;
 import br.com.marketedelivery.camada.exceptions.ClienteInexistenteException;
+import br.com.marketedelivery.camada.exceptions.MarcaInexistenteException;
 import br.com.marketedelivery.camada.exceptions.ProdutoExistenteException;
 import br.com.marketedelivery.camada.exceptions.ProdutoInexistenteException;
 import br.com.marketedelivery.camada.exceptions.SupermercadoExistenteException;
 import br.com.marketedelivery.camada.exceptions.SupermercadoInexistenteException;
+import br.com.marketedelivery.camada.exceptions.UnidadeMedidaInexistenteException;
 import br.com.marketedelivery.camada.exceptions.UsuarioExistenteException;
 import br.com.marketedelivery.camada.exceptions.UsuarioInexistenteException;
 
@@ -20,10 +23,12 @@ public interface IDAOGenerico<Entidade>
 			SupermercadoInexistenteException, UsuarioInexistenteException;
 
 	public Entidade consultarPorId(Integer id) throws ClienteInexistenteException, ProdutoInexistenteException,
-			SupermercadoInexistenteException, UsuarioInexistenteException;
+			SupermercadoInexistenteException, UsuarioInexistenteException, CategoriaInexistenteException,
+			MarcaInexistenteException, UnidadeMedidaInexistenteException;
 
 	public List<Entidade> consultarTodos() throws ClienteInexistenteException, ProdutoInexistenteException,
-			SupermercadoInexistenteException, UsuarioInexistenteException;
+			SupermercadoInexistenteException, UsuarioInexistenteException, CategoriaInexistenteException,
+			MarcaInexistenteException, UnidadeMedidaInexistenteException;
 
 	public List<Entidade> consultarTodos(Integer indiceInicial, Integer quantidade);
 }

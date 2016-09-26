@@ -6,9 +6,12 @@ package br.com.marketedelivery.camada.dados;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import br.com.marketedelivery.camada.interfaces.dao.ICategoriaDAO;
 import br.com.marketedelivery.camada.interfaces.dao.IClienteDAO;
+import br.com.marketedelivery.camada.interfaces.dao.IMarcaDAO;
 import br.com.marketedelivery.camada.interfaces.dao.IProdutoDAO;
 import br.com.marketedelivery.camada.interfaces.dao.ISupermercadoDAO;
+import br.com.marketedelivery.camada.interfaces.dao.IUnidadeMedidaDAO;
 import br.com.marketedelivery.camada.interfaces.dao.IUsuarioDAO;
 
 /**
@@ -21,6 +24,12 @@ public class DAOFactory
 	private static EntityManagerFactory factory;
 
 	public static IClienteDAO clienteDAO;
+
+	public static ICategoriaDAO categoriaDAO;
+
+	public static IMarcaDAO marcaDAO;
+
+	public static IUnidadeMedidaDAO unidadeMedidaDAO;
 
 	public static IProdutoDAO produtoDAO;
 
@@ -45,6 +54,24 @@ public class DAOFactory
 	{
 		clienteDAO = new ClienteDAO(factory.createEntityManager());
 		return clienteDAO;
+	}
+
+	public static ICategoriaDAO getCategoriaDAO()
+	{
+		categoriaDAO = new CategoriaDAO(factory.createEntityManager());
+		return categoriaDAO;
+	}
+
+	public static IMarcaDAO getMarcaDAO()
+	{
+		marcaDAO = new MarcaDAO(factory.createEntityManager());
+		return marcaDAO;
+	}
+
+	public static IUnidadeMedidaDAO getUnidadeMedidaDAO()
+	{
+		unidadeMedidaDAO = new UnidadeMedidaDAO(factory.createEntityManager());
+		return unidadeMedidaDAO;
 	}
 
 	public static IProdutoDAO getProdutoDAO()

@@ -20,7 +20,6 @@ public class RNUsuario
 	// Métodos
 	public boolean verificarUsuarioExistente(Usuario usuario) throws UsuarioInexistenteException
 	{
-		new DAOFactory();
 		usuarioDAO = DAOFactory.getUsuarioDAO();
 		Usuario u = usuarioDAO.pesquisarUsuarioPorEmail(usuario.getEmail());
 		if (u == null)

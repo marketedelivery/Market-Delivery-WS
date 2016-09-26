@@ -1,11 +1,9 @@
 package br.com.marketedelivery.camada.dados;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 
 import br.com.marketedelivery.camada.classesBasicas.Cliente;
-import br.com.marketedelivery.camada.classesBasicas.Status;
 import br.com.marketedelivery.camada.interfaces.dao.IClienteDAO;
 
 public class ClienteDAO extends DAOGenerico<Cliente> implements IClienteDAO
@@ -32,26 +30,6 @@ public class ClienteDAO extends DAOGenerico<Cliente> implements IClienteDAO
 		catch (Exception e)
 		{
 			return null;
-		}
-	}
-
-	public void excluirCliente(Cliente cliente)
-	{
-		EntityTransaction tx = getEntityManager().getTransaction();
-		try
-		{
-			tx.begin();
-			cliente = getEntityManager().merge(cliente);
-			cliente.getUsuario().setStatus(Status.INATIVO);
-			tx.commit();
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-			if (tx != null && tx.isActive())
-			{
-				tx.rollback();
-			}
 		}
 	}
 

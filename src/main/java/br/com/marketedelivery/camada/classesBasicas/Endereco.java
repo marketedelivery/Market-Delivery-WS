@@ -5,37 +5,37 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 
 @Entity
-@Table(name = "Endereco")
 public class Endereco
 {
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer codigo;
 
-	@Column(name = "cep", length = 9, nullable = false)
+	@Column(length = 9, nullable = false)
 	private String cep;
 
-	@Column(name = "logradouro", length = 30, nullable = false)
+	@Column(length = 30, nullable = false)
 	private String logradouro;
 
-	@Column(name = "numero", nullable = false)
+	@Column(length = 5, nullable = false)
 	private int numero;
 
-	@Column(name = "complemento", length = 30, nullable = true)
+	@Column(length = 30, nullable = true)
 	private String complemento;
 
-	@Column(name = "bairro", length = 30, nullable = false)
+	@Column(length = 30, nullable = false)
 	private String bairro;
 
-	@Column(name = "cidade", length = 30, nullable = false)
+	@Column(length = 30, nullable = false)
 	private String cidade;
 
 	@Enumerated(EnumType.STRING)
+	@Column(length = 2, nullable = false)
 	private Estado estado;
 
 	@ManyToOne

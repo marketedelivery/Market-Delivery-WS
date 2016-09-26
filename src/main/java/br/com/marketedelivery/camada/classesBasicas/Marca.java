@@ -6,6 +6,7 @@ package br.com.marketedelivery.camada.classesBasicas;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 /**
@@ -17,10 +18,10 @@ public class Marca
 {
 	// Atributos
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer codigo;
 
-	@Column(name = "nome_marca")
+	@Column(name = "nome_marca", length = 20, nullable = false)
 	private String nome;
 
 	// Construtores

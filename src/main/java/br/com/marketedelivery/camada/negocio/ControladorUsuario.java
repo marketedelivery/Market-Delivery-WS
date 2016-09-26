@@ -15,12 +15,15 @@ import javax.ws.rs.Produces;
 import br.com.marketedelivery.camada.classesBasicas.Status;
 import br.com.marketedelivery.camada.classesBasicas.Usuario;
 import br.com.marketedelivery.camada.dados.DAOFactory;
+import br.com.marketedelivery.camada.exceptions.CategoriaInexistenteException;
 import br.com.marketedelivery.camada.exceptions.ClienteExistenteException;
 import br.com.marketedelivery.camada.exceptions.ClienteInexistenteException;
+import br.com.marketedelivery.camada.exceptions.MarcaInexistenteException;
 import br.com.marketedelivery.camada.exceptions.ProdutoExistenteException;
 import br.com.marketedelivery.camada.exceptions.ProdutoInexistenteException;
 import br.com.marketedelivery.camada.exceptions.SupermercadoExistenteException;
 import br.com.marketedelivery.camada.exceptions.SupermercadoInexistenteException;
+import br.com.marketedelivery.camada.exceptions.UnidadeMedidaInexistenteException;
 import br.com.marketedelivery.camada.exceptions.UsuarioExistenteException;
 import br.com.marketedelivery.camada.exceptions.UsuarioInexistenteException;
 import br.com.marketedelivery.camada.interfaces.dao.IUsuarioDAO;
@@ -152,7 +155,6 @@ public class ControladorUsuario implements IControladorUsuario
 	public List<Usuario> consultarTodosUsuarios()
 	{
 		DAOFactory.abrir();
-		new DAOFactory();
 		usuarioDAO = DAOFactory.getUsuarioDAO();
 		List<Usuario> usuarios = new ArrayList<>();
 		try
@@ -177,6 +179,18 @@ public class ControladorUsuario implements IControladorUsuario
 			e.printStackTrace();
 			e.getMessage();
 		}
+		catch (CategoriaInexistenteException e)
+		{
+			// e.printStackTrace();
+		}
+		catch (MarcaInexistenteException e)
+		{
+			// e.printStackTrace();
+		}
+		catch (UnidadeMedidaInexistenteException e)
+		{
+			// e.printStackTrace();
+		}
 		DAOFactory.close();
 		return null;
 	}
@@ -191,7 +205,6 @@ public class ControladorUsuario implements IControladorUsuario
 	public String excluirUsuario(@PathParam("codigo") int codigo)
 	{
 		DAOFactory.abrir();
-		new DAOFactory();
 		usuarioDAO = DAOFactory.getUsuarioDAO();
 		try
 		{
@@ -217,12 +230,24 @@ public class ControladorUsuario implements IControladorUsuario
 			e.printStackTrace();
 			return e.getMessage();
 		}
+		catch (CategoriaInexistenteException e)
+		{
+			// e.printStackTrace();
+		}
+		catch (MarcaInexistenteException e)
+		{
+			// e.printStackTrace();
+		}
+		catch (UnidadeMedidaInexistenteException e)
+		{
+			// e.printStackTrace();
+		}
 		DAOFactory.close();
 		return "";
 	}
 
 	/**
-	 * Esse método lista todos os Usuários cadastrados na base
+	 * Esse método efetua o Login do Usuário cadastrado na base
 	 */
 	@POST
 	@Produces("application/json; charset=UTF-8")
@@ -238,7 +263,6 @@ public class ControladorUsuario implements IControladorUsuario
 	public Usuario efetuarLogin(Usuario usuario)
 	{
 		DAOFactory.abrir();
-		new DAOFactory();
 		usuarioDAO = DAOFactory.getUsuarioDAO();
 		Usuario u;
 		try

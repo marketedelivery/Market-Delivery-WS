@@ -6,27 +6,25 @@ package br.com.marketedelivery.camada.classesBasicas;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
 
 /**
  * @author Audry Martins
  *
  */
 @Entity
-@Table(name="unidadeMedida")
 public class UnidadeMedida
 {
 	// Atributos
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer codigo;
 
 	@Column(name = "nome_medida", length = 55, nullable = false)
 	private String nome;
-	
-	// Construtores
 
+	// Construtores
 	public UnidadeMedida()
 	{
 		this.nome = "";

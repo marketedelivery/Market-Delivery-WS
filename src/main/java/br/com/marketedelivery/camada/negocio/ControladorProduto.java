@@ -12,20 +12,28 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
+import br.com.marketedelivery.camada.classesBasicas.Categoria;
+import br.com.marketedelivery.camada.classesBasicas.Marca;
 import br.com.marketedelivery.camada.classesBasicas.Produto;
 import br.com.marketedelivery.camada.classesBasicas.Status;
+import br.com.marketedelivery.camada.classesBasicas.Supermercado;
+import br.com.marketedelivery.camada.classesBasicas.UnidadeMedida;
 import br.com.marketedelivery.camada.dados.DAOFactory;
+import br.com.marketedelivery.camada.exceptions.CategoriaInexistenteException;
 import br.com.marketedelivery.camada.exceptions.ClienteExistenteException;
 import br.com.marketedelivery.camada.exceptions.ClienteInexistenteException;
+import br.com.marketedelivery.camada.exceptions.MarcaInexistenteException;
 import br.com.marketedelivery.camada.exceptions.ProdutoExistenteException;
 import br.com.marketedelivery.camada.exceptions.ProdutoInexistenteException;
 import br.com.marketedelivery.camada.exceptions.SupermercadoExistenteException;
 import br.com.marketedelivery.camada.exceptions.SupermercadoInexistenteException;
+import br.com.marketedelivery.camada.exceptions.UnidadeMedidaInexistenteException;
 import br.com.marketedelivery.camada.exceptions.UsuarioExistenteException;
 import br.com.marketedelivery.camada.exceptions.UsuarioInexistenteException;
 import br.com.marketedelivery.camada.interfaces.dao.IProdutoDAO;
 import br.com.marketedelivery.camada.interfaces.negocio.IControladorProduto;
 import br.com.marketedelivery.camada.negocio.regras.RNProduto;
+import br.com.marketedelivery.camada.negocio.regras.RNSupermercado;
 import br.com.marketedelivery.camada.util.Mensagens;
 
 @Path("/service")
@@ -34,6 +42,8 @@ public class ControladorProduto implements IControladorProduto
 	private IProdutoDAO produtoDAO;
 
 	RNProduto rnProduto = new RNProduto();
+
+	RNSupermercado rnSupermercado = new RNSupermercado();
 
 	Mensagens msg = new Mensagens();
 
@@ -50,34 +60,64 @@ public class ControladorProduto implements IControladorProduto
 	public String cadastrarProduto(Produto produto)
 	{
 		DAOFactory.abrir();
-		String resultado = rnProduto.validarCampos(produto);
-		if (!resultado.equals("") || resultado.length() != 0)
+		boolean existe = rnProduto.verificarProdutoExistente(produto);
+		if (existe == false)
 		{
-			boolean existe = rnProduto.verificarProdutoExistente(produto);
-			if (existe == false)
+			try
 			{
-				try
+				produtoDAO = DAOFactory.getProdutoDAO();
+				Categoria categoria = rnProduto.verificarCategoriaExistente(produto.getCategoria().getCodigo());
+				Marca marca = rnProduto.verificarMarcaExistente(produto.getMarca().getCodigo());
+				UnidadeMedida um = rnProduto.verificarUnidadeMedidaExistente(produto.getUnidadeMedida().getCodigo());
+				Supermercado supermercado = rnSupermercado
+						.verificarSupermercadoExistente(produto.getSupermercado().getCodigo());
+				if (categoria != null)
 				{
-					produtoDAO.inserir(produto);
-					return msg.getMsg_produto_cadastrado_com_sucesso();
-				}
-				catch (ClienteExistenteException e)
+					produto.setCategoria(categoria);
+					if (marca != null)
+					{
+						produto.setMarca(marca);
+					} else
+					{
+						return new MarcaInexistenteException().getMessage();
+					}
+					if (um != null)
+					{
+						produto.setUnidadeMedida(um);
+					} else
+					{
+						return new UnidadeMedidaInexistenteException().getMessage();
+					}
+					if (supermercado != null)
+					{
+						produto.setSupermercado(supermercado);
+						produtoDAO.inserir(produto);
+						return msg.getMsg_produto_cadastrado_com_sucesso();
+					} else
+					{
+						return new SupermercadoInexistenteException().getMessage();
+					}
+				} else
 				{
-					// e.printStackTrace();
+					return new CategoriaInexistenteException().getMessage();
 				}
-				catch (ProdutoExistenteException e)
-				{
-					e.printStackTrace();
-					e.getMessage();
-				}
-				catch (SupermercadoExistenteException e)
-				{
-					// e.printStackTrace();
-				}
-				catch (UsuarioExistenteException e)
-				{
-					// e.printStackTrace();
-				}
+			}
+			catch (ClienteExistenteException e)
+			{
+				// e.printStackTrace();
+			}
+			catch (ProdutoExistenteException e)
+			{
+				e.printStackTrace();
+				e.getMessage();
+			}
+			catch (SupermercadoExistenteException e)
+			{
+				// e.printStackTrace();
+			}
+			catch (UsuarioExistenteException e)
+			{
+				// e.printStackTrace();
 			}
 		}
 		DAOFactory.close();
@@ -164,6 +204,18 @@ public class ControladorProduto implements IControladorProduto
 		{
 			// e.printStackTrace();
 		}
+		catch (CategoriaInexistenteException e)
+		{
+			// e.printStackTrace();
+		}
+		catch (MarcaInexistenteException e)
+		{
+			// e.printStackTrace();
+		}
+		catch (UnidadeMedidaInexistenteException e)
+		{
+			// e.printStackTrace();
+		}
 		DAOFactory.close();
 		return "";
 	}
@@ -200,6 +252,18 @@ public class ControladorProduto implements IControladorProduto
 			// e.printStackTrace();
 		}
 		catch (UsuarioInexistenteException e)
+		{
+			// e.printStackTrace();
+		}
+		catch (CategoriaInexistenteException e)
+		{
+			// e.printStackTrace();
+		}
+		catch (MarcaInexistenteException e)
+		{
+			// e.printStackTrace();
+		}
+		catch (UnidadeMedidaInexistenteException e)
 		{
 			// e.printStackTrace();
 		}
@@ -276,6 +340,18 @@ public class ControladorProduto implements IControladorProduto
 			// e.printStackTrace();
 		}
 		catch (UsuarioInexistenteException e)
+		{
+			// e.printStackTrace();
+		}
+		catch (CategoriaInexistenteException e)
+		{
+			// e.printStackTrace();
+		}
+		catch (MarcaInexistenteException e)
+		{
+			// e.printStackTrace();
+		}
+		catch (UnidadeMedidaInexistenteException e)
 		{
 			// e.printStackTrace();
 		}

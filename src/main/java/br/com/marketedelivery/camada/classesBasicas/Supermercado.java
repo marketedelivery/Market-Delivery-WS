@@ -2,38 +2,42 @@ package br.com.marketedelivery.camada.classesBasicas;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
-import javax.persistence.Table;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 @Entity
-@Table(name = "supermercado")
 public class Supermercado
 {
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int codigo;
 
-	@Column(name = "nome", length = 50, nullable = false)
+	@Column(length = 50, nullable = false)
 	private String nome;
 
-	@Column(name = "cnpj", length = 14, nullable = false, unique = true)
+	@Column(length = 20, nullable = false, unique = true)
 	private String cnpj;
 
 	@Column(length = 50, nullable = false)
 	private String inscricaoEstatdual;
 
-	@Column(name = "telefone", length = 11, nullable = false)
+	@Column(length = 11, nullable = false)
 	private String telefone;
 
-	@Column(name = "email", length = 50, nullable = false)
+	@Column(length = 50, nullable = false)
 	private String email;
 
-	@Column(name = "estoque", length = 5, nullable = true)
+	@Column(length = 5, nullable = true)
 	private int estoque;
 
-	@OneToOne
+	@OneToOne(fetch = FetchType.EAGER)
+	@Cascade(CascadeType.SAVE_UPDATE)
 	private Usuario usuario;
 
 	public Supermercado()

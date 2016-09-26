@@ -3,50 +3,48 @@ package br.com.marketedelivery.camada.classesBasicas;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.Table;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 @Entity
-@Table(name = "cliente")
 public class Cliente
 {
 	@Id
-	@GeneratedValue
-	@Column(name = "codigo")
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int codigo;
 
-	@Column(name = "nome", length = 100)
+	@Column(length = 100, nullable = false)
 	private String nome;
 
-	@Column(name = "rg", length = 15, nullable = true)
-	private String rg;
-
-	@Column(name = "cpf", length = 14, nullable = false)
+	@Column(length = 14, nullable = false)
 	private String cpf;
 
-	@Column(name = "telefone", length = 10, nullable = true)
+	@Column(length = 10, nullable = true)
 	private String telefone;
 
-	@Column(name = "celular", length = 11, nullable = false)
+	@Column(length = 11, nullable = false)
 	private String celular;
 
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(fetch = FetchType.EAGER)
+	@Cascade(CascadeType.SAVE_UPDATE)
 	private Usuario usuario;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente", targetEntity = Endereco.class, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "cliente", targetEntity = Endereco.class, fetch = FetchType.EAGER)
+	@Cascade(CascadeType.SAVE_UPDATE)
 	private List<Endereco> endereco;
 
 	public Cliente()
 	{
 		this.nome = "";
-		this.rg = "";
 		this.cpf = "";
 		this.telefone = "";
 		this.celular = "";
@@ -54,13 +52,12 @@ public class Cliente
 		this.endereco = new ArrayList<Endereco>();
 	}
 
-	public Cliente(int codigo, String nome, String rg, String cpf, String telefone, String celular, Usuario usuario,
+	public Cliente(int codigo, String nome, String cpf, String telefone, String celular, Usuario usuario,
 			List<Endereco> endereco)
 	{
 		super();
 		this.codigo = codigo;
 		this.nome = nome;
-		this.rg = rg;
 		this.cpf = cpf;
 		this.telefone = telefone;
 		this.celular = celular;
@@ -86,16 +83,6 @@ public class Cliente
 	public void setNome(String nome)
 	{
 		this.nome = nome;
-	}
-
-	public String getRg()
-	{
-		return rg;
-	}
-
-	public void setRg(String rg)
-	{
-		this.rg = rg;
 	}
 
 	public String getCpf()

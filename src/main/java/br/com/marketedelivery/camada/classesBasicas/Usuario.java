@@ -5,23 +5,22 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
 
 @Entity
-@Table(name = "usuario")
 public class Usuario
 {
 	// Atributos
 	@Id
-	@GeneratedValue
-	@Column(name = "codigo")
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(length = 5)
 	private Integer codigo;
 
-	@Column(name = "email", length = 55, nullable = false)
+	@Column(length = 40, nullable = false)
 	private String email;
 
-	@Column(name = "senha", length = 55, nullable = false)
+	@Column(length = 20, nullable = false)
 	private String senha;
 
 	@Enumerated(EnumType.STRING)
@@ -54,13 +53,6 @@ public class Usuario
 		this.senha = senha;
 		this.status = status;
 		this.tipo_usuario = tipo_usuario;
-	}
-
-	// Métodos
-	@Override
-	public String toString()
-	{
-		return "Usuario [email=" + email + ", senha=" + senha + status + "]";
 	}
 
 	// Gets e Sets

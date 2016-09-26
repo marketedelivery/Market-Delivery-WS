@@ -1,27 +1,28 @@
 package br.com.marketedelivery.camada.classesBasicas;
 
-import java.util.Calendar;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 /**
  * @author Audry Martins
  *
  */
 @Entity
-@Table(name = "produto")
 public class Produto
 {
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer codigo;
 
 	@Column(name = "nome_produto", length = 50, nullable = false)
@@ -30,35 +31,38 @@ public class Produto
 	@Column(name = "descricao_produto", length = 150, nullable = false)
 	private String descricao;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
+	@Cascade(CascadeType.SAVE_UPDATE)
 	private Marca marca;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(updatable = true)
+	@Cascade(CascadeType.SAVE_UPDATE)
 	private UnidadeMedida unidadeMedida;
 
-	@Column(name = "peso_produto", length = 50, nullable = false)
+	@Column(length = 50, nullable = false)
 	private int peso;
 
-	@Column(name = "quantidade_produto", length = 50, nullable = false)
+	@Column(length = 50, nullable = false)
 	private int quantidade;
 
-	@Column(name = "inf_Nutri_produto", length = 50, nullable = false)
-	private String informacaoNutricional;
+	@Column(length = 20, nullable = false)
+	private String dataValidade;
 
-	@Temporal(TemporalType.DATE)
-	@Column(name = "data_validade_produto", length = 50, nullable = false)
-	private Calendar dataValidade;
-
-	@Column(name = "preco_produto", length = 7, nullable = true)
+	@Column(length = 7, nullable = true)
 	private double preco;
 
-	@Enumerated
+	@Enumerated(EnumType.STRING)
+	@Column(length = 15, nullable = false)
 	private Status status;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
+	@Cascade(CascadeType.SAVE_UPDATE)
+	@JoinColumn(updatable = true)
 	private Categoria categoria;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
+	@Cascade(CascadeType.SAVE_UPDATE)
 	private Supermercado supermercado;
 
 	// Construtores
@@ -69,8 +73,7 @@ public class Produto
 		this.descricao = "";
 		this.marca = new Marca();
 		this.unidadeMedida = new UnidadeMedida();
-		this.informacaoNutricional = "";
-		this.dataValidade = Calendar.getInstance();
+		this.dataValidade = "";
 		this.status = Status.ATIVO;
 		this.categoria = new Categoria();
 		this.supermercado = new Supermercado();
@@ -84,7 +87,6 @@ public class Produto
 	 * @param unidadeMedida
 	 * @param peso
 	 * @param quantidade
-	 * @param informacaoNutricional
 	 * @param dataValidade
 	 * @param status
 	 * @param categoria
@@ -92,8 +94,8 @@ public class Produto
 	 * @param preco
 	 */
 	public Produto(Integer codigo, String nome, String descricao, Marca marca, UnidadeMedida unidadeMedida, int peso,
-			int quantidade, String informacaoNutricional, Calendar dataValidade, double preco, Status status,
-			Categoria categoria, Supermercado supermercado)
+			int quantidade, String dataValidade, double preco, Status status, Categoria categoria,
+			Supermercado supermercado)
 	{
 		super();
 		this.codigo = codigo;
@@ -103,7 +105,6 @@ public class Produto
 		this.unidadeMedida = unidadeMedida;
 		this.peso = peso;
 		this.quantidade = quantidade;
-		this.informacaoNutricional = informacaoNutricional;
 		this.dataValidade = dataValidade;
 		this.preco = preco;
 		this.status = status;
@@ -182,22 +183,12 @@ public class Produto
 		this.quantidade = quantidade;
 	}
 
-	public String getInformacaoNutricional()
-	{
-		return informacaoNutricional;
-	}
-
-	public void setInformacaoNutricional(String informacaoNutricional)
-	{
-		this.informacaoNutricional = informacaoNutricional;
-	}
-
-	public Calendar getDataValidade()
+	public String getDataValidade()
 	{
 		return dataValidade;
 	}
 
-	public void setDataValidade(Calendar dataValidade)
+	public void setDataValidade(String dataValidade)
 	{
 		this.dataValidade = dataValidade;
 	}
