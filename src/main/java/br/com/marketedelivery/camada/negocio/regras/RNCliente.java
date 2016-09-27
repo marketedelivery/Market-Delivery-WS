@@ -19,7 +19,6 @@ public class RNCliente
 	// Métodos
 	public boolean verificarClienteExistente(Cliente cliente)
 	{
-		new DAOFactory();
 		clienteDAO = DAOFactory.getClienteDAO();
 		Cliente c = clienteDAO.pesquisarClientePorCPF(cliente.getCpf());
 		if (c == null)

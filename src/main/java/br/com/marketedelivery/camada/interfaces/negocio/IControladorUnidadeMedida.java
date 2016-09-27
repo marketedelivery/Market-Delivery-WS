@@ -18,7 +18,7 @@ public interface IControladorUnidadeMedida
 
 	public List<UnidadeMedida> consultarTodasUnidadeMedidas() throws MarcaInexistenteException;
 
-	public UnidadeMedida pesquisarUnidadeMedidaPorNome(String nome) throws MarcaInexistenteException;
+	public UnidadeMedida pesquisarUnidadeMedidaPorNome(String nome);
 
 	public UnidadeMedida pesquisarUnidadeMedidaPorId(int codigo) throws MarcaInexistenteException;
 }

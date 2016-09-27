@@ -1,3 +1,6 @@
+/**
+ * 
+ */
 package br.com.marketedelivery.camada.negocio;
 
 import java.util.ArrayList;
@@ -13,11 +16,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
 import br.com.marketedelivery.camada.classesBasicas.Categoria;
-import br.com.marketedelivery.camada.classesBasicas.Marca;
-import br.com.marketedelivery.camada.classesBasicas.Produto;
 import br.com.marketedelivery.camada.classesBasicas.Status;
-import br.com.marketedelivery.camada.classesBasicas.Supermercado;
-import br.com.marketedelivery.camada.classesBasicas.UnidadeMedida;
 import br.com.marketedelivery.camada.dados.DAOFactory;
 import br.com.marketedelivery.camada.exceptions.CategoriaInexistenteException;
 import br.com.marketedelivery.camada.exceptions.ClienteExistenteException;
@@ -30,87 +29,57 @@ import br.com.marketedelivery.camada.exceptions.SupermercadoInexistenteException
 import br.com.marketedelivery.camada.exceptions.UnidadeMedidaInexistenteException;
 import br.com.marketedelivery.camada.exceptions.UsuarioExistenteException;
 import br.com.marketedelivery.camada.exceptions.UsuarioInexistenteException;
-import br.com.marketedelivery.camada.interfaces.dao.IProdutoDAO;
-import br.com.marketedelivery.camada.interfaces.negocio.IControladorProduto;
+import br.com.marketedelivery.camada.interfaces.dao.ICategoriaDAO;
+import br.com.marketedelivery.camada.interfaces.negocio.IControladorCategoria;
 import br.com.marketedelivery.camada.negocio.regras.RNCategoria;
-import br.com.marketedelivery.camada.negocio.regras.RNMarca;
-import br.com.marketedelivery.camada.negocio.regras.RNProduto;
-import br.com.marketedelivery.camada.negocio.regras.RNSupermercado;
-import br.com.marketedelivery.camada.negocio.regras.RNUnidadeMedida;
 import br.com.marketedelivery.camada.util.Mensagens;
 
+/**
+ * @author Audry Martins
+ *
+ */
 @Path("/service")
-public class ControladorProduto implements IControladorProduto
+public class ControladorCategoria implements IControladorCategoria
 {
-	private IProdutoDAO produtoDAO;
+	// Atributos
+	private ICategoriaDAO categoriaDAO;
 
-	RNProduto rnProduto = new RNProduto();
+	private RNCategoria rnCategoria = new RNCategoria();
 
-	RNCategoria rnCategoria = new RNCategoria();
-
-	RNMarca rnMarca = new RNMarca();
-
-	RNUnidadeMedida rnUnidadeMedida = new RNUnidadeMedida();
-
-	RNSupermercado rnSupermercado = new RNSupermercado();
-
-	Mensagens msg = new Mensagens();
+	private Mensagens msg = new Mensagens();
 
 	/**
 	 * @Consumes - determina o formato dos dados que vamos postar
 	 * @Produces - determina o formato dos dados que vamos retornar
 	 * 
-	 *           Esse método cadastra um novo Produto
+	 *           Esse método cadastra uma nova Categoria
 	 */
 	@POST
 	@Consumes("application/json; charset=UTF-8")
 	@Produces("application/json; charset=UTF-8")
-	@Path("/cadastrarProduto")
-	public String cadastrarProduto(Produto produto)
+	@Path("/cadastrarCategoria")
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * br.com.marketedelivery.camada.interfaces.negocio.IControladorCategoria#
+	 * cadastrarCategoria(br.com.marketedelivery.camada.classesBasicas.
+	 * Categoria)
+	 */
+	@Override
+	public String cadastrarCategoria(Categoria categoria)
 	{
 		DAOFactory.abrir();
-		boolean existe = rnProduto.verificarProdutoExistente(produto);
+		boolean existe = false;
+		String mensagem = "";
+		// Falta validar os campos
+		existe = rnCategoria.verificarCategoriaExistente(categoria);
 		if (existe == false)
 		{
 			try
 			{
-				produtoDAO = DAOFactory.getProdutoDAO();
-				Categoria categoria = rnCategoria.verificarCategoriaExistente(produto.getCategoria().getCodigo());
-				Marca marca = rnMarca.verificarMarcaExistente(produto.getMarca().getCodigo());
-				UnidadeMedida um = rnUnidadeMedida
-						.verificarUnidadeMedidaExistente(produto.getUnidadeMedida().getCodigo());
-				Supermercado supermercado = rnSupermercado
-						.verificarSupermercadoExistente(produto.getSupermercado().getCodigo());
-				if (categoria != null)
-				{
-					produto.setCategoria(categoria);
-					if (marca != null)
-					{
-						produto.setMarca(marca);
-					} else
-					{
-						return new MarcaInexistenteException().getMessage();
-					}
-					if (um != null)
-					{
-						produto.setUnidadeMedida(um);
-					} else
-					{
-						return new UnidadeMedidaInexistenteException().getMessage();
-					}
-					if (supermercado != null)
-					{
-						produto.setSupermercado(supermercado);
-						produtoDAO.inserir(produto);
-						return msg.getMsg_produto_cadastrado_com_sucesso();
-					} else
-					{
-						return new SupermercadoInexistenteException().getMessage();
-					}
-				} else
-				{
-					return new CategoriaInexistenteException().getMessage();
-				}
+				categoriaDAO = DAOFactory.getCategoriaDAO();
+				categoriaDAO.inserir(categoria);
+				mensagem = msg.getMsg_categoria_cadastrada_com_sucesso();
 			}
 			catch (ClienteExistenteException e)
 			{
@@ -118,8 +87,7 @@ public class ControladorProduto implements IControladorProduto
 			}
 			catch (ProdutoExistenteException e)
 			{
-				e.printStackTrace();
-				e.getMessage();
+				// e.printStackTrace();
 			}
 			catch (SupermercadoExistenteException e)
 			{
@@ -131,28 +99,36 @@ public class ControladorProduto implements IControladorProduto
 			}
 		}
 		DAOFactory.close();
-		return "";
+		return mensagem;
 	}
 
 	/**
-	 * Essse método altera um cliente já cadastrado
+	 * Essse método altera uma Categoria já cadastrada
 	 **/
 	@PUT
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
-	@Path("/alterarProduto")
-	public String alterarProduto(Produto produto)
+	@Path("/alterarCategoria")
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * br.com.marketedelivery.camada.interfaces.negocio.IControladorCategoria#
+	 * alterarCategoria(br.com.marketedelivery.camada.classesBasicas.Categoria)
+	 */
+	@Override
+	public String alterarCategoria(Categoria categoria)
 	{
 		DAOFactory.abrir();
-		produtoDAO = DAOFactory.getProdutoDAO();
-		Produto existe = new Produto();
+		boolean existe = false;
+		String mensagem = "";
 		try
 		{
-			existe = produtoDAO.consultarPorId(produto.getCodigo());
-			if (existe != null)
+			existe = rnCategoria.verificarCategoriaExistente(categoria);
+			if (existe == true)
 			{
-				produtoDAO.alterar(produto);
-				return msg.getMsg_produto_alterado_com_sucesso();
+				categoriaDAO = DAOFactory.getCategoriaDAO();
+				categoriaDAO.alterar(categoria);
+				mensagem = msg.getMsg_categoria_alterada_com_sucesso();
 			}
 		}
 		catch (ClienteInexistenteException e)
@@ -161,8 +137,7 @@ public class ControladorProduto implements IControladorProduto
 		}
 		catch (ProdutoInexistenteException e)
 		{
-			e.printStackTrace();
-			return e.getMessage();
+			// e.printStackTrace();
 		}
 		catch (SupermercadoInexistenteException e)
 		{
@@ -172,45 +147,34 @@ public class ControladorProduto implements IControladorProduto
 		{
 			// e.printStackTrace();
 		}
-		catch (CategoriaInexistenteException e)
-		{
-			// e.printStackTrace();
-		}
-		catch (MarcaInexistenteException e)
-		{
-			// e.printStackTrace();
-		}
-		catch (UnidadeMedidaInexistenteException e)
-		{
-			// e.printStackTrace();
-		}
 		DAOFactory.close();
-		return "";
+		return mensagem;
 	}
 
 	/**
-	 * Excluindo um produto pelo código
+	 * Excluindo uma categoria pelo código
 	 */
 	@DELETE
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
-	@Path("/excluirProduto/{codigo}")
-	public String excluirProduto(int codigo)
+	@Path("/excluirCategoria/{codigo}")
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * br.com.marketedelivery.camada.interfaces.negocio.IControladorCategoria#
+	 * excluirCategoria(int)
+	 */
+	@Override
+	public String excluirCategoria(int codigo)
 	{
 		DAOFactory.abrir();
-		produtoDAO = DAOFactory.getProdutoDAO();
+		categoriaDAO = DAOFactory.getCategoriaDAO();
 		try
 		{
-			Produto p = produtoDAO.consultarPorId(codigo);
-			if (p.getQuantidade() != 0)
-			{
-				p.setStatus(Status.INATIVO);
-			} else
-			{
-				p.setStatus(Status.INDISPONIVEL);
-			}
-			produtoDAO.alterar(p);
-			return msg.getMsg_produto_excluido_com_sucesso();
+			Categoria categoria = categoriaDAO.consultarPorId(codigo);
+			categoria.setStatus(Status.INATIVO);
+			categoriaDAO.alterar(categoria);
+			return msg.getMsg_categoria_excluida_com_sucesso();
 		}
 		catch (ClienteInexistenteException e)
 		{
@@ -218,8 +182,7 @@ public class ControladorProduto implements IControladorProduto
 		}
 		catch (ProdutoInexistenteException e)
 		{
-			e.printStackTrace();
-			return e.getMessage();
+			// e.printStackTrace();
 		}
 		catch (SupermercadoInexistenteException e)
 		{
@@ -231,7 +194,8 @@ public class ControladorProduto implements IControladorProduto
 		}
 		catch (CategoriaInexistenteException e)
 		{
-			// e.printStackTrace();
+			e.printStackTrace();
+			return e.getMessage();
 		}
 		catch (MarcaInexistenteException e)
 		{
@@ -246,22 +210,27 @@ public class ControladorProduto implements IControladorProduto
 	}
 
 	/**
-	 * Esse método lista todos os clientes cadastrados na base
+	 * Esse método lista todas as categorias cadastradas na base
 	 */
 	@GET
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
-	@Path("/consultarTodosProdutos")
-	public List<Produto> consultarTodosProdutos()
+	@Path("/consultarTodosCategorias")
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * br.com.marketedelivery.camada.interfaces.negocio.IControladorCategoria#
+	 * consultarTodasCategorias()
+	 */
+	@Override
+	public List<Categoria> consultarTodasCategorias()
 	{
 		DAOFactory.abrir();
-		new DAOFactory();
-		produtoDAO = DAOFactory.getProdutoDAO();
-		List<Produto> produtos = new ArrayList<>();
+		categoriaDAO = DAOFactory.getCategoriaDAO();
+		List<Categoria> categorias = new ArrayList<>();
 		try
 		{
-			produtos = produtoDAO.consultarTodos();
-			return produtos;
+			categorias = categoriaDAO.consultarTodos();
 		}
 		catch (ClienteInexistenteException e)
 		{
@@ -269,8 +238,7 @@ public class ControladorProduto implements IControladorProduto
 		}
 		catch (ProdutoInexistenteException e)
 		{
-			e.printStackTrace();
-			e.getMessage();
+			// e.printStackTrace();
 		}
 		catch (SupermercadoInexistenteException e)
 		{
@@ -282,7 +250,8 @@ public class ControladorProduto implements IControladorProduto
 		}
 		catch (CategoriaInexistenteException e)
 		{
-			// e.printStackTrace();
+			e.printStackTrace();
+			e.getMessage();
 		}
 		catch (MarcaInexistenteException e)
 		{
@@ -293,27 +262,35 @@ public class ControladorProduto implements IControladorProduto
 			// e.printStackTrace();
 		}
 		DAOFactory.close();
-		return null;
+		return categorias;
 	}
 
 	/**
-	 * Esse método pesquisa o produto cadastrado na base
+	 * Esse método pesquisa a categoria cadastrada na base
 	 */
 	@GET
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
-	@Path("/pesquisarProdutoPorNome/{nome}")
-	public Produto pesquisarProdutoPorNome(@PathParam("nome") String nome)
+	@Path("/pesquisarCategoriaPorNome/{nome}")
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * br.com.marketedelivery.camada.interfaces.negocio.IControladorCategoria#
+	 * pesquisarCategoriaPorNome(java.lang.String)
+	 */
+	@Override
+	public Categoria pesquisarCategoriaPorNome(@PathParam("nome") String nome)
 	{
 		DAOFactory.abrir();
-		produtoDAO = DAOFactory.getProdutoDAO();
-		Produto p = produtoDAO.pesquisarProdutoPorNome(nome);
-		if (p == null)
+		new DAOFactory();
+		categoriaDAO = DAOFactory.getCategoriaDAO();
+		Categoria c = categoriaDAO.pesquisarCategoriaPorNome(nome);
+		if (c == null)
 		{
 			return null;
 		}
 		DAOFactory.close();
-		return p;
+		return c;
 	}
 
 	/**
@@ -322,23 +299,23 @@ public class ControladorProduto implements IControladorProduto
 	@GET
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
-	@Path("/pesquisarProdutoPorId/{codigo}")
+	@Path("/pesquisarCategoriaPorId/{codigo}")
 	/*
 	 * (non-Javadoc)
 	 * @see
-	 * br.com.marketedelivery.camada.interfaces.negocio.IControladorProduto#
-	 * pesquisarProdutoPorId(int)
+	 * br.com.marketedelivery.camada.interfaces.negocio.IControladorCategoria#
+	 * pesquisarCategoriaPorId(int)
 	 */
 	@Override
-	public Produto pesquisarProdutoPorId(@PathParam("codigo") int codigo)
+	public Categoria pesquisarCategoriaPorId(@PathParam("codigo") int codigo)
 	{
 		DAOFactory.abrir();
 		new DAOFactory();
-		produtoDAO = DAOFactory.getProdutoDAO();
+		categoriaDAO = DAOFactory.getCategoriaDAO();
 		try
 		{
-			Produto p = produtoDAO.consultarPorId(codigo);
-			return p;
+			Categoria c = categoriaDAO.consultarPorId(codigo);
+			return c;
 		}
 		catch (ClienteInexistenteException e)
 		{
@@ -346,8 +323,7 @@ public class ControladorProduto implements IControladorProduto
 		}
 		catch (ProdutoInexistenteException e)
 		{
-			e.printStackTrace();
-			e.getMessage();
+			// e.printStackTrace();
 		}
 		catch (SupermercadoInexistenteException e)
 		{
@@ -359,7 +335,8 @@ public class ControladorProduto implements IControladorProduto
 		}
 		catch (CategoriaInexistenteException e)
 		{
-			// e.printStackTrace();
+			e.printStackTrace();
+			e.getMessage();
 		}
 		catch (MarcaInexistenteException e)
 		{

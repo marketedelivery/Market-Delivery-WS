@@ -17,7 +17,7 @@ public interface IControladorCategoria
 
 	public List<Categoria> consultarTodasCategorias() throws CategoriaInexistenteException;
 
-	public Categoria pesquisarCategoriaPorNome(String nome) throws CategoriaInexistenteException;
+	public Categoria pesquisarCategoriaPorNome(String nome);
 
 	public Categoria pesquisarCategoriaPorId(int codigo) throws CategoriaInexistenteException;
 }

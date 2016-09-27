@@ -5,6 +5,8 @@ package br.com.marketedelivery.camada.classesBasicas;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,12 +28,17 @@ public class Categoria
 
 	@Column(length = 25, nullable = false)
 	private String nome;
+
+	@Enumerated(EnumType.STRING)
+	@Column(length = 10, nullable = false)
+	private Status status;
 	// Construtores
 
 	public Categoria()
 	{
 		this.subcategoria = "";
 		this.nome = "";
+		this.status = Status.ATIVO;
 	}
 
 	/**
@@ -39,12 +46,13 @@ public class Categoria
 	 * @param subcategoria
 	 * @param nome
 	 */
-	public Categoria(Integer codigo, String subcategoria, String nome)
+	public Categoria(Integer codigo, String subcategoria, String nome, Status status)
 	{
 		super();
 		this.codigo = codigo;
 		this.subcategoria = subcategoria;
 		this.nome = nome;
+		this.status = status;
 	}
 
 	// Gets e Sets
@@ -97,5 +105,22 @@ public class Categoria
 	public void setNome(String nome)
 	{
 		this.nome = nome;
+	}
+
+	/**
+	 * @return the status
+	 */
+	public Status getStatus()
+	{
+		return status;
+	}
+
+	/**
+	 * @param status
+	 *            the status to set
+	 */
+	public void setStatus(Status status)
+	{
+		this.status = status;
 	}
 }

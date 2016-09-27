@@ -18,7 +18,7 @@ public interface IControladorMarca
 
 	public List<Marca> consultarTodasMarcas() throws MarcaInexistenteException;
 
-	public Marca pesquisarMarcaPorNome(String nome) throws MarcaInexistenteException;
+	public Marca pesquisarMarcaPorNome(String nome);
 
 	public Marca pesquisarMarcaPorId(int codigo) throws MarcaInexistenteException;
 }
