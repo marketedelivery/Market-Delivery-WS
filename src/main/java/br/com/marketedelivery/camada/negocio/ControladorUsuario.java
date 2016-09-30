@@ -15,9 +15,12 @@ import javax.ws.rs.Produces;
 import br.com.marketedelivery.camada.classesBasicas.Status;
 import br.com.marketedelivery.camada.classesBasicas.Usuario;
 import br.com.marketedelivery.camada.dados.DAOFactory;
+import br.com.marketedelivery.camada.exceptions.CategoriaExistenteException;
 import br.com.marketedelivery.camada.exceptions.CategoriaInexistenteException;
 import br.com.marketedelivery.camada.exceptions.ClienteExistenteException;
 import br.com.marketedelivery.camada.exceptions.ClienteInexistenteException;
+import br.com.marketedelivery.camada.exceptions.EnderecoExistenteException;
+import br.com.marketedelivery.camada.exceptions.EnderecoInexistenteException;
 import br.com.marketedelivery.camada.exceptions.MarcaInexistenteException;
 import br.com.marketedelivery.camada.exceptions.ProdutoExistenteException;
 import br.com.marketedelivery.camada.exceptions.ProdutoInexistenteException;
@@ -91,6 +94,26 @@ public class ControladorUsuario implements IControladorUsuario
 			e.printStackTrace();
 			return e.getMessage();
 		}
+		catch (EnderecoExistenteException e)
+		{
+			// e.printStackTrace();
+		}
+		catch (CategoriaInexistenteException e)
+		{
+			// e.printStackTrace();
+		}
+		catch (MarcaInexistenteException e)
+		{
+			// e.printStackTrace();
+		}
+		catch (UnidadeMedidaInexistenteException e)
+		{
+			// e.printStackTrace();
+		}
+		catch (CategoriaExistenteException e)
+		{
+			// e.printStackTrace();
+		}
 		DAOFactory.close();
 		return mensagem;
 	}
@@ -106,23 +129,79 @@ public class ControladorUsuario implements IControladorUsuario
 	{
 		DAOFactory.abrir();
 		boolean existe = false;
+		String mensagem = "";
 		try
 		{
+			existe = rnUsuario.verificarUsuarioExistente(usuario);
+		}
+		catch (UsuarioInexistenteException e)
+		{
+			e.printStackTrace();
+			mensagem = e.getMessage();
+		}
+		if (existe == true)
+		{
 			try
-			{
-				existe = rnUsuario.verificarUsuarioExistente(usuario);
-			}
-			catch (UsuarioInexistenteException e)
-			{
-				e.printStackTrace();
-				e.getMessage();
-			}
-			if (existe == true)
 			{
 				usuarioDAO = DAOFactory.getUsuarioDAO();
 				usuarioDAO.alterar(usuario);
 				return msg.getMsg_usuario_alterado_com_sucesso();
 			}
+			catch (ClienteInexistenteException e)
+			{
+				// e.printStackTrace();
+			}
+			catch (ProdutoInexistenteException e)
+			{
+				// e.printStackTrace();
+			}
+			catch (SupermercadoInexistenteException e)
+			{
+				// e.printStackTrace();
+			}
+			catch (UsuarioInexistenteException e)
+			{
+				e.printStackTrace();
+				mensagem = e.getMessage();
+			}
+			catch (CategoriaInexistenteException e)
+			{
+				// e.printStackTrace();
+			}
+			catch (MarcaInexistenteException e)
+			{
+				// e.printStackTrace();
+			}
+			catch (UnidadeMedidaInexistenteException e)
+			{
+				// e.printStackTrace();
+			}
+			catch (EnderecoInexistenteException e)
+			{
+				// e.printStackTrace();
+			}
+		}
+		DAOFactory.close();
+		return mensagem;
+	}
+
+	/**
+	 * Excluindo um Usuário pelo código
+	 */
+	@DELETE
+	@Produces("application/json; charset=UTF-8")
+	@Consumes("application/json; charset=UTF-8")
+	@Path("/excluirUsuario/{codigo}")
+	public String excluirUsuario(@PathParam("codigo") int codigo)
+	{
+		DAOFactory.abrir();
+		usuarioDAO = DAOFactory.getUsuarioDAO();
+		try
+		{
+			Usuario user = usuarioDAO.consultarPorId(codigo);
+			user.setStatus(Status.INATIVO);
+			usuarioDAO.alterar(user);
+			return msg.getMsg_usuario_excluido_com_sucesso();
 		}
 		catch (ClienteInexistenteException e)
 		{
@@ -140,6 +219,22 @@ public class ControladorUsuario implements IControladorUsuario
 		{
 			e.printStackTrace();
 			return e.getMessage();
+		}
+		catch (CategoriaInexistenteException e)
+		{
+			// e.printStackTrace();
+		}
+		catch (MarcaInexistenteException e)
+		{
+			// e.printStackTrace();
+		}
+		catch (UnidadeMedidaInexistenteException e)
+		{
+			// e.printStackTrace();
+		}
+		catch (EnderecoInexistenteException e)
+		{
+			// e.printStackTrace();
 		}
 		DAOFactory.close();
 		return "";
@@ -191,59 +286,12 @@ public class ControladorUsuario implements IControladorUsuario
 		{
 			// e.printStackTrace();
 		}
+		catch (EnderecoInexistenteException e)
+		{
+			// e.printStackTrace();
+		}
 		DAOFactory.close();
 		return null;
-	}
-
-	/**
-	 * Excluindo um Usuário pelo código
-	 */
-	@DELETE
-	@Produces("application/json; charset=UTF-8")
-	@Consumes("application/json; charset=UTF-8")
-	@Path("/excluirUsuario/{codigo}")
-	public String excluirUsuario(@PathParam("codigo") int codigo)
-	{
-		DAOFactory.abrir();
-		usuarioDAO = DAOFactory.getUsuarioDAO();
-		try
-		{
-			Usuario user = usuarioDAO.consultarPorId(codigo);
-			user.setStatus(Status.INATIVO);
-			usuarioDAO.alterar(user);
-			return msg.getMsg_usuario_excluido_com_sucesso();
-		}
-		catch (ClienteInexistenteException e)
-		{
-			// e.printStackTrace();
-		}
-		catch (ProdutoInexistenteException e)
-		{
-			// e.printStackTrace();
-		}
-		catch (SupermercadoInexistenteException e)
-		{
-			// e.printStackTrace();
-		}
-		catch (UsuarioInexistenteException e)
-		{
-			e.printStackTrace();
-			return e.getMessage();
-		}
-		catch (CategoriaInexistenteException e)
-		{
-			// e.printStackTrace();
-		}
-		catch (MarcaInexistenteException e)
-		{
-			// e.printStackTrace();
-		}
-		catch (UnidadeMedidaInexistenteException e)
-		{
-			// e.printStackTrace();
-		}
-		DAOFactory.close();
-		return "";
 	}
 
 	/**

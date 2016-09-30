@@ -19,9 +19,12 @@ import br.com.marketedelivery.camada.classesBasicas.Status;
 import br.com.marketedelivery.camada.classesBasicas.Supermercado;
 import br.com.marketedelivery.camada.classesBasicas.UnidadeMedida;
 import br.com.marketedelivery.camada.dados.DAOFactory;
+import br.com.marketedelivery.camada.exceptions.CategoriaExistenteException;
 import br.com.marketedelivery.camada.exceptions.CategoriaInexistenteException;
 import br.com.marketedelivery.camada.exceptions.ClienteExistenteException;
 import br.com.marketedelivery.camada.exceptions.ClienteInexistenteException;
+import br.com.marketedelivery.camada.exceptions.EnderecoExistenteException;
+import br.com.marketedelivery.camada.exceptions.EnderecoInexistenteException;
 import br.com.marketedelivery.camada.exceptions.MarcaInexistenteException;
 import br.com.marketedelivery.camada.exceptions.ProdutoExistenteException;
 import br.com.marketedelivery.camada.exceptions.ProdutoInexistenteException;
@@ -129,6 +132,26 @@ public class ControladorProduto implements IControladorProduto
 			{
 				// e.printStackTrace();
 			}
+			catch (EnderecoExistenteException e)
+			{
+				// e.printStackTrace();
+			}
+			catch (CategoriaInexistenteException e)
+			{
+				// e.printStackTrace();
+			}
+			catch (MarcaInexistenteException e)
+			{
+				// e.printStackTrace();
+			}
+			catch (UnidadeMedidaInexistenteException e)
+			{
+				// e.printStackTrace();
+			}
+			catch (CategoriaExistenteException e)
+			{
+				// e.printStackTrace();
+			}
 		}
 		DAOFactory.close();
 		return "";
@@ -181,6 +204,10 @@ public class ControladorProduto implements IControladorProduto
 			// e.printStackTrace();
 		}
 		catch (UnidadeMedidaInexistenteException e)
+		{
+			// e.printStackTrace();
+		}
+		catch (EnderecoInexistenteException e)
 		{
 			// e.printStackTrace();
 		}
@@ -241,6 +268,10 @@ public class ControladorProduto implements IControladorProduto
 		{
 			// e.printStackTrace();
 		}
+		catch (EnderecoInexistenteException e)
+		{
+			// e.printStackTrace();
+		}
 		DAOFactory.close();
 		return "";
 	}
@@ -289,6 +320,10 @@ public class ControladorProduto implements IControladorProduto
 			// e.printStackTrace();
 		}
 		catch (UnidadeMedidaInexistenteException e)
+		{
+			// e.printStackTrace();
+		}
+		catch (EnderecoInexistenteException e)
 		{
 			// e.printStackTrace();
 		}
@@ -366,6 +401,10 @@ public class ControladorProduto implements IControladorProduto
 			// e.printStackTrace();
 		}
 		catch (UnidadeMedidaInexistenteException e)
+		{
+			// e.printStackTrace();
+		}
+		catch (EnderecoInexistenteException e)
 		{
 			// e.printStackTrace();
 		}

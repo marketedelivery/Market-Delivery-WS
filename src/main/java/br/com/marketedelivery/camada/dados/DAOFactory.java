@@ -8,6 +8,7 @@ import javax.persistence.Persistence;
 
 import br.com.marketedelivery.camada.interfaces.dao.ICategoriaDAO;
 import br.com.marketedelivery.camada.interfaces.dao.IClienteDAO;
+import br.com.marketedelivery.camada.interfaces.dao.IEnderecoDAO;
 import br.com.marketedelivery.camada.interfaces.dao.IMarcaDAO;
 import br.com.marketedelivery.camada.interfaces.dao.IProdutoDAO;
 import br.com.marketedelivery.camada.interfaces.dao.ISupermercadoDAO;
@@ -30,6 +31,8 @@ public class DAOFactory
 	public static IMarcaDAO marcaDAO;
 
 	public static IUnidadeMedidaDAO unidadeMedidaDAO;
+
+	public static IEnderecoDAO enderecoDAO;
 
 	public static IProdutoDAO produtoDAO;
 
@@ -90,6 +93,15 @@ public class DAOFactory
 	{
 		supermercadoDAO = new SupermercadoDAO(factory.createEntityManager());
 		return supermercadoDAO;
+	}
+
+	/**
+	 * @return the enderecoDAO
+	 */
+	public static IEnderecoDAO getEnderecoDAO()
+	{
+		enderecoDAO = new EnderecoDAO(factory.createEntityManager());
+		return enderecoDAO;
 	}
 
 	public static void close()

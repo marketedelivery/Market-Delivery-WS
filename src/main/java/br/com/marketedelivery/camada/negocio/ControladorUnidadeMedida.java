@@ -1,3 +1,6 @@
+/**
+ * 
+ */
 package br.com.marketedelivery.camada.negocio;
 
 import java.util.ArrayList;
@@ -12,15 +15,12 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
-import br.com.marketedelivery.camada.classesBasicas.Cliente;
 import br.com.marketedelivery.camada.classesBasicas.Status;
+import br.com.marketedelivery.camada.classesBasicas.UnidadeMedida;
 import br.com.marketedelivery.camada.dados.DAOFactory;
-import br.com.marketedelivery.camada.exceptions.CategoriaExistenteException;
 import br.com.marketedelivery.camada.exceptions.CategoriaInexistenteException;
 import br.com.marketedelivery.camada.exceptions.ClienteExistenteException;
 import br.com.marketedelivery.camada.exceptions.ClienteInexistenteException;
-import br.com.marketedelivery.camada.exceptions.EnderecoExistenteException;
-import br.com.marketedelivery.camada.exceptions.EnderecoInexistenteException;
 import br.com.marketedelivery.camada.exceptions.MarcaInexistenteException;
 import br.com.marketedelivery.camada.exceptions.ProdutoExistenteException;
 import br.com.marketedelivery.camada.exceptions.ProdutoInexistenteException;
@@ -29,48 +29,53 @@ import br.com.marketedelivery.camada.exceptions.SupermercadoInexistenteException
 import br.com.marketedelivery.camada.exceptions.UnidadeMedidaInexistenteException;
 import br.com.marketedelivery.camada.exceptions.UsuarioExistenteException;
 import br.com.marketedelivery.camada.exceptions.UsuarioInexistenteException;
-import br.com.marketedelivery.camada.interfaces.dao.IClienteDAO;
-import br.com.marketedelivery.camada.interfaces.negocio.IControladorCliente;
-import br.com.marketedelivery.camada.negocio.regras.RNCliente;
+import br.com.marketedelivery.camada.interfaces.dao.IUnidadeMedidaDAO;
+import br.com.marketedelivery.camada.interfaces.negocio.IControladorUnidadeMedida;
+import br.com.marketedelivery.camada.negocio.regras.RNUnidadeMedida;
 import br.com.marketedelivery.camada.util.Mensagens;
 
+/**
+ * @author Audry Martins
+ *
+ */
 @Path("/service")
-public class ControladorCliente implements IControladorCliente
+public class ControladorUnidadeMedida implements IControladorUnidadeMedida
 {
-	private IClienteDAO clienteDAO;
+	// Atributos
+	private IUnidadeMedidaDAO unidadeMedidaDAO;
 
-	private RNCliente rnCliente = new RNCliente();
+	RNUnidadeMedida rnUnidadeMedida = new RNUnidadeMedida();
 
-	Mensagens msg = new Mensagens();
+	private Mensagens msg = new Mensagens();
+	// Métodos
 
 	/**
-	 * @throws ClienteInexistenteException
 	 * @Consumes - determina o formato dos dados que vamos postar
 	 * @Produces - determina o formato dos dados que vamos retornar
 	 * 
-	 *           Esse método cadastra um novo cliente
+	 *           Esse método cadastra ua nova UnidadeMedida
 	 */
 	@POST
 	@Consumes("application/json; charset=UTF-8")
 	@Produces("application/json; charset=UTF-8")
-	@Path("/cadastrarCliente")
-	public String cadastrarCliente(Cliente cliente)
+	@Path("/cadastrarUnidadeMedida")
+	@Override
+	public String cadastrarUnidadeMedida(UnidadeMedida unidadeMedida)
 	{
 		DAOFactory.abrir();
-		// Falta validar os campos
-		boolean existe = rnCliente.verificarClienteExistente(cliente);
-		if (existe == false)
+		String mensagem = "";
+		UnidadeMedida existe = rnUnidadeMedida.verificarUnidadeMedidaExistente(unidadeMedida.getCodigo());
+		if (existe != null)
 		{
 			try
 			{
-				clienteDAO = DAOFactory.getClienteDAO();
-				clienteDAO.inserir(cliente);
-				return msg.getMsg_cliente_cadastrado_com_sucesso();
+				unidadeMedidaDAO = DAOFactory.getUnidadeMedidaDAO();
+				unidadeMedidaDAO.inserir(unidadeMedida);
+				mensagem = msg.getMsg_unidadeMedida_cadastrada_com_sucesso();
 			}
 			catch (ClienteExistenteException e)
 			{
-				e.printStackTrace();
-				return e.getMessage();
+				// e.printStackTrace();
 			}
 			catch (ProdutoExistenteException e)
 			{
@@ -94,45 +99,41 @@ public class ControladorCliente implements IControladorCliente
 			}
 			catch (UnidadeMedidaInexistenteException e)
 			{
-				// e.printStackTrace();
+				e.printStackTrace();
+				mensagem = e.getMessage();
 			}
-			catch (CategoriaExistenteException e)
-			{
-				// e.printStackTrace();
-			}
-			catch (EnderecoExistenteException e)
-			{
-				// e.printStackTrace();
-			}
+		} else
+		{
+			mensagem = new UnidadeMedidaInexistenteException().getMessage();
 		}
-		DAOFactory.close();
-		return "";
+		return mensagem;
 	}
 
 	/**
-	 * Essse método altera um cliente já cadastrado
+	 * Essse método altera uma UnidadeMedida já cadastrada
 	 **/
 	@PUT
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
-	@Path("/alterarCliente")
-	public String alterarCliente(Cliente cliente)
+	@Path("/alterarUnidadeMedida")
+	@Override
+	public String alterarUnidadeMedida(UnidadeMedida unidadeMedida)
 	{
 		DAOFactory.abrir();
+		String mensagem = "";
 		// Falta validar os campos.
-		boolean existe = rnCliente.verificarClienteExistente(cliente);
-		if (existe == true)
+		UnidadeMedida existe = rnUnidadeMedida.verificarUnidadeMedidaExistente(unidadeMedida.getCodigo());
+		if (existe != null)
 		{
 			try
 			{
-				clienteDAO = DAOFactory.getClienteDAO();
-				clienteDAO.alterar(cliente);
-				return msg.getMsg_cliente_alterado_com_sucesso();
+				unidadeMedidaDAO = DAOFactory.getUnidadeMedidaDAO();
+				unidadeMedidaDAO.alterar(unidadeMedida);
+				mensagem = msg.getMsg_unidadeMedida_alterada_com_sucesso();
 			}
 			catch (ClienteInexistenteException e)
 			{
-				e.printStackTrace();
-				return e.getMessage();
+				// e.printStackTrace();
 			}
 			catch (ProdutoInexistenteException e)
 			{
@@ -156,46 +157,37 @@ public class ControladorCliente implements IControladorCliente
 			}
 			catch (UnidadeMedidaInexistenteException e)
 			{
-				// e.printStackTrace();
-			}
-			catch (EnderecoInexistenteException e)
-			{
-				// e.printStackTrace();
+				e.printStackTrace();
+				mensagem = e.getMessage();
 			}
 		}
 		DAOFactory.close();
-		return "";
+		return mensagem;
 	}
 
 	/**
-	 * Excluindo um cliente pelo código
+	 * Excluindo uma UnidadeMedida pelo código
 	 */
 	@DELETE
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
-	@Path("/excluirCliente/{codigo}")
-	/*
-	 * (non-Javadoc)
-	 * @see
-	 * br.com.marketedelivery.camada.negocio.IControladorCliente#excluirCliente(
-	 * br.com.marketedelivery.camada.classesBasicas.Cliente)
-	 */
+	@Path("/excluirUnidadeMedida/{codigo}")
 	@Override
-	public String excluirCliente(@PathParam("codigo") int codigo)
+	public String excluirUnidadeMedida(int codigo)
 	{
 		DAOFactory.abrir();
-		clienteDAO = DAOFactory.getClienteDAO();
+		String mensagem = "";
 		try
 		{
-			Cliente c = clienteDAO.consultarPorId(codigo);
-			c.getUsuario().setStatus(Status.INATIVO);
-			clienteDAO.alterar(c);
-			return msg.getMsg_cliente_excluido_com_sucesso();
+			unidadeMedidaDAO = DAOFactory.getUnidadeMedidaDAO();
+			UnidadeMedida u = unidadeMedidaDAO.consultarPorId(codigo);
+			u.setStatus(Status.INATIVO);
+			unidadeMedidaDAO.alterar(u);
+			mensagem = msg.getMsg_unidadeMedida_excluida_com_sucesso();
 		}
 		catch (ClienteInexistenteException e)
 		{
-			e.printStackTrace();
-			return e.getMessage();
+			// e.printStackTrace();
 		}
 		catch (ProdutoInexistenteException e)
 		{
@@ -219,37 +211,34 @@ public class ControladorCliente implements IControladorCliente
 		}
 		catch (UnidadeMedidaInexistenteException e)
 		{
-			// e.printStackTrace();
-		}
-		catch (EnderecoInexistenteException e)
-		{
-			// e.printStackTrace();
+			e.printStackTrace();
+			mensagem = e.getMessage();
 		}
 		DAOFactory.close();
-		return "";
+		return mensagem;
 	}
 
 	/**
-	 * Esse método lista todos os clientes cadastrados na base
+	 * Esse método lista todas as UnidadeMedidas cadastradas na base
 	 */
 	@GET
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
-	@Path("/consultarTodosClientes")
-	public List<Cliente> consultarTodosClientes()
+	@Path("/consultarTodasUnidadeMedidas")
+	@Override
+	public List<UnidadeMedida> consultarTodasUnidadeMedidas()
 	{
 		DAOFactory.abrir();
-		clienteDAO = DAOFactory.getClienteDAO();
-		List<Cliente> clientes = new ArrayList<>();
+		unidadeMedidaDAO = DAOFactory.getUnidadeMedidaDAO();
+		List<UnidadeMedida> unidadeMedidas = new ArrayList<>();
 		try
 		{
-			clientes = clienteDAO.consultarTodos();
-			return clientes;
+			unidadeMedidas = unidadeMedidaDAO.consultarTodos();
+			return unidadeMedidas;
 		}
 		catch (ClienteInexistenteException e)
 		{
-			e.printStackTrace();
-			e.getMessage();
+			// e.printStackTrace();
 		}
 		catch (ProdutoInexistenteException e)
 		{
@@ -273,60 +262,60 @@ public class ControladorCliente implements IControladorCliente
 		}
 		catch (UnidadeMedidaInexistenteException e)
 		{
-			// e.printStackTrace();
-		}
-		catch (EnderecoInexistenteException e)
-		{
 			e.printStackTrace();
+			e.getMessage();
 		}
 		DAOFactory.close();
 		return null;
 	}
 
 	/**
-	 * Esse método pesquisa o cliente cadastrado na base
+	 * Esse método pesquisa a UnidadeMedida cadastrada na base
 	 */
 	@GET
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
-	@Path("/pesquisarCliente/{cpf}")
-	public Cliente pesquisarCliente(@PathParam("cpf") String cpf)
-	{
-		DAOFactory.abrir();
-		clienteDAO = DAOFactory.getClienteDAO();
-		Cliente c = clienteDAO.pesquisarClientePorCPF(cpf);
-		DAOFactory.close();
-		return c;
-	}
-
-	/**
-	 * Esse método pesquisa o cliente cadastrado na base
-	 */
-	@GET
-	@Produces("application/json; charset=UTF-8")
-	@Consumes("application/json; charset=UTF-8")
-	@Path("/pesquisarClientePorId/{codigo}")
-	/*
-	 * (non-Javadoc)
-	 * @see
-	 * br.com.marketedelivery.camada.interfaces.negocio.IControladorCliente#
-	 * pesquisarClientePorId(int)
-	 */
+	@Path("/pesquisarUnidadeMedidaPorNome/{nome}")
 	@Override
-	public Cliente pesquisarClientePorId(@PathParam("codigo") int codigo)
+	public UnidadeMedida pesquisarUnidadeMedidaPorNome(@PathParam("nome") String nome)
 	{
 		DAOFactory.abrir();
-		Cliente cliente;
+		UnidadeMedida um = null;
+		unidadeMedidaDAO = DAOFactory.getUnidadeMedidaDAO();
 		try
 		{
-			clienteDAO = DAOFactory.getClienteDAO();
-			cliente = clienteDAO.consultarPorId(codigo);
-			return cliente;
+			um = unidadeMedidaDAO.pesquisarUnidadeMedidaPorNome(nome);
 		}
-		catch (ClienteInexistenteException e)
+		catch (UnidadeMedidaInexistenteException e)
 		{
 			e.printStackTrace();
 			e.getMessage();
+		}
+		DAOFactory.close();
+		return um;
+	}
+
+	/**
+	 * Esse método pesquisa a UnidadeMedida cadastrada na base
+	 */
+	@GET
+	@Produces("application/json; charset=UTF-8")
+	@Consumes("application/json; charset=UTF-8")
+	@Path("/pesquisarUnidadeMedidaPorId/{codigo}")
+	@Override
+	public UnidadeMedida pesquisarUnidadeMedidaPorId(@PathParam("codigo") int codigo)
+	{
+		DAOFactory.abrir();
+		UnidadeMedida um;
+		try
+		{
+			unidadeMedidaDAO = DAOFactory.getUnidadeMedidaDAO();
+			um = unidadeMedidaDAO.consultarPorId(codigo);
+			return um;
+		}
+		catch (ClienteInexistenteException e)
+		{
+			// e.printStackTrace();
 		}
 		catch (ProdutoInexistenteException e)
 		{
@@ -350,11 +339,8 @@ public class ControladorCliente implements IControladorCliente
 		}
 		catch (UnidadeMedidaInexistenteException e)
 		{
-			// e.printStackTrace();
-		}
-		catch (EnderecoInexistenteException e)
-		{
-			// e.printStackTrace();
+			e.printStackTrace();
+			e.getMessage();
 		}
 		DAOFactory.close();
 		return null;

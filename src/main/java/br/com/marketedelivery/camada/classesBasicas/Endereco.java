@@ -7,7 +7,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 
 @Entity
 public class Endereco
@@ -38,8 +37,8 @@ public class Endereco
 	@Column(length = 2, nullable = false)
 	private Estado estado;
 
-	@ManyToOne
-	private Cliente cliente;
+	@Enumerated(EnumType.STRING)
+	private Status status;
 
 	public Endereco()
 	{
@@ -49,11 +48,11 @@ public class Endereco
 		this.bairro = "";
 		this.cidade = "";
 		this.estado = null;
-		this.cliente = null;
+		this.status = Status.ATIVO;
 	}
 
 	public Endereco(Integer codigo, String cep, String logradouro, int numero, String complemento, String bairro,
-			String cidade, Estado estado, Cliente cliente)
+			String cidade, Estado estado, Status status)
 	{
 		super();
 		this.codigo = codigo;
@@ -64,7 +63,7 @@ public class Endereco
 		this.bairro = bairro;
 		this.cidade = cidade;
 		this.estado = estado;
-		this.cliente = cliente;
+		this.status = status;
 	}
 
 	/**
@@ -162,19 +161,19 @@ public class Endereco
 	}
 
 	/**
-	 * @return the cliente
+	 * @return the status
 	 */
-	public Cliente getCliente()
+	public Status getStatus()
 	{
-		return cliente;
+		return status;
 	}
 
 	/**
-	 * @param cliente
-	 *            the cliente to set
+	 * @param status
+	 *            the status to set
 	 */
-	public void setCliente(Cliente cliente)
+	public void setStatus(Status status)
 	{
-		this.cliente = cliente;
+		this.status = status;
 	}
 }

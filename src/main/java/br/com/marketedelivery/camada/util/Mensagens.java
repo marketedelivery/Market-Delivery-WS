@@ -39,6 +39,12 @@ public class Mensagens
 
 	private String msg_unidadeMedida_excluida_com_sucesso;
 
+	private String msg_endereco_cadastrado_com_sucesso;
+
+	private String msg_endereco_alterado_com_sucesso;
+
+	private String msg_endereco_excluido_com_sucesso;
+
 	private String msg_supermercado_cadastrado_com_sucesso;
 
 	private String msg_supermercado_alterado_com_sucesso;
@@ -75,6 +81,9 @@ public class Mensagens
 		this.msg_unidadeMedida_cadastrada_com_sucesso = "A unidade de medida foi cadastrada com sucesso.";
 		this.msg_unidadeMedida_alterada_com_sucesso = "A unidade de medida foi alterada com sucesso.";
 		this.msg_unidadeMedida_excluida_com_sucesso = "A unidade de medida foi excluida com sucesso.";
+		this.msg_unidadeMedida_cadastrada_com_sucesso = "O endereço foi cadastrado com sucesso.";
+		this.msg_unidadeMedida_alterada_com_sucesso = "O endereço foi alterado com sucesso.";
+		this.msg_unidadeMedida_excluida_com_sucesso = "O endereço foi excluido com sucesso.";
 		this.msg_supermercado_cadastrado_com_sucesso = "O supermercado foi cadastrado com sucesso.";
 		this.msg_supermercado_alterado_com_sucesso = "O supermercado foi alterado com sucesso.";
 		this.msg_supermercado_excluido_com_sucesso = "O supermercado foi excluido com sucesso.";
@@ -100,6 +109,9 @@ public class Mensagens
 	 * @param msg_unidadeMedida_cadastrada_com_sucesso
 	 * @param msg_unidadeMedida_alterada_com_sucesso
 	 * @param msg_unidadeMedida_excluida_com_sucesso
+	 * @param msg_endereco_cadastrado_com_sucesso
+	 * @param msg_endereco_alterado_com_sucesso
+	 * @param msg_endereco_excluido_com_sucesso
 	 * @param msg_supermercado_cadastrado_com_sucesso
 	 * @param msg_supermercado_alterado_com_sucesso
 	 * @param msg_supermercado_excluido_com_sucesso
@@ -115,10 +127,11 @@ public class Mensagens
 			String msg_categoria_excluida_com_sucesso, String msg_marca_cadastrada_com_sucesso,
 			String msg_marca_alterada_com_sucesso, String msg_marca_excluida_com_sucesso,
 			String msg_unidadeMedida_cadastrada_com_sucesso, String msg_unidadeMedida_alterada_com_sucesso,
-			String msg_unidadeMedida_excluida_com_sucesso, String msg_supermercado_cadastrado_com_sucesso,
-			String msg_supermercado_alterado_com_sucesso, String msg_supermercado_excluido_com_sucesso,
-			String msg_usuario_cadastrado_com_sucesso, String msg_usuario_alterado_com_sucesso,
-			String msg_usuario_excluido_com_sucesso, String msg_campo_invalido)
+			String msg_unidadeMedida_excluida_com_sucesso, String msg_endereco_cadastrado_com_sucesso,
+			String msg_endereco_alterado_com_sucesso, String msg_endereco_excluido_com_sucesso,
+			String msg_supermercado_cadastrado_com_sucesso, String msg_supermercado_alterado_com_sucesso,
+			String msg_supermercado_excluido_com_sucesso, String msg_usuario_cadastrado_com_sucesso,
+			String msg_usuario_alterado_com_sucesso, String msg_usuario_excluido_com_sucesso, String msg_campo_invalido)
 	{
 		super();
 		this.msg_cliente_cadastrado_com_sucesso = msg_cliente_cadastrado_com_sucesso;
@@ -136,6 +149,9 @@ public class Mensagens
 		this.msg_unidadeMedida_cadastrada_com_sucesso = msg_unidadeMedida_cadastrada_com_sucesso;
 		this.msg_unidadeMedida_alterada_com_sucesso = msg_unidadeMedida_alterada_com_sucesso;
 		this.msg_unidadeMedida_excluida_com_sucesso = msg_unidadeMedida_excluida_com_sucesso;
+		this.msg_endereco_cadastrado_com_sucesso = msg_endereco_cadastrado_com_sucesso;
+		this.msg_endereco_alterado_com_sucesso = msg_endereco_alterado_com_sucesso;
+		this.msg_endereco_excluido_com_sucesso = msg_endereco_excluido_com_sucesso;
 		this.msg_supermercado_cadastrado_com_sucesso = msg_supermercado_cadastrado_com_sucesso;
 		this.msg_supermercado_alterado_com_sucesso = msg_supermercado_alterado_com_sucesso;
 		this.msg_supermercado_excluido_com_sucesso = msg_supermercado_excluido_com_sucesso;
@@ -288,6 +304,30 @@ public class Mensagens
 	public String getMsg_supermercado_excluido_com_sucesso()
 	{
 		return msg_supermercado_excluido_com_sucesso;
+	}
+
+	/**
+	 * @return the msg_endereco_cadastrado_com_sucesso
+	 */
+	public String getMsg_endereco_cadastrado_com_sucesso()
+	{
+		return msg_endereco_cadastrado_com_sucesso;
+	}
+
+	/**
+	 * @return the msg_endereco_alterado_com_sucesso
+	 */
+	public String getMsg_endereco_alterado_com_sucesso()
+	{
+		return msg_endereco_alterado_com_sucesso;
+	}
+
+	/**
+	 * @return the msg_endereco_excluido_com_sucesso
+	 */
+	public String getMsg_endereco_excluido_com_sucesso()
+	{
+		return msg_endereco_excluido_com_sucesso;
 	}
 
 	/**
