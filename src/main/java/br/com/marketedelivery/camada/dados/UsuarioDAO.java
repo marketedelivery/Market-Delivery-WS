@@ -1,7 +1,6 @@
 package br.com.marketedelivery.camada.dados;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 
 import br.com.marketedelivery.camada.classesBasicas.Usuario;
@@ -9,46 +8,20 @@ import br.com.marketedelivery.camada.interfaces.dao.IUsuarioDAO;
 
 public class UsuarioDAO extends DAOGenerico<Usuario> implements IUsuarioDAO
 {
+	@SuppressWarnings("unused")
 	private EntityManager manager;
 
 	public UsuarioDAO(EntityManager em)
 	{
 		super(em);
-		this.setManager(em);
+		this.manager = em;
 	}
 
-	/**
-	 * faz a validação do usuario na base de dados
-	 * 
-	 * @see br.com.marketedelivery.camada.interfaces.dao.IUsuarioDAO#efetuarLogin(br.com.marketedelivery.Usuario.Usuario)
-	 */
-	public Usuario efetuarLogin(Usuario usuario)
+	public Usuario buscarPorEmail(String email)
 	{
-		EntityTransaction tx = getEntityManager().getTransaction();
-		try
-		{
-			String sql = "SELECT us FROM Usuario WHERE us.email = :email and us.senha = :senha";
-			TypedQuery<Usuario> queryUsuario = this.entityManager.createQuery(sql, Usuario.class);
-			queryUsuario.setParameter("email", usuario.getEmail());
-			queryUsuario.setParameter("senha", usuario.getSenha());
-			usuario = queryUsuario.getSingleResult();
-			return usuario;
-		}
-		catch (Exception e)
-		{
-			if (tx != null && tx.isActive())
-			{
-				tx.rollback();
-			}
-		}
-		return null;
-	}
-
-	public Usuario pesquisarUsuarioPorEmail(String email)
-	{
-		String consulta = "SELECT u FROM Usuario u WHERE u.email = :email";
+		String consulta = "SELECT u FROM Usuario u WHERE u.email = :N";
 		TypedQuery<Usuario> retorno = getEntityManager().createQuery(consulta, Usuario.class);
-		retorno.setParameter("email", email);
+		retorno.setParameter("N", email);
 		Usuario resultado;
 		try
 		{
@@ -61,13 +34,44 @@ public class UsuarioDAO extends DAOGenerico<Usuario> implements IUsuarioDAO
 		}
 	}
 
-	public EntityManager getManager()
+	public Usuario buscarUsuarioPorCPF(String cpf)
 	{
-		return manager;
+		String consulta = "SELECT c FROM Usuario c WHERE c.cpf = :N";
+		TypedQuery<Usuario> retorno = getEntityManager().createQuery(consulta, Usuario.class);
+		retorno.setParameter("N", cpf);
+		Usuario resultado;
+		try
+		{
+			resultado = retorno.getSingleResult();
+			return resultado;
+		}
+		catch (Exception e)
+		{
+			return null;
+		}
 	}
 
-	public void setManager(EntityManager manager)
+	public Usuario buscarUsuarioPorNome(String nome)
 	{
-		this.manager = manager;
+		String consulta = "SELECT c FROM Usuario c WHERE c.nome = :N";
+		TypedQuery<Usuario> retorno = getEntityManager().createQuery(consulta, Usuario.class);
+		retorno.setParameter("N", nome);
+		Usuario resultado;
+		try
+		{
+			resultado = retorno.getSingleResult();
+			return resultado;
+		}
+		catch (Exception e)
+		{
+			return null;
+		}
+	}
+
+	@Override
+	public Usuario pesquisarPorCodigo(int codigo)
+	{
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

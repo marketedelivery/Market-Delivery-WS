@@ -7,38 +7,39 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="Endereco")
 public class Endereco
 {
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer codigo;
-
-	@Column(length = 9, nullable = false)
+	@Id @GeneratedValue(strategy=GenerationType.SEQUENCE)
+	@Column(name="codigo")
+	int codigo;
+	
+	@Column(name = "cep", length = 9, nullable = false)
 	private String cep;
 
-	@Column(length = 30, nullable = false)
+	@Column(name = "logradouro", length = 30, nullable = false)
 	private String logradouro;
 
-	@Column(length = 5, nullable = false)
+	@Column(name = "numero", nullable = false)
 	private int numero;
 
-	@Column(length = 30, nullable = true)
+	@Column(name = "complemento", length = 30, nullable = true)
 	private String complemento;
 
-	@Column(length = 30, nullable = false)
+	@Column(name = "bairro", length = 30, nullable = false)
 	private String bairro;
 
-	@Column(length = 30, nullable = false)
+	@Column(name = "cidade", length = 30, nullable = false)
 	private String cidade;
 
 	@Enumerated(EnumType.STRING)
-	@Column(length = 2, nullable = false)
 	private Estado estado;
-
-	@Enumerated(EnumType.STRING)
-	private Status status;
+	
+	
+	
 
 	public Endereco()
 	{
@@ -47,15 +48,14 @@ public class Endereco
 		this.complemento = "";
 		this.bairro = "";
 		this.cidade = "";
-		this.estado = null;
-		this.status = Status.ATIVO;
+		
+	
 	}
 
-	public Endereco(Integer codigo, String cep, String logradouro, int numero, String complemento, String bairro,
-			String cidade, Estado estado, Status status)
+	public Endereco(String cep, String logradouro, int numero, String complemento, String bairro, String cidade,
+			Estado estado)
 	{
 		super();
-		this.codigo = codigo;
 		this.cep = cep;
 		this.logradouro = logradouro;
 		this.numero = numero;
@@ -63,24 +63,7 @@ public class Endereco
 		this.bairro = bairro;
 		this.cidade = cidade;
 		this.estado = estado;
-		this.status = status;
-	}
-
-	/**
-	 * @return the codigo
-	 */
-	public Integer getCodigo()
-	{
-		return codigo;
-	}
-
-	/**
-	 * @param codigo
-	 *            the codigo to set
-	 */
-	public void setCodigo(Integer codigo)
-	{
-		this.codigo = codigo;
+		
 	}
 
 	public String getCep()
@@ -143,37 +126,13 @@ public class Endereco
 		this.cidade = cidade;
 	}
 
-	/**
-	 * @return the estado
-	 */
 	public Estado getEstado()
 	{
 		return estado;
 	}
 
-	/**
-	 * @param estado
-	 *            the estado to set
-	 */
 	public void setEstado(Estado estado)
 	{
 		this.estado = estado;
-	}
-
-	/**
-	 * @return the status
-	 */
-	public Status getStatus()
-	{
-		return status;
-	}
-
-	/**
-	 * @param status
-	 *            the status to set
-	 */
-	public void setStatus(Status status)
-	{
-		this.status = status;
 	}
 }

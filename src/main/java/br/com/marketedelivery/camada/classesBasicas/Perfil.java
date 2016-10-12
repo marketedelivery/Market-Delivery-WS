@@ -1,6 +1,6 @@
 package br.com.marketedelivery.camada.classesBasicas;
 
-public enum Status
+public enum Perfil
 {
-	Aprovada, Nao_Aprovado
+	Administrador, Usuario
 }

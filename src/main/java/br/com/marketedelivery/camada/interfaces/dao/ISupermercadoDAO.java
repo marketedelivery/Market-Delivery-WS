@@ -4,8 +4,9 @@ import br.com.marketedelivery.camada.classesBasicas.Supermercado;
 
 public interface ISupermercadoDAO extends IDAOGenerico<Supermercado>
 {
-	// Métodos
-	public Supermercado pesquisarSupermercadoPorNome(String nome);
+	public Supermercado buscarPorNome(String nome);
 
-	public Supermercado pesquisarSupermercadoPorCNPJ(String cnpj);
+	public Supermercado buscarPorCNPJ(String cnpj);
+
+	public Supermercado pesquisarPorCodigo(int codigo);
 }

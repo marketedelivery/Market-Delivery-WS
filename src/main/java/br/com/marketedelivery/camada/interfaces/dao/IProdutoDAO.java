@@ -1,16 +1,13 @@
-/**
- * 
- */
 package br.com.marketedelivery.camada.interfaces.dao;
 
-import br.com.marketedelivery.camada.classesBasicas.Produto;
+import java.util.List;
 
-/**
- * @author Audry Martins
- *
- */
+import br.com.marketedelivery.camada.classesBasicas.Produto;
+import br.com.marketedelivery.camada.classesBasicas.Supermercado;
+
 public interface IProdutoDAO extends IDAOGenerico<Produto>
 {
-	// Métodos
-	public Produto pesquisarProdutoPorNome(String nome);
+	public Produto buscarPorNome(String nome);
+
+	public List<Produto> buscarProdutoPorSupermercado(Supermercado supermercado);
 }

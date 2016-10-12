@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates and open the template
- * in the editor.
- */
 package br.com.marketedelivery.camada.dados;
 
 import javax.persistence.EntityManager;
@@ -13,15 +8,34 @@ import br.com.marketedelivery.camada.interfaces.dao.ISupermercadoDAO;
 
 public class SupermercadoDAO extends DAOGenerico<Supermercado> implements ISupermercadoDAO
 {
+	@SuppressWarnings("unused")
 	private EntityManager manager;
 
 	public SupermercadoDAO(EntityManager em)
 	{
 		super(em);
-		this.setManager(em);
+		this.manager = em;
 	}
 
-	public Supermercado pesquisarSupermercadoPorCNPJ(String cnpj)
+	@Override
+	public Supermercado pesquisarPorCodigo(int codigo)
+	{
+		String consulta = "SELECT c FROM Supermercado c WHERE c.codigo = :N";
+		TypedQuery<Supermercado> retorno = getEntityManager().createQuery(consulta, Supermercado.class);
+		retorno.setParameter("N", codigo);
+		Supermercado resultado;
+		try
+		{
+			resultado = retorno.getSingleResult();
+			return resultado;
+		}
+		catch (Exception e)
+		{
+			return null;
+		}
+	}
+
+	public Supermercado buscarPorCNPJ(String cnpj)
 	{
 		String consulta = "SELECT c FROM Supermercado c WHERE c.cnpj = :N";
 		TypedQuery<Supermercado> retorno = getEntityManager().createQuery(consulta, Supermercado.class);
@@ -38,11 +52,11 @@ public class SupermercadoDAO extends DAOGenerico<Supermercado> implements ISuper
 		}
 	}
 
-	public Supermercado pesquisarSupermercadoPorNome(String nome)
+	public Supermercado pesquisarPorCodigo(String codigo)
 	{
-		String comandoSelect = "SELECT s FROM Supermercado s WHERE s.nome = :N ";
-		TypedQuery<Supermercado> retorno = getEntityManager().createQuery(comandoSelect, Supermercado.class);
-		retorno.setParameter("N", "%" + nome + "%");
+		String consulta = "SELECT cod FROM Supermercado cod WHERE cod.codigo = :N";
+		TypedQuery<Supermercado> retorno = getEntityManager().createQuery(consulta, Supermercado.class);
+		retorno.setParameter("N", codigo);
 		Supermercado resultado;
 		try
 		{
@@ -55,13 +69,20 @@ public class SupermercadoDAO extends DAOGenerico<Supermercado> implements ISuper
 		}
 	}
 
-	public EntityManager getManager()
+	public Supermercado buscarPorNome(String nome)
 	{
-		return manager;
-	}
-
-	public void setManager(EntityManager manager)
-	{
-		this.manager = manager;
+		String comandoSelect = "SELECT c FROM Supermercado c WHERE c.nome = :N ";
+		TypedQuery<Supermercado> retorno = getEntityManager().createQuery(comandoSelect, Supermercado.class);
+		retorno.setParameter("N", "%" + nome + "%");
+		Supermercado resultado;
+		try
+		{
+			resultado = retorno.getSingleResult();
+			return resultado;
+		}
+		catch (Exception e)
+		{
+			return null;
+		}
 	}
 }

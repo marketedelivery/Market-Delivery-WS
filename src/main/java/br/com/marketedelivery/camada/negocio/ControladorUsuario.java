@@ -1,329 +1,141 @@
 package br.com.marketedelivery.camada.negocio;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
-import br.com.marketedelivery.camada.classesBasicas.Status;
+import br.com.marketedelivery.camada.DAOFactory.DAOFactoryUsuario;
 import br.com.marketedelivery.camada.classesBasicas.Usuario;
-import br.com.marketedelivery.camada.dados.DAOFactory;
-import br.com.marketedelivery.camada.exceptions.CategoriaExistenteException;
-import br.com.marketedelivery.camada.exceptions.CategoriaInexistenteException;
-import br.com.marketedelivery.camada.exceptions.ClienteExistenteException;
-import br.com.marketedelivery.camada.exceptions.ClienteInexistenteException;
-import br.com.marketedelivery.camada.exceptions.EnderecoExistenteException;
-import br.com.marketedelivery.camada.exceptions.EnderecoInexistenteException;
-import br.com.marketedelivery.camada.exceptions.MarcaInexistenteException;
-import br.com.marketedelivery.camada.exceptions.ProdutoExistenteException;
-import br.com.marketedelivery.camada.exceptions.ProdutoInexistenteException;
-import br.com.marketedelivery.camada.exceptions.SupermercadoExistenteException;
-import br.com.marketedelivery.camada.exceptions.SupermercadoInexistenteException;
-import br.com.marketedelivery.camada.exceptions.UnidadeMedidaInexistenteException;
-import br.com.marketedelivery.camada.exceptions.UsuarioExistenteException;
-import br.com.marketedelivery.camada.exceptions.UsuarioInexistenteException;
 import br.com.marketedelivery.camada.interfaces.dao.IUsuarioDAO;
-import br.com.marketedelivery.camada.interfaces.negocio.IControladorUsuario;
-import br.com.marketedelivery.camada.negocio.regras.RNUsuario;
-import br.com.marketedelivery.camada.util.Mensagens;
 
 @Path("/service")
-public class ControladorUsuario implements IControladorUsuario
+public class ControladorUsuario
 {
 	private IUsuarioDAO usuarioDAO;
 
-	RNUsuario rnUsuario = new RNUsuario();
-
-	private Mensagens msg = new Mensagens();
-
-	/**
-	 * @Consumes - determina o formato dos dados que vamos postar
-	 * @Produces - determina o formato dos dados que vamos retornar
-	 * 
-	 *           Esse método cadastra um novo Usuário
-	 */
 	@POST
 	@Consumes("application/json; charset=UTF-8")
 	@Produces("application/json; charset=UTF-8")
 	@Path("/cadastrarUsuario")
-	public String cadastrarUsuario(Usuario usuario)
+	public void CadastrarUsuario(Usuario usuario)
 	{
-		DAOFactory.abrir();
-		boolean existe = false;
-		String mensagem = "";
-		try
-		{
-			try
-			{
-				// Falta validar os campos
-				existe = rnUsuario.verificarUsuarioExistente(usuario);
-			}
-			catch (UsuarioInexistenteException e)
-			{
-				e.printStackTrace();
-				e.getMessage();
-			}
-			if (existe == false)
-			{
-				usuarioDAO = DAOFactory.getUsuarioDAO();
-				usuarioDAO.inserir(usuario);
-			}
-			mensagem = msg.getMsg_usuario_cadastrado_com_sucesso();
-		}
-		catch (ClienteExistenteException e)
-		{
-			// e.printStackTrace();
-		}
-		catch (ProdutoExistenteException e)
-		{
-			// e.printStackTrace();
-		}
-		catch (SupermercadoExistenteException e)
-		{
-			// e.printStackTrace();
-		}
-		catch (UsuarioExistenteException e)
-		{
-			e.printStackTrace();
-			return e.getMessage();
-		}
-		catch (EnderecoExistenteException e)
-		{
-			// e.printStackTrace();
-		}
-		catch (CategoriaInexistenteException e)
-		{
-			// e.printStackTrace();
-		}
-		catch (MarcaInexistenteException e)
-		{
-			// e.printStackTrace();
-		}
-		catch (UnidadeMedidaInexistenteException e)
-		{
-			// e.printStackTrace();
-		}
-		catch (CategoriaExistenteException e)
-		{
-			// e.printStackTrace();
-		}
-		DAOFactory.close();
-		return mensagem;
+		usuarioDAO = DAOFactoryUsuario.getUsuarioDAO();
+		usuarioDAO.inserir(usuario);
 	}
 
-	/**
-	 * Essse método altera um Usuário já cadastrado
-	 **/
 	@PUT
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
-	@Path("/alterarUsuario")
-	public String alterarUsuario(Usuario usuario)
+	@Path("/atualizarUsuario")
+	public void atualizarUsuario(Usuario usuario)
 	{
-		DAOFactory.abrir();
-		boolean existe = false;
-		String mensagem = "";
-		try
-		{
-			existe = rnUsuario.verificarUsuarioExistente(usuario);
-		}
-		catch (UsuarioInexistenteException e)
-		{
-			e.printStackTrace();
-			mensagem = e.getMessage();
-		}
-		if (existe == true)
-		{
-			try
-			{
-				usuarioDAO = DAOFactory.getUsuarioDAO();
-				usuarioDAO.alterar(usuario);
-				return msg.getMsg_usuario_alterado_com_sucesso();
-			}
-			catch (ClienteInexistenteException e)
-			{
-				// e.printStackTrace();
-			}
-			catch (ProdutoInexistenteException e)
-			{
-				// e.printStackTrace();
-			}
-			catch (SupermercadoInexistenteException e)
-			{
-				// e.printStackTrace();
-			}
-			catch (UsuarioInexistenteException e)
-			{
-				e.printStackTrace();
-				mensagem = e.getMessage();
-			}
-			catch (CategoriaInexistenteException e)
-			{
-				// e.printStackTrace();
-			}
-			catch (MarcaInexistenteException e)
-			{
-				// e.printStackTrace();
-			}
-			catch (UnidadeMedidaInexistenteException e)
-			{
-				// e.printStackTrace();
-			}
-			catch (EnderecoInexistenteException e)
-			{
-				// e.printStackTrace();
-			}
-		}
-		DAOFactory.close();
-		return mensagem;
+		usuarioDAO = DAOFactoryUsuario.getUsuarioDAO();
+		usuarioDAO.alterar(usuario);
 	}
 
-	/**
-	 * Excluindo um Usuário pelo código
-	 */
-	@DELETE
+	@GET
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
-	@Path("/excluirUsuario/{codigo}")
-	public String excluirUsuario(@PathParam("codigo") int codigo)
+	@Path("/listarTodosUsuarios")
+	public List<Usuario> ListarTodosUsuarios()
 	{
-		DAOFactory.abrir();
-		usuarioDAO = DAOFactory.getUsuarioDAO();
-		try
-		{
-			Usuario user = usuarioDAO.consultarPorId(codigo);
-			user.setStatus(Status.INATIVO);
-			usuarioDAO.alterar(user);
-			return msg.getMsg_usuario_excluido_com_sucesso();
-		}
-		catch (ClienteInexistenteException e)
-		{
-			// e.printStackTrace();
-		}
-		catch (ProdutoInexistenteException e)
-		{
-			// e.printStackTrace();
-		}
-		catch (SupermercadoInexistenteException e)
-		{
-			// e.printStackTrace();
-		}
-		catch (UsuarioInexistenteException e)
-		{
-			e.printStackTrace();
-			return e.getMessage();
-		}
-		catch (CategoriaInexistenteException e)
-		{
-			// e.printStackTrace();
-		}
-		catch (MarcaInexistenteException e)
-		{
-			// e.printStackTrace();
-		}
-		catch (UnidadeMedidaInexistenteException e)
-		{
-			// e.printStackTrace();
-		}
-		catch (EnderecoInexistenteException e)
-		{
-			// e.printStackTrace();
-		}
-		DAOFactory.close();
-		return "";
+		usuarioDAO = DAOFactoryUsuario.getUsuarioDAO();
+		return usuarioDAO.consultarTodos();
+	}
+
+	@GET
+	@Produces("application/json; charset=UTF-8")
+	@Consumes("application/json; charset=UTF-8")
+	@Path("/ListarPorCPF")
+	public Usuario ListarPorCPF(Usuario usuario)
+	{
+		String cpf = usuario.getCpf();
+		usuarioDAO = DAOFactoryUsuario.getUsuarioDAO();
+		Usuario retorno = usuarioDAO.buscarUsuarioPorCPF(cpf);
+		return retorno;
+	}
+
+	@GET
+	@Produces("application/json; charset=UTF-8")
+	@Consumes("application/json; charset=UTF-8")
+	@Path("/ListarPorNome")
+	public Usuario ListarPorNome(Usuario usuario)
+	{
+		String nome = usuario.getNome();
+		usuarioDAO = DAOFactoryUsuario.getUsuarioDAO();
+		Usuario retorno = usuarioDAO.buscarUsuarioPorNome(nome);
+		return retorno;
+	}
+
+	@GET
+	@Produces("application/json; charset=UTF-8")
+	@Consumes("application/json; charset=UTF-8")
+	@Path("/pesquisarUsuarioPorCodigo")
+	public Usuario pesquisarUsuarioPorCodigo(Usuario usuario)
+	{
+		usuarioDAO = DAOFactoryUsuario.getUsuarioDAO();
+		Usuario cp = usuarioDAO.consultarPorId(usuario.getCodigo());
+		return cp;
+	}
+
+	@GET
+	@Produces("application/json; charset=UTF-8")
+	@Consumes("application/json; charset=UTF-8")
+	@Path("/pesquisarPorEmail")
+	public Usuario pesquisarPorEmail(Usuario usuario)
+	{
+		String email = usuario.getEmail();
+		usuarioDAO = DAOFactoryUsuario.getUsuarioDAO();
+		Usuario retorno = usuarioDAO.buscarPorEmail(email);
+		return retorno;
 	}
 
 	/**
-	 * Esse método lista todos os Usuários cadastrados na base
+	 * metodo que recupera a senha do usu�rio
+	 * 
+	 * @return String
 	 */
 	@GET
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
-	@Path("/consultarTodosUsuarios")
-	public List<Usuario> consultarTodosUsuarios()
+	@Path("/geraSenha")
+	public String geraSenha()
 	{
-		DAOFactory.abrir();
-		usuarioDAO = DAOFactory.getUsuarioDAO();
-		List<Usuario> usuarios = new ArrayList<>();
-		try
+		Random gerador = new Random();
+		StringBuilder bilder = new StringBuilder();
+		for (int i = 0; i < 9; i++)
 		{
-			usuarios = usuarioDAO.consultarTodos();
-			return usuarios;
+			bilder.append(Integer.toString(gerador.nextInt(10)));
 		}
-		catch (ClienteInexistenteException e)
-		{
-			// e.printStackTrace();
-		}
-		catch (ProdutoInexistenteException e)
-		{
-			// e.printStackTrace();
-		}
-		catch (SupermercadoInexistenteException e)
-		{
-			// e.printStackTrace();
-		}
-		catch (UsuarioInexistenteException e)
-		{
-			e.printStackTrace();
-			e.getMessage();
-		}
-		catch (CategoriaInexistenteException e)
-		{
-			// e.printStackTrace();
-		}
-		catch (MarcaInexistenteException e)
-		{
-			// e.printStackTrace();
-		}
-		catch (UnidadeMedidaInexistenteException e)
-		{
-			// e.printStackTrace();
-		}
-		catch (EnderecoInexistenteException e)
-		{
-			// e.printStackTrace();
-		}
-		DAOFactory.close();
-		return null;
+		return bilder.toString();
 	}
 
 	/**
-	 * Esse método efetua o Login do Usuário cadastrado na base
+	 * metodo que altera a senha do usuario
+	 * 
+	 * @param u
+	 * @return boolean
 	 */
-	@POST
+	@GET
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
-	@Path("/efetuarLogin")
-	/*
-	 * (non-Javadoc)
-	 * @see
-	 * br.com.marketedelivery.camada.interfaces.negocio.IControladorUsuario#
-	 * efetuarLogin(br.com.marketedelivery.camada.classesBasicas.Usuario)
-	 */
-	@Override
-	public Usuario efetuarLogin(Usuario usuario)
+	@Path("/alterarSenha")
+	public boolean alteraSenha(Usuario u)
 	{
-		DAOFactory.abrir();
-		usuarioDAO = DAOFactory.getUsuarioDAO();
-		Usuario u;
-		try
+		if (u != null)
 		{
-			u = usuarioDAO.efetuarLogin(usuario);
-			return u;
+			String senhaGerada = geraSenha();
+			u.setSenha(senhaGerada);
+			usuarioDAO = DAOFactoryUsuario.getUsuarioDAO();
+			usuarioDAO.alterar(u);
+			return true;
 		}
-		catch (UsuarioInexistenteException e)
-		{
-			e.printStackTrace();
-			e.getMessage();
-		}
-		DAOFactory.close();
-		return null;
+		return false;
 	}
 }

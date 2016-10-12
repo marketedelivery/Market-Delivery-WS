@@ -1,87 +1,90 @@
 package br.com.marketedelivery.camada.classesBasicas;
 
+import java.io.Serializable;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
-
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
-public class Supermercado
+@Table(name = "tb_supermercado")
+public class Supermercado implements Serializable
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@Column(name = "codigo")
 	private int codigo;
 
-	@Column(length = 50, nullable = false)
+	@Column(name = "nome")
 	private String nome;
 
-	@Column(length = 20, nullable = false, unique = true)
-	private String cnpj;
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinTable
+	private List<Produto> produtos;
 
-	@Column(length = 50, nullable = false)
-	private String inscricaoEstatdual;
+	@Column(name = "latitude")
+	private String latitude;
 
-	@Column(length = 11, nullable = false)
-	private String telefone;
+	@Column(name = "Logitude")
+	private String Logitude;
 
-	@Column(length = 50, nullable = false)
-	private String email;
+	public String getLatitude()
+	{
+		return latitude;
+	}
 
-	@Column(length = 5, nullable = true)
-	private int estoque;
+	public void setLatitude(String latitude)
+	{
+		this.latitude = latitude;
+	}
 
-	@OneToOne(fetch = FetchType.EAGER)
-	@Cascade(CascadeType.SAVE_UPDATE)
-	private Usuario usuario;
+	public String getLogitude()
+	{
+		return Logitude;
+	}
+
+	public void setLogitude(String logitude)
+	{
+		Logitude = logitude;
+	}
+
+	@Override
+	public String toString()
+	{
+		return "Supermercado " + nome + "";
+	}
+
+	public Supermercado(String nome, int codigo, List<Produto> produtos)
+	{
+		super();
+		this.nome = nome;
+		this.codigo = codigo;
+		this.produtos = produtos;
+	}
+
+	public Supermercado(String nome, List<Produto> produtos)
+	{
+		super();
+		this.nome = nome;
+		this.produtos = produtos;
+	}
 
 	public Supermercado()
 	{
 		super();
-		this.nome = "";
-		this.cnpj = "";
-		this.inscricaoEstatdual = "";
-		this.telefone = "";
-		this.email = "";
-		this.usuario = new Usuario();
-	}
-
-	/**
-	 * @param codigo
-	 * @param nome
-	 * @param cnpj
-	 * @param inscricaoEstatdual
-	 * @param telefone
-	 * @param email
-	 * @param estoque
-	 */
-	public Supermercado(int codigo, String nome, String cnpj, String inscricaoEstatdual, String telefone, String email,
-			int estoque, Usuario usuario)
-	{
-		super();
-		this.codigo = codigo;
-		this.nome = nome;
-		this.cnpj = cnpj;
-		this.inscricaoEstatdual = inscricaoEstatdual;
-		this.telefone = telefone;
-		this.email = email;
-		this.estoque = estoque;
-		this.usuario = usuario;
-	}
-
-	public int getCodigo()
-	{
-		return codigo;
-	}
-
-	public void setCodigo(int codigo)
-	{
-		this.codigo = codigo;
 	}
 
 	public String getNome()
@@ -94,63 +97,34 @@ public class Supermercado
 		this.nome = nome;
 	}
 
-	public String getCnpj()
+	public int getCodigo()
 	{
-		return cnpj;
+		return codigo;
 	}
 
-	public void setCnpj(String cnpj)
+	public void setCodigo(int codigo)
 	{
-		this.cnpj = cnpj;
+		this.codigo = codigo;
 	}
 
-	public String getInscricaoEstatdual()
+	public List<Produto> getProdutos()
 	{
-		return inscricaoEstatdual;
+		return produtos;
 	}
 
-	public void setInscricaoEstatdual(String inscricaoEstatdual)
+	public void setProdutos(List<Produto> produtos)
 	{
-		this.inscricaoEstatdual = inscricaoEstatdual;
+		this.produtos = produtos;
 	}
 
-	public String getTelefone()
+	@Override
+	public boolean equals(Object obj)
 	{
-		return telefone;
-	}
-
-	public void setTelefone(String telefone)
-	{
-		this.telefone = telefone;
-	}
-
-	public String getEmail()
-	{
-		return email;
-	}
-
-	public void setEmail(String email)
-	{
-		this.email = email;
-	}
-
-	public int getEstoque()
-	{
-		return estoque;
-	}
-
-	public void setEstoque(int estoque)
-	{
-		this.estoque = estoque;
-	}
-
-	public Usuario getUsuario()
-	{
-		return usuario;
-	}
-
-	public void setUsuario(Usuario usuario)
-	{
-		this.usuario = usuario;
+		if (this == obj) return true;
+		if (obj == null) return false;
+		if (getClass() != obj.getClass()) return false;
+		Supermercado other = (Supermercado) obj;
+		if (codigo != other.codigo) return false;
+		return true;
 	}
 }

@@ -1,37 +1,49 @@
-/**
- * 
- */
 package br.com.marketedelivery.camada.dados;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 
 import br.com.marketedelivery.camada.classesBasicas.Endereco;
 import br.com.marketedelivery.camada.interfaces.dao.IEnderecoDAO;
 
-/**
- * @author Audry Martins
- *
- */
 public class EnderecoDAO extends DAOGenerico<Endereco> implements IEnderecoDAO
 {
-	// Atributos
-	private EntityManager manager;
-
-	// Construtores
 	public EnderecoDAO(EntityManager em)
 	{
 		super(em);
-		this.setManager(em);
 	}
 
-	// Gets e Sets
-	public EntityManager getManager()
+	public Endereco pesquisarCep(String cep)
 	{
-		return manager;
+		String consulta = "SELECT e FROM endereco e WHERE e.cep = :N";
+		TypedQuery<Endereco> retorno = getEntityManager().createQuery(consulta, Endereco.class);
+		retorno.setParameter("N", cep);
+		Endereco resultado;
+		try
+		{
+			resultado = retorno.getSingleResult();
+			return resultado;
+		}
+		catch (Exception e)
+		{
+			return null;
+		}
 	}
 
-	public void setManager(EntityManager manager)
+	public Endereco pesquisarLogradouro(String logradouro)
 	{
-		this.manager = manager;
+		String consulta = "SELECT e FROM endereco e WHERE e.logradouro = :N";
+		TypedQuery<Endereco> retorno = getEntityManager().createQuery(consulta, Endereco.class);
+		retorno.setParameter("N", logradouro);
+		Endereco resultado;
+		try
+		{
+			resultado = retorno.getSingleResult();
+			return resultado;
+		}
+		catch (Exception e)
+		{
+			return null;
+		}
 	}
 }

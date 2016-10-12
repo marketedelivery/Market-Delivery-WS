@@ -1,5 +1,6 @@
 package br.com.marketedelivery.camada.classesBasicas;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -7,55 +8,63 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "tb_usuario")
 public class Usuario
 {
-	// Atributos
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(length = 5)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@Column(name = "codigo")
 	private Integer codigo;
 
-	@Column(length = 40, nullable = false)
+	@Column(name = "nome", length = 30)
+	private String nome;
+
+	@Column(name = "CPF", length = 14)
+	private String cpf;
+
+	@OneToOne(cascade = CascadeType.PERSIST)
+	private Endereco endereco;
+
+	@Column(name = "telefone_whatsapp", length = 14)
+	private String telefonewhatsapp;
+
+	@Enumerated(EnumType.STRING)
+	private Perfil perfil;
+
+	@Column(name = "Telefone", length = 14)
+	private String telefone;
+
+	@Column(name = "Email", length = 30)
 	private String email;
 
-	@Column(length = 20, nullable = false)
+	@Column(name = "Senha", length = 10)
 	private String senha;
 
-	@Enumerated(EnumType.STRING)
-	private Status status;
-
-	@Enumerated(EnumType.STRING)
-	private Tipo tipo_usuario;
-
-	// Construtores
-	public Usuario()
-	{
-		this.email = "";
-		this.senha = "";
-		this.status = Status.ATIVO;
-		this.tipo_usuario = null;
-	}
-
-	/**
-	 * @param codigo
-	 * @param email
-	 * @param senha
-	 * @param status
-	 * @param tipo_usuario
-	 */
-	public Usuario(Integer codigo, String email, String senha, Status status, Tipo tipo_usuario)
+	public Usuario(Integer codigo, String nome, String cpf, Endereco endereco, String telefonewhatsapp, String telefone,
+			Perfil perfil, String email, String senha)
 	{
 		super();
 		this.codigo = codigo;
+		this.nome = nome;
+		this.cpf = cpf;
+		this.endereco = endereco;
+		this.telefonewhatsapp = telefonewhatsapp;
+		this.telefone = telefone;
+		this.perfil = perfil;
 		this.email = email;
 		this.senha = senha;
-		this.status = status;
-		this.tipo_usuario = tipo_usuario;
 	}
 
-	// Gets e Sets
+	public Usuario()
+	{
+		super();
+		endereco = new Endereco();
+	}
+
 	public Integer getCodigo()
 	{
 		return codigo;
@@ -64,6 +73,66 @@ public class Usuario
 	public void setCodigo(Integer codigo)
 	{
 		this.codigo = codigo;
+	}
+
+	public String getNome()
+	{
+		return nome;
+	}
+
+	public void setNome(String nome)
+	{
+		this.nome = nome;
+	}
+
+	public String getCpf()
+	{
+		return cpf;
+	}
+
+	public void setCpf(String cpf)
+	{
+		this.cpf = cpf;
+	}
+
+	public Endereco getEndereco()
+	{
+		return endereco;
+	}
+
+	public void setEndereco(Endereco endereco)
+	{
+		this.endereco = endereco;
+	}
+
+	public String getTelefoneWhatsapp()
+	{
+		return telefonewhatsapp;
+	}
+
+	public void setTelefoneWhatsapp(String telefonewhatsapp)
+	{
+		this.telefonewhatsapp = telefonewhatsapp;
+	}
+
+	public String getTelefone()
+	{
+		return telefone;
+	}
+
+	public void setTelefone(String telefone)
+	{
+		this.telefone = telefone;
+	}
+
+	public Perfil getPerfil()
+	{
+		return perfil;
+	}
+
+	public void setPerfil(Perfil perfil)
+	{
+		this.perfil = perfil;
 	}
 
 	public String getEmail()
@@ -84,32 +153,5 @@ public class Usuario
 	public void setSenha(String senha)
 	{
 		this.senha = senha;
-	}
-
-	public Status getStatus()
-	{
-		return status;
-	}
-
-	public void setStatus(Status status)
-	{
-		this.status = status;
-	}
-
-	/**
-	 * @return the tipo_usuario
-	 */
-	public Tipo getTipo_usuario()
-	{
-		return tipo_usuario;
-	}
-
-	/**
-	 * @param tipo_usuario
-	 *            the tipo_usuario to set
-	 */
-	public void setTipo_usuario(Tipo tipo_usuario)
-	{
-		this.tipo_usuario = tipo_usuario;
 	}
 }
