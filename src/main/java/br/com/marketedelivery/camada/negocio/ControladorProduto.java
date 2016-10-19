@@ -14,7 +14,7 @@ import br.com.marketedelivery.camada.classesBasicas.Produto;
 import br.com.marketedelivery.camada.classesBasicas.Supermercado;
 import br.com.marketedelivery.camada.interfaces.dao.IProdutoDAO;
 
-@Path("/service")
+@Path("/produto")
 public class ControladorProduto
 {
 	private IProdutoDAO produtoDAO;
@@ -63,7 +63,7 @@ public class ControladorProduto
 	@GET
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
-	@Path("/buscarProdutoPorSupermercado")
+	@Path("/pesquisarProdutoPorSupermercado")
 	public List<Produto> buscarProdutoPorSupermercado(Supermercado supermercado)
 	{
 		produtoDAO = DAOFactoryProduto.getProdutoDAO();

@@ -13,7 +13,7 @@ import br.com.marketedelivery.camada.DAOFactory.DAOFactoryPagamento;
 import br.com.marketedelivery.camada.classesBasicas.Pagamento;
 import br.com.marketedelivery.camada.interfaces.dao.IPagamentoDAO;
 
-@Path("/cadastrarSupermercado")
+@Path("pagamento")
 public class ControladorPagamento
 {
 	private IPagamentoDAO pagamentoDAO;
@@ -41,7 +41,7 @@ public class ControladorPagamento
 	@GET
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
-	@Path("/listarTodos")
+	@Path("/listarTodosPagamentos")
 	public List<Pagamento> ListarTodos()
 	{
 		pagamentoDAO = DAOFactoryPagamento.getPagamentoDAO();
@@ -51,7 +51,7 @@ public class ControladorPagamento
 	@GET
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
-	@Path("/listarPorCodigo")
+	@Path("/pesquisarPagamentoPorCodigo")
 	public Pagamento ListarPorCodigo(Pagamento pagamento)
 	{
 		int codigo = pagamento.getCodigo();
@@ -63,7 +63,7 @@ public class ControladorPagamento
 	@GET
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
-	@Path("/buscarPorStatus")
+	@Path("/pesquisarPagamentoPorStatus")
 	public Pagamento BuscarPorStatus(Pagamento pagamento)
 	{
 		// pagamentoDAO = DAOFactoryPagamento.getPagamentoDAO();

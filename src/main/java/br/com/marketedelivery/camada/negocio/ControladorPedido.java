@@ -13,7 +13,7 @@ import br.com.marketedelivery.camada.DAOFactory.DAOFactoryPedido;
 import br.com.marketedelivery.camada.classesBasicas.Pedido;
 import br.com.marketedelivery.camada.interfaces.dao.IPedidoDAO;
 
-@Path("/service")
+@Path("/pedido")
 public class ControladorPedido
 {
 	private IPedidoDAO pedidoDAO;
@@ -21,7 +21,7 @@ public class ControladorPedido
 	@POST
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
-	@Path("/cadastrarpedido")
+	@Path("/cadastrarPedido")
 	public void CadastrarPedido(Pedido pedido)
 	{
 		pedidoDAO = DAOFactoryPedido.getPedidoDAO();
@@ -31,7 +31,7 @@ public class ControladorPedido
 	@PUT
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
-	@Path("/atualizarpedido")
+	@Path("/atualizarPedido")
 	public void AlterarPedido(Pedido pedido)
 	{
 		pedidoDAO = DAOFactoryPedido.getPedidoDAO();
@@ -51,7 +51,7 @@ public class ControladorPedido
 	@GET
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
-	@Path("/listarPedidoPorCodigo")
+	@Path("/pesquisarPedidoPorCodigo")
 	public Pedido ListarPedidoPorCodigo(Pedido pedido)
 	{
 		int codigo = pedido.getCodigo();

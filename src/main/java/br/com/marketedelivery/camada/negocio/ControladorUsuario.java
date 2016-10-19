@@ -14,7 +14,7 @@ import br.com.marketedelivery.camada.DAOFactory.DAOFactoryUsuario;
 import br.com.marketedelivery.camada.classesBasicas.Usuario;
 import br.com.marketedelivery.camada.interfaces.dao.IUsuarioDAO;
 
-@Path("/service")
+@Path("/usuario")
 public class ControladorUsuario
 {
 	private IUsuarioDAO usuarioDAO;
@@ -25,8 +25,10 @@ public class ControladorUsuario
 	@Path("/cadastrarUsuario")
 	public void CadastrarUsuario(Usuario usuario)
 	{
+		DAOFactoryUsuario.abrir();
 		usuarioDAO = DAOFactoryUsuario.getUsuarioDAO();
 		usuarioDAO.inserir(usuario);
+		DAOFactoryUsuario.close();
 	}
 
 	@PUT
@@ -52,7 +54,7 @@ public class ControladorUsuario
 	@GET
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
-	@Path("/ListarPorCPF")
+	@Path("/pesquisarUsuarioPorCPF")
 	public Usuario ListarPorCPF(Usuario usuario)
 	{
 		String cpf = usuario.getCpf();
@@ -64,7 +66,7 @@ public class ControladorUsuario
 	@GET
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
-	@Path("/ListarPorNome")
+	@Path("/pesquisarUsuarioPorNome")
 	public Usuario ListarPorNome(Usuario usuario)
 	{
 		String nome = usuario.getNome();
@@ -87,7 +89,7 @@ public class ControladorUsuario
 	@GET
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
-	@Path("/pesquisarPorEmail")
+	@Path("/pesquisarUsuarioPorEmail")
 	public Usuario pesquisarPorEmail(Usuario usuario)
 	{
 		String email = usuario.getEmail();
@@ -104,7 +106,7 @@ public class ControladorUsuario
 	@GET
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
-	@Path("/geraSenha")
+	@Path("/gerarSenhaUsuario")
 	public String geraSenha()
 	{
 		Random gerador = new Random();
@@ -125,7 +127,7 @@ public class ControladorUsuario
 	@GET
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
-	@Path("/alterarSenha")
+	@Path("/alterarSenhaUsuario")
 	public boolean alteraSenha(Usuario u)
 	{
 		if (u != null)

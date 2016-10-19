@@ -13,7 +13,7 @@ import br.com.marketedelivery.camada.DAOFactory.DAOFactoryItem;
 import br.com.marketedelivery.camada.classesBasicas.Item;
 import br.com.marketedelivery.camada.interfaces.dao.IItemDAO;
 
-@Path("/service")
+@Path("/item")
 public class ControladorItem
 {
 	private IItemDAO itemDAO;
@@ -31,7 +31,7 @@ public class ControladorItem
 	@PUT
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
-	@Path("/atualizarrItem")
+	@Path("/atualizarItem")
 	public void AtualizarItem(Item item)
 	{
 		itemDAO = DAOFactoryItem.getItemDAO();
@@ -41,7 +41,7 @@ public class ControladorItem
 	@GET
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
-	@Path("/listarTodosItem")
+	@Path("/listarTodosItens")
 	public List<Item> ListarTodosItem()
 	{
 		itemDAO = DAOFactoryItem.getItemDAO();

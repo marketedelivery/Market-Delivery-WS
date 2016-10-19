@@ -13,7 +13,7 @@ import br.com.marketedelivery.camada.DAOFactory.DAOFactoryEndereco;
 import br.com.marketedelivery.camada.classesBasicas.Endereco;
 import br.com.marketedelivery.camada.interfaces.dao.IEnderecoDAO;
 
-@Path("/service")
+@Path("/endereco")
 public class ControladorEndereco
 {
 	private IEnderecoDAO enderecoDAO;
@@ -21,7 +21,7 @@ public class ControladorEndereco
 	@POST
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
-	@Path("/cadastrarendereco")
+	@Path("/cadastrarEndereco")
 	public void cadastrarEndereco(Endereco endereco)
 	{
 		enderecoDAO = DAOFactoryEndereco.getEnderecoDAO();
@@ -41,7 +41,7 @@ public class ControladorEndereco
 	@GET
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
-	@Path("/listarTodosEndereco")
+	@Path("/listarTodosEnderecos")
 	public List<Endereco> listarTodosEndereco()
 	{
 		enderecoDAO = DAOFactoryEndereco.getEnderecoDAO();
@@ -51,7 +51,7 @@ public class ControladorEndereco
 	@GET
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
-	@Path("/pesquisarPorCep")
+	@Path("/pesquisarEnderecoPorCep")
 	public Endereco pesquisarPorCep(Endereco endereco)
 	{
 		String cep = endereco.getCep();
@@ -63,7 +63,7 @@ public class ControladorEndereco
 	@GET
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
-	@Path("/pesquisarPorLogradouro")
+	@Path("/pesquisarEnderecoPorLogradouro")
 	public Endereco pesquisarPorLogradouro(Endereco endereco)
 	{
 		String logradouro = endereco.getLogradouro();

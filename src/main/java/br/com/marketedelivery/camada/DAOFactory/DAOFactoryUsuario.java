@@ -8,12 +8,20 @@ import br.com.marketedelivery.camada.interfaces.dao.IUsuarioDAO;
 
 public abstract class DAOFactoryUsuario
 {
-	private static final EntityManagerFactory factory;
+	private static EntityManagerFactory factory;
 
 	public static IUsuarioDAO usuarioDAO;
 	static
 	{
 		factory = Persistence.createEntityManagerFactory("bd_market");
+	}
+
+	public static void abrir()
+	{
+		if(factory == null)
+		{
+			factory = Persistence.createEntityManagerFactory("bd_market");
+		}
 	}
 
 	public static IUsuarioDAO getUsuarioDAO()

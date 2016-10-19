@@ -4,7 +4,7 @@ import java.util.List;
 
 import br.com.marketedelivery.camada.classesBasicas.Perfil;
 
-@Path("/service")
+@Path("/perfil")
 public class ControladorPerfil
 {
 	private IPerfilDAO perfilDAO;
@@ -32,7 +32,7 @@ public class ControladorPerfil
 	@GET
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
-	@Path("/listarTodosPerfil")
+	@Path("/listarTodosPerfis")
 	public List<Perfil> ListarTodosPerfil()
 	{
 		perfilDAO = DAOFactoryPerfil.getPerfilDAO();
@@ -42,7 +42,7 @@ public class ControladorPerfil
 	@GET
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
-	@Path("/pesquisarPorCodigo")
+	@Path("/pesquisarPerfilPorCodigo")
 	public Perfil PesquisarPorCodigo(Perfil perfil)
 	{
 		int codigo = perfil.getCodigo();
@@ -54,7 +54,7 @@ public class ControladorPerfil
 	@GET
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
-	@Path("/pesquisarPorNome")
+	@Path("/pesquisarPerfilPorNome")
 	public Perfil PesquisarPorNome(Perfil perfil)
 	{
 		String nome = perfil.getNome();

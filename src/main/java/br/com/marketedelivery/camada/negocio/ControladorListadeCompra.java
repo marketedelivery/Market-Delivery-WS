@@ -13,7 +13,7 @@ import br.com.marketedelivery.camada.DAOFactory.DAOFactoryListadeCompras;
 import br.com.marketedelivery.camada.classesBasicas.ListaDeCompras;
 import br.com.marketedelivery.camada.interfaces.dao.IListaDeComprasDAO;
 
-@Path("/service")
+@Path("/listaCompras")
 public class ControladorListadeCompra
 {
 	IListaDeComprasDAO listaDAO;
@@ -41,7 +41,7 @@ public class ControladorListadeCompra
 	@GET
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
-	@Path("/listarTudo")
+	@Path("/listarTodasListas")
 	public List<ListaDeCompras> ListarTudo()
 	{
 		listaDAO = DAOFactoryListadeCompras.getListaDAO();
@@ -51,7 +51,7 @@ public class ControladorListadeCompra
 	@GET
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
-	@Path("/buscarPorCodigo")
+	@Path("/pesquisarListaPorCodigo")
 	public ListaDeCompras buscarPorCodigo(ListaDeCompras lista)
 	{
 		int codigo = lista.getCodigo();

@@ -5,7 +5,9 @@ import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
 import br.com.marketedelivery.camada.DAOFactory.DAOFactorySupermercado;
@@ -13,6 +15,7 @@ import br.com.marketedelivery.camada.classesBasicas.Produto;
 import br.com.marketedelivery.camada.classesBasicas.Supermercado;
 import br.com.marketedelivery.camada.interfaces.dao.ISupermercadoDAO;
 
+@Path("/supermercado")
 public class ControladorSupermercado
 {
 	private ISupermercadoDAO supermercadoDAO;
@@ -27,10 +30,10 @@ public class ControladorSupermercado
 		supermercadoDAO.inserir(supermercado);
 	}
 
-	@POST
+	@PUT
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
-	@Path("/cadastrarSupermercado")
+	@Path("/atualizarSupermercado")
 	public void atualizarSupermercado(Supermercado supermercado)
 	{
 		supermercadoDAO.alterar(supermercado);
@@ -49,7 +52,7 @@ public class ControladorSupermercado
 	@GET
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
-	@Path("/pesquisarPorNome")
+	@Path("/pesquisarSupermercadoPorNome")
 	public Supermercado pesquisarPorNome(Supermercado supermercado)
 	{
 		String nome = supermercado.getNome();
@@ -60,7 +63,7 @@ public class ControladorSupermercado
 	@GET
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
-	@Path("/pesquisarPorCodigo")
+	@Path("/pesquisarSupermercadoPorCodigo")
 	public Supermercado pesquisarPorCodigo(Supermercado supermercado)
 	{
 		supermercadoDAO = DAOFactorySupermercado.getSupermercadoDAO();
@@ -71,8 +74,9 @@ public class ControladorSupermercado
 	@GET
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
-	@Path("/listarProdutoSupermercado")
-	public List<Produto> listaProtudoDoSupermercado(String nomeProduto, String supermercado)
+	@Path("/listarProdutoPorSupermercado/{produto},{supermercado}")
+	public List<Produto> listaProtudoDoSupermercado(@PathParam("produto") String nomeProduto,
+			@PathParam("supermercado") String supermercado)
 	{
 		supermercadoDAO = DAOFactorySupermercado.getSupermercadoDAO();
 		return null;
@@ -81,7 +85,7 @@ public class ControladorSupermercado
 	@GET
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
-	@Path("/consultarPorID")
+	@Path("/consultarSupermercadoPorID")
 	public Supermercado consultarPorID(Supermercado supermercado)
 	{
 		supermercadoDAO = DAOFactorySupermercado.getSupermercadoDAO();
