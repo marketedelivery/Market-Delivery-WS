@@ -1,5 +1,7 @@
 package br.com.marketedelivery.camada.classesBasicas;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -13,20 +15,31 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "tb_pedido")
-public class Pedido
+public class Pedido implements Serializable
 {
+	// Atrinutos
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name = "codigo")
 	private int codigo;
 
 	@OneToOne
-	private ListaDeCompras lista;
+	private ListaCompras lista;
 
 	@OneToMany
 	private List<Item> itens;
 
-	public Pedido(int codigo, ListaDeCompras lista, List<Item> itens)
+	// Construtores
+	public Pedido()
+	{
+		super();
+		this.lista = new ListaCompras();
+		this.itens = new ArrayList<>();
+	}
+
+	public Pedido(int codigo, ListaCompras lista, List<Item> itens)
 	{
 		super();
 		this.codigo = codigo;
@@ -34,11 +47,7 @@ public class Pedido
 		this.itens = itens;
 	}
 
-	public Pedido()
-	{
-		super();
-	}
-
+	// Gets e Sets
 	public int getCodigo()
 	{
 		return codigo;
@@ -49,12 +58,12 @@ public class Pedido
 		this.codigo = codigo;
 	}
 
-	public ListaDeCompras getLista()
+	public ListaCompras getLista()
 	{
 		return lista;
 	}
 
-	public void setLista(ListaDeCompras lista)
+	public void setLista(ListaCompras lista)
 	{
 		this.lista = lista;
 	}

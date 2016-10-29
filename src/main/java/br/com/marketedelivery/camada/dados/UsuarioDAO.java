@@ -4,20 +4,16 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
 import br.com.marketedelivery.camada.classesBasicas.Usuario;
-import br.com.marketedelivery.camada.interfaces.dao.IUsuarioDAO;
+import br.com.marketedelivery.camada.interfaces.dados.IUsuarioDAO;
 
 public class UsuarioDAO extends DAOGenerico<Usuario> implements IUsuarioDAO
 {
-	@SuppressWarnings("unused")
-	private EntityManager manager;
-
 	public UsuarioDAO(EntityManager em)
 	{
 		super(em);
-		this.manager = em;
 	}
 
-	public Usuario buscarPorEmail(String email)
+	public Usuario pesquisarUsuarioPorEmail(String email)
 	{
 		String consulta = "SELECT u FROM Usuario u WHERE u.email = :N";
 		TypedQuery<Usuario> retorno = getEntityManager().createQuery(consulta, Usuario.class);
@@ -34,7 +30,7 @@ public class UsuarioDAO extends DAOGenerico<Usuario> implements IUsuarioDAO
 		}
 	}
 
-	public Usuario buscarUsuarioPorCPF(String cpf)
+	public Usuario pesquisarUsuarioPorCPF(String cpf)
 	{
 		String consulta = "SELECT c FROM Usuario c WHERE c.cpf = :N";
 		TypedQuery<Usuario> retorno = getEntityManager().createQuery(consulta, Usuario.class);
@@ -51,7 +47,7 @@ public class UsuarioDAO extends DAOGenerico<Usuario> implements IUsuarioDAO
 		}
 	}
 
-	public Usuario buscarUsuarioPorNome(String nome)
+	public Usuario pesquisarUsuarioPorNome(String nome)
 	{
 		String consulta = "SELECT c FROM Usuario c WHERE c.nome = :N";
 		TypedQuery<Usuario> retorno = getEntityManager().createQuery(consulta, Usuario.class);
@@ -69,9 +65,21 @@ public class UsuarioDAO extends DAOGenerico<Usuario> implements IUsuarioDAO
 	}
 
 	@Override
-	public Usuario pesquisarPorCodigo(int codigo)
+	public Usuario efetuarLogin(String email, String senha)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		String consulta = "SELECT u FROM Usuario u WHERE u.email =:email AND u.senha = :senha";
+		TypedQuery<Usuario> retorno = getEntityManager().createQuery(consulta, Usuario.class);
+		retorno.setParameter("email", email);
+		retorno.setParameter("senha", senha);
+		Usuario resultado;
+		try
+		{
+			resultado = retorno.getSingleResult();
+			return resultado;
+		}
+		catch (Exception e)
+		{
+			return null;
+		}
 	}
 }

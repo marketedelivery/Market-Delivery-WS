@@ -18,9 +18,7 @@ import javax.persistence.Table;
 @Table(name = "tb_supermercado")
 public class Supermercado implements Serializable
 {
-	/**
-	 * 
-	 */
+	// Atributos
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -38,33 +36,15 @@ public class Supermercado implements Serializable
 	@Column(name = "latitude")
 	private String latitude;
 
-	@Column(name = "Logitude")
-	private String Logitude;
+	@Column(name = "longitude")
+	private String longitude;
 
-	public String getLatitude()
+	// Construtores
+	public Supermercado()
 	{
-		return latitude;
-	}
-
-	public void setLatitude(String latitude)
-	{
-		this.latitude = latitude;
-	}
-
-	public String getLogitude()
-	{
-		return Logitude;
-	}
-
-	public void setLogitude(String logitude)
-	{
-		Logitude = logitude;
-	}
-
-	@Override
-	public String toString()
-	{
-		return "Supermercado " + nome + "";
+		this.nome = "";
+		this.latitude = "";
+		this.longitude = "";
 	}
 
 	public Supermercado(String nome, int codigo, List<Produto> produtos)
@@ -82,11 +62,7 @@ public class Supermercado implements Serializable
 		this.produtos = produtos;
 	}
 
-	public Supermercado()
-	{
-		super();
-	}
-
+	// Gets e Sets
 	public String getNome()
 	{
 		return nome;
@@ -117,14 +93,23 @@ public class Supermercado implements Serializable
 		this.produtos = produtos;
 	}
 
-	@Override
-	public boolean equals(Object obj)
+	public String getLatitude()
 	{
-		if (this == obj) return true;
-		if (obj == null) return false;
-		if (getClass() != obj.getClass()) return false;
-		Supermercado other = (Supermercado) obj;
-		if (codigo != other.codigo) return false;
-		return true;
+		return latitude;
+	}
+
+	public void setLatitude(String latitude)
+	{
+		this.latitude = latitude;
+	}
+
+	public String getLongitude()
+	{
+		return longitude;
+	}
+
+	public void setLongitude(String longitude)
+	{
+		this.longitude = longitude;
 	}
 }

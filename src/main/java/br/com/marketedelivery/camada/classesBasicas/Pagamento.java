@@ -1,5 +1,7 @@
 package br.com.marketedelivery.camada.classesBasicas;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -12,8 +14,11 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "tb_pagamento")
-public class Pagamento
+public class Pagamento implements Serializable
 {
+	// Atributos
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name = "codigo")
@@ -23,12 +28,20 @@ public class Pagamento
 	private Usuario usuario;
 
 	@Enumerated(EnumType.STRING)
-	private Status status;
+	private StatusPagamento status;
 
 	@OneToOne
 	private Pedido pedido;
 
-	public Pagamento(int codigo, Usuario usuario, Status status, Pedido pedido)
+	// Construtores
+	public Pagamento()
+	{
+		super();
+		this.usuario = new Usuario();
+		this.pedido = new Pedido();
+	}
+
+	public Pagamento(int codigo, Usuario usuario, StatusPagamento status, Pedido pedido)
 	{
 		super();
 		this.codigo = codigo;
@@ -37,11 +50,7 @@ public class Pagamento
 		this.pedido = pedido;
 	}
 
-	public Pagamento()
-	{
-		super();
-	}
-
+	// gets e Sets
 	public int getCodigo()
 	{
 		return codigo;
@@ -62,12 +71,12 @@ public class Pagamento
 		this.usuario = usuario;
 	}
 
-	public Status getStatus()
+	public StatusPagamento getStatus()
 	{
 		return status;
 	}
 
-	public void setStatus(Status status)
+	public void setStatus(StatusPagamento status)
 	{
 		this.status = status;
 	}

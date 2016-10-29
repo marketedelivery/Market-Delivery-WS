@@ -7,68 +7,93 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
-import br.com.marketedelivery.camada.DAOFactory.DAOFactoryEndereco;
 import br.com.marketedelivery.camada.classesBasicas.Endereco;
-import br.com.marketedelivery.camada.interfaces.dao.IEnderecoDAO;
+import br.com.marketedelivery.camada.dados.factory.DAOFactory;
+import br.com.marketedelivery.camada.interfaces.dados.IEnderecoDAO;
+import br.com.marketedelivery.camada.interfaces.negocio.IControladorEndereco;
 
 @Path("/endereco")
-public class ControladorEndereco
+public class ControladorEndereco implements IControladorEndereco
 {
+	// Atributos
 	private IEnderecoDAO enderecoDAO;
 
+	// Métodos
 	@POST
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
 	@Path("/cadastrarEndereco")
 	public void cadastrarEndereco(Endereco endereco)
 	{
-		enderecoDAO = DAOFactoryEndereco.getEnderecoDAO();
+		DAOFactory.abrir();
+		enderecoDAO = DAOFactory.getEnderecoDAO();
 		enderecoDAO.inserir(endereco);
+		DAOFactory.close();
 	}
 
 	@PUT
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
-	@Path("/atualizarEndereco")
-	public void atualizarEndereco(Endereco endereco)
+	@Path("/alterarEndereco")
+	public void alterarEndereco(Endereco endereco)
 	{
-		enderecoDAO = DAOFactoryEndereco.getEnderecoDAO();
+		DAOFactory.abrir();
+		enderecoDAO = DAOFactory.getEnderecoDAO();
 		enderecoDAO.alterar(endereco);
+		DAOFactory.close();
 	}
 
 	@GET
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
-	@Path("/listarTodosEnderecos")
-	public List<Endereco> listarTodosEndereco()
+	@Path("/consultarTodosEnderecos")
+	public List<Endereco> consultarTodosEnderecos()
 	{
-		enderecoDAO = DAOFactoryEndereco.getEnderecoDAO();
-		return enderecoDAO.consultarTodos();
+		DAOFactory.abrir();
+		enderecoDAO = DAOFactory.getEnderecoDAO();
+		List<Endereco> lista = enderecoDAO.consultarTodos();
+		DAOFactory.close();
+		if (!lista.isEmpty())
+		{
+			return lista;
+		}
+		return null;
 	}
 
 	@GET
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
-	@Path("/pesquisarEnderecoPorCep")
-	public Endereco pesquisarPorCep(Endereco endereco)
+	@Path("/pesquisarEnderecoPorCEP/{cep}")
+	public Endereco pesquisarEnderecoPorCEP(@PathParam("cep") String cep)
 	{
-		String cep = endereco.getCep();
-		enderecoDAO = DAOFactoryEndereco.getEnderecoDAO();
-		Endereco retorno = enderecoDAO.pesquisarCep(cep);
-		return retorno;
+		DAOFactory.abrir();
+		enderecoDAO = DAOFactory.getEnderecoDAO();
+		Endereco e = enderecoDAO.pesquisarEnderecoCEP(cep);
+		DAOFactory.close();
+		if (e == null)
+		{
+			return null;
+		}
+		return e;
 	}
 
 	@GET
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
-	@Path("/pesquisarEnderecoPorLogradouro")
-	public Endereco pesquisarPorLogradouro(Endereco endereco)
+	@Path("/pesquisarEnderecoPorLogradouro/{logradouro}")
+	public Endereco pesquisarEnderecoPorLogradouro(@PathParam("logradouro") String logradouro)
 	{
-		String logradouro = endereco.getLogradouro();
-		enderecoDAO = DAOFactoryEndereco.getEnderecoDAO();
-		Endereco retorno = enderecoDAO.pesquisarLogradouro(logradouro);
-		return retorno;
+		DAOFactory.abrir();
+		enderecoDAO = DAOFactory.getEnderecoDAO();
+		Endereco e = enderecoDAO.pesquisarEnderecoLogradouro(logradouro);
+		DAOFactory.close();
+		if (e == null)
+		{
+			return null;
+		}
+		return e;
 	}
 }

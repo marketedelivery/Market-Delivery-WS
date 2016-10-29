@@ -1,4 +1,4 @@
-package br.com.marketedelivery.camada.interfaces.dao;
+package br.com.marketedelivery.camada.interfaces.dados;
 
 import br.com.marketedelivery.camada.classesBasicas.Pedido;
 

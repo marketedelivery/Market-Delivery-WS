@@ -7,55 +7,76 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
-import br.com.marketedelivery.camada.DAOFactory.DAOFactoryPedido;
 import br.com.marketedelivery.camada.classesBasicas.Pedido;
-import br.com.marketedelivery.camada.interfaces.dao.IPedidoDAO;
+import br.com.marketedelivery.camada.dados.factory.DAOFactory;
+import br.com.marketedelivery.camada.interfaces.dados.IPedidoDAO;
+import br.com.marketedelivery.camada.interfaces.negocio.IControladorPedido;
 
 @Path("/pedido")
-public class ControladorPedido
+public class ControladorPedido implements IControladorPedido
 {
+	// Atributos
 	private IPedidoDAO pedidoDAO;
 
+	// Métodos
 	@POST
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
 	@Path("/cadastrarPedido")
-	public void CadastrarPedido(Pedido pedido)
+	public void cadastrarPedido(Pedido pedido)
 	{
-		pedidoDAO = DAOFactoryPedido.getPedidoDAO();
+		DAOFactory.abrir();
+		pedidoDAO = DAOFactory.getPedidoDAO();
 		pedidoDAO.inserir(pedido);
+		DAOFactory.close();
 	}
 
 	@PUT
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
-	@Path("/atualizarPedido")
-	public void AlterarPedido(Pedido pedido)
+	@Path("/alterarPedido")
+	public void alterarPedido(Pedido pedido)
 	{
-		pedidoDAO = DAOFactoryPedido.getPedidoDAO();
+		DAOFactory.abrir();
+		pedidoDAO = DAOFactory.getPedidoDAO();
 		pedidoDAO.inserir(pedido);
+		DAOFactory.close();
 	}
 
 	@GET
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
-	@Path("/listarTodosPedidos")
-	public List<Pedido> ListarTodosPedidos()
+	@Path("/consultarTodosPedidos")
+	public List<Pedido> consultarTodosPedidos()
 	{
-		pedidoDAO = DAOFactoryPedido.getPedidoDAO();
-		return pedidoDAO.consultarTodos();
+		DAOFactory.abrir();
+		pedidoDAO = DAOFactory.getPedidoDAO();
+		List<Pedido> lista = pedidoDAO.consultarTodos();
+		DAOFactory.close();
+		if (!lista.isEmpty())
+		{
+			return lista;
+		}
+		return null;
 	}
 
 	@GET
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
-	@Path("/pesquisarPedidoPorCodigo")
-	public Pedido ListarPedidoPorCodigo(Pedido pedido)
+	@Path("/pesquisarPedidoPorId/{codigo}")
+	public Pedido pesquisarPedidoPorCodigo(@PathParam("codigo") int codigo)
 	{
-		int codigo = pedido.getCodigo();
-		pedidoDAO = DAOFactoryPedido.getPedidoDAO();
-		return pedidoDAO.consultarPorId(codigo);
+		DAOFactory.abrir();
+		pedidoDAO = DAOFactory.getPedidoDAO();
+		Pedido p = pedidoDAO.consultarPorId(codigo);
+		DAOFactory.close();
+		if (p == null)
+		{
+			return null;
+		}
+		return p;
 	}
 }

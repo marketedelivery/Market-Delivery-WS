@@ -1,5 +1,7 @@
 package br.com.marketedelivery.camada.classesBasicas;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -10,13 +12,17 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="Endereco")
-public class Endereco
+@Table(name = "tb_endereco")
+public class Endereco implements Serializable
 {
-	@Id @GeneratedValue(strategy=GenerationType.SEQUENCE)
-	@Column(name="codigo")
-	int codigo;
-	
+	// Atrinutos
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@Column(name = "codigo")
+	private int codigo;
+
 	@Column(name = "cep", length = 9, nullable = false)
 	private String cep;
 
@@ -37,10 +43,8 @@ public class Endereco
 
 	@Enumerated(EnumType.STRING)
 	private Estado estado;
-	
-	
-	
 
+	// Contrutores
 	public Endereco()
 	{
 		this.cep = "";
@@ -48,8 +52,7 @@ public class Endereco
 		this.complemento = "";
 		this.bairro = "";
 		this.cidade = "";
-		
-	
+		this.estado = null;
 	}
 
 	public Endereco(String cep, String logradouro, int numero, String complemento, String bairro, String cidade,
@@ -63,9 +66,9 @@ public class Endereco
 		this.bairro = bairro;
 		this.cidade = cidade;
 		this.estado = estado;
-		
 	}
 
+	// Gets e Sets
 	public String getCep()
 	{
 		return cep;

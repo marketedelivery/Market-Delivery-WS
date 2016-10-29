@@ -7,11 +7,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
 import br.com.marketedelivery.camada.classesBasicas.Produto;
-import br.com.marketedelivery.camada.classesBasicas.Supermercado;
-import br.com.marketedelivery.camada.interfaces.dao.IProdutoDAO;
+import br.com.marketedelivery.camada.interfaces.dados.IProdutoDAO;
 
 public class ProdutoDAO extends DAOGenerico<Produto> implements IProdutoDAO
 {
+	// Atributos
 	@Inject
 	private EntityManager bd01Manager;
 
@@ -19,14 +19,16 @@ public class ProdutoDAO extends DAOGenerico<Produto> implements IProdutoDAO
 	@bd02
 	private EntityManager bd02Manager;
 
+	// Construtores
 	public ProdutoDAO(EntityManager em)
 	{
 		super(em);
-		this.bd01Manager = em;
+		this.setBd01Manager(em);
 		this.bd02Manager = em;
 	}
 
-	public Produto buscarPorNome(String nome)
+	//Métodos
+	public Produto pesquisarProdutoPorNome(String nome)
 	{
 		String consulta = "SELECT p FROM Produto p WHERE p.nome = :N";
 		TypedQuery<Produto> retorno = getEntityManager().createQuery(consulta, Produto.class);
@@ -43,7 +45,7 @@ public class ProdutoDAO extends DAOGenerico<Produto> implements IProdutoDAO
 		}
 	}
 
-	public Produto buscarPorMarca(String marca)
+	public Produto pesquisarProdutoPorMarca(String marca)
 	{
 		String consulta = "SELECT p FROM Produto p WHERE p.nome = :N";
 		TypedQuery<Produto> retorno = getEntityManager().createQuery(consulta, Produto.class);
@@ -60,12 +62,11 @@ public class ProdutoDAO extends DAOGenerico<Produto> implements IProdutoDAO
 		}
 	}
 
-	public List<Produto> buscarProdutoPorSupermercado(Supermercado supermercado)
+	public List<Produto> pesquisarProdutoPorSupermercado(int supermercado)
 	{
-		int codigo = supermercado.getCodigo();
-		String consulta = "SELECT p FROM Produto p WHERE p.supermercado.codigo = :N";
+		String consulta = "SELECT p FROM Produto p WHERE p.supermercado.codigo = :codigo";
 		TypedQuery<Produto> retorno = getEntityManager().createQuery(consulta, Produto.class);
-		retorno.setParameter("N", codigo);
+		retorno.setParameter("codigo", supermercado);
 		try
 		{
 			List<Produto> resultado = retorno.getResultList();
@@ -75,5 +76,32 @@ public class ProdutoDAO extends DAOGenerico<Produto> implements IProdutoDAO
 		{
 			return null;
 		}
+	}
+
+	public List<Produto> consultarProdutosPorTipo(String tipo)
+	{
+		String consulta = "SELECT p FROM Produto p WHERE p.tipo = :tipo";
+		TypedQuery<Produto> retorno = getEntityManager().createQuery(consulta, Produto.class);
+		retorno.setParameter("tipo", tipo);
+		try
+		{
+			List<Produto> resultado = retorno.getResultList();
+			return resultado;
+		}
+		catch (Exception e)
+		{
+			return null;
+		}
+	}
+
+	// Gets e Sets
+	public EntityManager getBd01Manager()
+	{
+		return bd01Manager;
+	}
+
+	public void setBd01Manager(EntityManager bd01Manager)
+	{
+		this.bd01Manager = bd01Manager;
 	}
 }

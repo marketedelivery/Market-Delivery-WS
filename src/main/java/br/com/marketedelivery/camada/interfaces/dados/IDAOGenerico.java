@@ -1,4 +1,4 @@
-package br.com.marketedelivery.camada.interfaces.dao;
+package br.com.marketedelivery.camada.interfaces.dados;
 
 import java.util.List;
 
@@ -13,6 +13,4 @@ public interface IDAOGenerico<Entidade>
 	public Entidade consultarPorId(Integer id);
 
 	public List<Entidade> consultarTodos();
-
-	public List<Entidade> consultarTodos(Integer indiceInicial, Integer quantidade);
 }

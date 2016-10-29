@@ -7,66 +7,93 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
-import br.com.marketedelivery.camada.DAOFactory.DAOFactoryProduto;
 import br.com.marketedelivery.camada.classesBasicas.Produto;
-import br.com.marketedelivery.camada.classesBasicas.Supermercado;
-import br.com.marketedelivery.camada.interfaces.dao.IProdutoDAO;
+import br.com.marketedelivery.camada.dados.factory.DAOFactory;
+import br.com.marketedelivery.camada.interfaces.dados.IProdutoDAO;
+import br.com.marketedelivery.camada.interfaces.negocio.IControladorProduto;
 
 @Path("/produto")
-public class ControladorProduto
+public class ControladorProduto implements IControladorProduto
 {
+	// Atributos
 	private IProdutoDAO produtoDAO;
 
+	// Métodos
 	@POST
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
 	@Path("/cadastrarProduto")
-	public void CadastrarProduto(Produto produto)
+	public void cadastrarProduto(Produto produto)
 	{
-		produtoDAO = DAOFactoryProduto.getProdutoDAO();
+		DAOFactory.abrir();
+		produtoDAO = DAOFactory.getProdutoDAO();
 		produtoDAO.inserir(produto);
+		DAOFactory.close();
 	}
 
 	@PUT
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
-	@Path("/atualizarProduto")
-	public void AtualizarProduto(Produto produto)
+	@Path("/alterarProduto")
+	public void alterarProduto(Produto produto)
 	{
-		produtoDAO = DAOFactoryProduto.getProdutoDAO();
+		DAOFactory.abrir();
+		produtoDAO = DAOFactory.getProdutoDAO();
 		produtoDAO.alterar(produto);
+		DAOFactory.close();
 	}
 
 	@GET
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
-	@Path("/listarTodosProdutos")
-	public List<Produto> ListarTodosProdutos()
+	@Path("/consultarTodosProdutos")
+	public List<Produto> consultarTodosProdutos()
 	{
-		produtoDAO = DAOFactoryProduto.getProdutoDAO();
-		return produtoDAO.consultarTodos();
+		DAOFactory.abrir();
+		produtoDAO = DAOFactory.getProdutoDAO();
+		List<Produto> lista = produtoDAO.consultarTodos();
+		DAOFactory.close();
+		if (!lista.isEmpty())
+		{
+			return lista;
+		}
+		return null;
 	}
 
 	@GET
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
-	@Path("/pesquisarProdutoPorNome")
-	public Produto PesquisarProdutoPorNome(Produto produto)
+	@Path("/pesquisarProdutoPorNome/{nome}")
+	public Produto pesquisarProdutoPorNome(@PathParam("nome") String nome)
 	{
-		String nome = produto.getNome();
-		produtoDAO = DAOFactoryProduto.getProdutoDAO();
-		return produtoDAO.buscarPorNome(nome);
+		DAOFactory.abrir();
+		produtoDAO = DAOFactory.getProdutoDAO();
+		Produto p = produtoDAO.pesquisarProdutoPorNome(nome);
+		DAOFactory.close();
+		if (p == null)
+		{
+			return null;
+		}
+		return p;
 	}
 
 	@GET
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
-	@Path("/pesquisarProdutoPorSupermercado")
-	public List<Produto> buscarProdutoPorSupermercado(Supermercado supermercado)
+	@Path("/consultarProdutosPorSupermercado/{supermercado}")
+	public List<Produto> consultarProdutosPorSupermercado(@PathParam("supermercado") int supermercado)
 	{
-		produtoDAO = DAOFactoryProduto.getProdutoDAO();
-		return produtoDAO.buscarProdutoPorSupermercado(supermercado);
+		DAOFactory.abrir();
+		produtoDAO = DAOFactory.getProdutoDAO();
+		List<Produto> lista = produtoDAO.pesquisarProdutoPorSupermercado(supermercado);
+		DAOFactory.close();
+		if (!lista.isEmpty())
+		{
+			return lista;
+		}
+		return null;
 	}
 }

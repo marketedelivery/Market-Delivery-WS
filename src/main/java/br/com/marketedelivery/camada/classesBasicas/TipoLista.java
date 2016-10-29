@@ -1,6 +1,6 @@
 package br.com.marketedelivery.camada.classesBasicas;
 
-public enum Status
+public enum TipoLista
 {
-	Aprovada, Nao_Aprovado
+	Semanal, Quinzenal, Mensal
 }

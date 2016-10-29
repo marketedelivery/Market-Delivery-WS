@@ -8,106 +8,135 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
-import br.com.marketedelivery.camada.DAOFactory.DAOFactoryUsuario;
 import br.com.marketedelivery.camada.classesBasicas.Usuario;
-import br.com.marketedelivery.camada.interfaces.dao.IUsuarioDAO;
+import br.com.marketedelivery.camada.dados.factory.DAOFactory;
+import br.com.marketedelivery.camada.interfaces.dados.IUsuarioDAO;
+import br.com.marketedelivery.camada.interfaces.negocio.IControladorUsuario;
 
 @Path("/usuario")
-public class ControladorUsuario
+public class ControladorUsuario implements IControladorUsuario
 {
+	// Atributos
 	private IUsuarioDAO usuarioDAO;
 
+	// Métodos
 	@POST
 	@Consumes("application/json; charset=UTF-8")
 	@Produces("application/json; charset=UTF-8")
 	@Path("/cadastrarUsuario")
-	public void CadastrarUsuario(Usuario usuario)
+	public void cadastrarUsuario(Usuario usuario)
 	{
-		DAOFactoryUsuario.abrir();
-		usuarioDAO = DAOFactoryUsuario.getUsuarioDAO();
+		DAOFactory.abrir();
+		usuarioDAO = DAOFactory.getUsuarioDAO();
 		usuarioDAO.inserir(usuario);
-		DAOFactoryUsuario.close();
+		DAOFactory.close();
 	}
 
 	@PUT
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
 	@Path("/atualizarUsuario")
-	public void atualizarUsuario(Usuario usuario)
+	public void alterarUsuario(Usuario usuario)
 	{
-		usuarioDAO = DAOFactoryUsuario.getUsuarioDAO();
+		DAOFactory.abrir();
+		usuarioDAO = DAOFactory.getUsuarioDAO();
 		usuarioDAO.alterar(usuario);
+		DAOFactory.close();
 	}
 
 	@GET
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
 	@Path("/listarTodosUsuarios")
-	public List<Usuario> ListarTodosUsuarios()
+	public List<Usuario> consultarTodosUsuarios()
 	{
-		usuarioDAO = DAOFactoryUsuario.getUsuarioDAO();
-		return usuarioDAO.consultarTodos();
+		DAOFactory.abrir();
+		usuarioDAO = DAOFactory.getUsuarioDAO();
+		List<Usuario> lista = usuarioDAO.consultarTodos();
+		DAOFactory.close();
+		if (!lista.isEmpty())
+		{
+			return lista;
+		}
+		return null;
 	}
 
 	@GET
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
-	@Path("/pesquisarUsuarioPorCPF")
-	public Usuario ListarPorCPF(Usuario usuario)
+	@Path("/pesquisarUsuarioPorCPF/{cpf}")
+	public Usuario pesquisarUsuarioPorCPF(@PathParam("cpf") String cpf)
 	{
-		String cpf = usuario.getCpf();
-		usuarioDAO = DAOFactoryUsuario.getUsuarioDAO();
-		Usuario retorno = usuarioDAO.buscarUsuarioPorCPF(cpf);
-		return retorno;
+		DAOFactory.abrir();
+		usuarioDAO = DAOFactory.getUsuarioDAO();
+		Usuario u = usuarioDAO.pesquisarUsuarioPorCPF(cpf);
+		DAOFactory.close();
+		if (u == null)
+		{
+			return null;
+		}
+		return u;
 	}
 
 	@GET
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
-	@Path("/pesquisarUsuarioPorNome")
-	public Usuario ListarPorNome(Usuario usuario)
+	@Path("/pesquisarUsuarioPorNome/{nome}")
+	public Usuario pesquisarUsuarioPorNome(@PathParam("nome") String nome)
 	{
-		String nome = usuario.getNome();
-		usuarioDAO = DAOFactoryUsuario.getUsuarioDAO();
-		Usuario retorno = usuarioDAO.buscarUsuarioPorNome(nome);
-		return retorno;
+		DAOFactory.abrir();
+		usuarioDAO = DAOFactory.getUsuarioDAO();
+		Usuario u = usuarioDAO.pesquisarUsuarioPorNome(nome);
+		DAOFactory.close();
+		if (u == null)
+		{
+			return null;
+		}
+		return u;
 	}
 
 	@GET
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
-	@Path("/pesquisarUsuarioPorCodigo")
-	public Usuario pesquisarUsuarioPorCodigo(Usuario usuario)
+	@Path("/pesquisarUsuarioPorId/{codigo}")
+	public Usuario pesquisarUsuarioPorCodigo(@PathParam("codigo") int codigo)
 	{
-		usuarioDAO = DAOFactoryUsuario.getUsuarioDAO();
-		Usuario cp = usuarioDAO.consultarPorId(usuario.getCodigo());
-		return cp;
+		DAOFactory.abrir();
+		usuarioDAO = DAOFactory.getUsuarioDAO();
+		Usuario u = usuarioDAO.consultarPorId(codigo);
+		DAOFactory.abrir();
+		if (u == null)
+		{
+			return null;
+		}
+		return u;
 	}
 
 	@GET
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
-	@Path("/pesquisarUsuarioPorEmail")
-	public Usuario pesquisarPorEmail(Usuario usuario)
+	@Path("/pesquisarUsuarioPorEmail/{email}")
+	public Usuario pesquisarUsuarioPorEmail(@PathParam("email") String email)
 	{
-		String email = usuario.getEmail();
-		usuarioDAO = DAOFactoryUsuario.getUsuarioDAO();
-		Usuario retorno = usuarioDAO.buscarPorEmail(email);
-		return retorno;
+		DAOFactory.abrir();
+		usuarioDAO = DAOFactory.getUsuarioDAO();
+		Usuario u = usuarioDAO.pesquisarUsuarioPorEmail(email);
+		DAOFactory.abrir();
+		if(u == null)
+		{
+			return null;
+		}
+		return u;
 	}
 
-	/**
-	 * metodo que recupera a senha do usu�rio
-	 * 
-	 * @return String
-	 */
 	@GET
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
 	@Path("/gerarSenhaUsuario")
-	public String geraSenha()
+	public String gerarSenhaUsuario()
 	{
 		Random gerador = new Random();
 		StringBuilder bilder = new StringBuilder();
@@ -118,26 +147,39 @@ public class ControladorUsuario
 		return bilder.toString();
 	}
 
-	/**
-	 * metodo que altera a senha do usuario
-	 * 
-	 * @param u
-	 * @return boolean
-	 */
 	@GET
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
 	@Path("/alterarSenhaUsuario")
-	public boolean alteraSenha(Usuario u)
+	public boolean alterarSenhaUsuario(Usuario usuario)
 	{
-		if (u != null)
+		DAOFactory.abrir();
+		usuarioDAO = DAOFactory.getUsuarioDAO();
+		if (usuario != null)
 		{
-			String senhaGerada = geraSenha();
-			u.setSenha(senhaGerada);
-			usuarioDAO = DAOFactoryUsuario.getUsuarioDAO();
-			usuarioDAO.alterar(u);
+			String senhaGerada = gerarSenhaUsuario();
+			usuario.setSenha(senhaGerada);
+			usuarioDAO.alterar(usuario);
+			DAOFactory.close();
 			return true;
 		}
 		return false;
+	}
+
+	@GET
+	@Produces("application/json; charset=UTF-8")
+	@Consumes("application/json; charset=UTF-8")
+	@Path("/efetuarLogin/{email}, {senha}")
+	public Usuario efetuarLogin(@PathParam("email") String email, @PathParam("senha") String senha)
+	{
+		DAOFactory.abrir();
+		usuarioDAO = DAOFactory.getUsuarioDAO();
+		Usuario user = usuarioDAO.efetuarLogin(email, senha);
+		DAOFactory.close();
+		if(user == null)
+		{
+			return null;
+		}
+		return user;
 	}
 }

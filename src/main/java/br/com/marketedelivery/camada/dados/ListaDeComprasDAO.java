@@ -1,31 +1,32 @@
 package br.com.marketedelivery.camada.dados;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
-import br.com.marketedelivery.camada.classesBasicas.ListaDeCompras;
-import br.com.marketedelivery.camada.interfaces.dao.IListaDeComprasDAO;
+import br.com.marketedelivery.camada.classesBasicas.ListaCompras;
+import br.com.marketedelivery.camada.classesBasicas.Usuario;
+import br.com.marketedelivery.camada.interfaces.dados.IListaComprasDAO;
 
-public class ListaDeComprasDAO extends DAOGenerico<ListaDeCompras> implements IListaDeComprasDAO
+public class ListaDeComprasDAO extends DAOGenerico<ListaCompras> implements IListaComprasDAO
 {
-	@SuppressWarnings("unused")
-	private EntityManager manager;
-
+	// Construtores
 	public ListaDeComprasDAO(EntityManager em)
 	{
 		super(em);
-		this.manager = em;
 	}
 
-	public ListaDeCompras buscarPorCodigo(int codigo)
+	// Métodos
+	public List<ListaCompras> consultarListasComprasPorUsuario(Usuario usuario)
 	{
-		String consulta = "SELECT l FROM ListaDeCompras l WHERE l.codigo = :N";
-		TypedQuery<ListaDeCompras> retorno = getEntityManager().createQuery(consulta, ListaDeCompras.class);
-		retorno.setParameter("N", codigo);
-		ListaDeCompras resultado;
+		String consulta = "SELECT lista FROM ListaDeCompras lista WHERE lista.usuario.codigo = :N";
+		TypedQuery<ListaCompras> retorno = getEntityManager().createQuery(consulta, ListaCompras.class);
+		retorno.setParameter("N", usuario.getCodigo());
+		List<ListaCompras> resultado;
 		try
 		{
-			resultado = retorno.getSingleResult();
+			resultado = retorno.getResultList();
 			return resultado;
 		}
 		catch (Exception e)

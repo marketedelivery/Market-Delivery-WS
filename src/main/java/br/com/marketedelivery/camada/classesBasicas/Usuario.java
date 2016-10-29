@@ -1,20 +1,29 @@
 package br.com.marketedelivery.camada.classesBasicas;
 
+import java.io.Serializable;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 @Entity
 @Table(name = "tb_usuario")
-public class Usuario
+public class Usuario implements Serializable
 {
+	// Atributos
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name = "codigo")
@@ -26,16 +35,18 @@ public class Usuario
 	@Column(name = "CPF", length = 14)
 	private String cpf;
 
-	@OneToOne(cascade = CascadeType.PERSIST)
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@Fetch(FetchMode.JOIN)
 	private Endereco endereco;
 
-	@Column(name = "telefone_whatsapp", length = 14)
-	private String telefonewhatsapp;
+	@Column(name = "telefoneWhatsapp", length = 16)
+	private String telefoneWhatsapp;
 
 	@Enumerated(EnumType.STRING)
+	@Fetch(FetchMode.JOIN)
 	private Perfil perfil;
 
-	@Column(name = "Telefone", length = 14)
+	@Column(name = "Telefone", length = 15)
 	private String telefone;
 
 	@Column(name = "Email", length = 30)
@@ -44,7 +55,21 @@ public class Usuario
 	@Column(name = "Senha", length = 10)
 	private String senha;
 
-	public Usuario(Integer codigo, String nome, String cpf, Endereco endereco, String telefonewhatsapp, String telefone,
+	// Construtores
+	public Usuario()
+	{
+		super();
+		this.nome = "";
+		this.cpf = "";
+		this.endereco = new Endereco();
+		this.telefoneWhatsapp = "";
+		this.telefone = "";
+		this.perfil = Perfil.Usuario;
+		this.email = "";
+		this.senha = "";
+	}
+
+	public Usuario(Integer codigo, String nome, String cpf, Endereco endereco, String telefoneWhatsapp, String telefone,
 			Perfil perfil, String email, String senha)
 	{
 		super();
@@ -52,19 +77,14 @@ public class Usuario
 		this.nome = nome;
 		this.cpf = cpf;
 		this.endereco = endereco;
-		this.telefonewhatsapp = telefonewhatsapp;
+		this.telefoneWhatsapp = telefoneWhatsapp;
 		this.telefone = telefone;
 		this.perfil = perfil;
 		this.email = email;
 		this.senha = senha;
 	}
 
-	public Usuario()
-	{
-		super();
-		endereco = new Endereco();
-	}
-
+	// Gets e Sets
 	public Integer getCodigo()
 	{
 		return codigo;
@@ -107,12 +127,12 @@ public class Usuario
 
 	public String getTelefoneWhatsapp()
 	{
-		return telefonewhatsapp;
+		return telefoneWhatsapp;
 	}
 
-	public void setTelefoneWhatsapp(String telefonewhatsapp)
+	public void setTelefoneWhatsapp(String telefoneWhatsapp)
 	{
-		this.telefonewhatsapp = telefonewhatsapp;
+		this.telefoneWhatsapp = telefoneWhatsapp;
 	}
 
 	public String getTelefone()
