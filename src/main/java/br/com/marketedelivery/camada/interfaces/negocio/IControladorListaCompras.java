@@ -19,6 +19,7 @@ import br.com.marketedelivery.camada.classesBasicas.ListaCompras;
  * @author Audry Martins
  *
  */
+@Path("/listaCompras")
 public interface IControladorListaCompras
 {
 	// Métodos

@@ -20,6 +20,7 @@ import br.com.marketedelivery.camada.classesBasicas.StatusPagamento;
  * @author Audry Martins
  *
  */
+@Path("pagamento")
 public interface IControladorPagamento
 {
 	// Métodos

@@ -19,6 +19,7 @@ import br.com.marketedelivery.camada.classesBasicas.Endereco;
  * @author Audry Martins
  *
  */
+@Path("/endereco")
 public interface IControladorEndereco
 {
 	// Métodos

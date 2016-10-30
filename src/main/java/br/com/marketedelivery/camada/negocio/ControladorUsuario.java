@@ -3,30 +3,17 @@ package br.com.marketedelivery.camada.negocio;
 import java.util.List;
 import java.util.Random;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-
 import br.com.marketedelivery.camada.classesBasicas.Usuario;
 import br.com.marketedelivery.camada.dados.factory.DAOFactory;
 import br.com.marketedelivery.camada.interfaces.dados.IUsuarioDAO;
 import br.com.marketedelivery.camada.interfaces.negocio.IControladorUsuario;
 
-@Path("/usuario")
 public class ControladorUsuario implements IControladorUsuario
 {
 	// Atributos
 	private IUsuarioDAO usuarioDAO;
 
 	// Métodos
-	@POST
-	@Consumes("application/json; charset=UTF-8")
-	@Produces("application/json; charset=UTF-8")
-	@Path("/cadastrarUsuario")
 	public void cadastrarUsuario(Usuario usuario)
 	{
 		DAOFactory.abrir();
@@ -35,10 +22,6 @@ public class ControladorUsuario implements IControladorUsuario
 		DAOFactory.close();
 	}
 
-	@PUT
-	@Produces("application/json; charset=UTF-8")
-	@Consumes("application/json; charset=UTF-8")
-	@Path("/atualizarUsuario")
 	public void alterarUsuario(Usuario usuario)
 	{
 		DAOFactory.abrir();
@@ -47,10 +30,6 @@ public class ControladorUsuario implements IControladorUsuario
 		DAOFactory.close();
 	}
 
-	@GET
-	@Produces("application/json; charset=UTF-8")
-	@Consumes("application/json; charset=UTF-8")
-	@Path("/listarTodosUsuarios")
 	public List<Usuario> consultarTodosUsuarios()
 	{
 		DAOFactory.abrir();
@@ -64,11 +43,7 @@ public class ControladorUsuario implements IControladorUsuario
 		return null;
 	}
 
-	@GET
-	@Produces("application/json; charset=UTF-8")
-	@Consumes("application/json; charset=UTF-8")
-	@Path("/pesquisarUsuarioPorCPF/{cpf}")
-	public Usuario pesquisarUsuarioPorCPF(@PathParam("cpf") String cpf)
+	public Usuario pesquisarUsuarioPorCPF(String cpf)
 	{
 		DAOFactory.abrir();
 		usuarioDAO = DAOFactory.getUsuarioDAO();
@@ -81,11 +56,7 @@ public class ControladorUsuario implements IControladorUsuario
 		return u;
 	}
 
-	@GET
-	@Produces("application/json; charset=UTF-8")
-	@Consumes("application/json; charset=UTF-8")
-	@Path("/pesquisarUsuarioPorNome/{nome}")
-	public Usuario pesquisarUsuarioPorNome(@PathParam("nome") String nome)
+	public Usuario pesquisarUsuarioPorNome(String nome)
 	{
 		DAOFactory.abrir();
 		usuarioDAO = DAOFactory.getUsuarioDAO();
@@ -98,11 +69,7 @@ public class ControladorUsuario implements IControladorUsuario
 		return u;
 	}
 
-	@GET
-	@Produces("application/json; charset=UTF-8")
-	@Consumes("application/json; charset=UTF-8")
-	@Path("/pesquisarUsuarioPorId/{codigo}")
-	public Usuario pesquisarUsuarioPorCodigo(@PathParam("codigo") int codigo)
+	public Usuario pesquisarUsuarioPorCodigo(int codigo)
 	{
 		DAOFactory.abrir();
 		usuarioDAO = DAOFactory.getUsuarioDAO();
@@ -115,27 +82,19 @@ public class ControladorUsuario implements IControladorUsuario
 		return u;
 	}
 
-	@GET
-	@Produces("application/json; charset=UTF-8")
-	@Consumes("application/json; charset=UTF-8")
-	@Path("/pesquisarUsuarioPorEmail/{email}")
-	public Usuario pesquisarUsuarioPorEmail(@PathParam("email") String email)
+	public Usuario pesquisarUsuarioPorEmail(String email)
 	{
 		DAOFactory.abrir();
 		usuarioDAO = DAOFactory.getUsuarioDAO();
 		Usuario u = usuarioDAO.pesquisarUsuarioPorEmail(email);
 		DAOFactory.abrir();
-		if(u == null)
+		if (u == null)
 		{
 			return null;
 		}
 		return u;
 	}
 
-	@GET
-	@Produces("application/json; charset=UTF-8")
-	@Consumes("application/json; charset=UTF-8")
-	@Path("/gerarSenhaUsuario")
 	public String gerarSenhaUsuario()
 	{
 		Random gerador = new Random();
@@ -147,10 +106,6 @@ public class ControladorUsuario implements IControladorUsuario
 		return bilder.toString();
 	}
 
-	@GET
-	@Produces("application/json; charset=UTF-8")
-	@Consumes("application/json; charset=UTF-8")
-	@Path("/alterarSenhaUsuario")
 	public boolean alterarSenhaUsuario(Usuario usuario)
 	{
 		DAOFactory.abrir();
@@ -166,17 +121,13 @@ public class ControladorUsuario implements IControladorUsuario
 		return false;
 	}
 
-	@GET
-	@Produces("application/json; charset=UTF-8")
-	@Consumes("application/json; charset=UTF-8")
-	@Path("/efetuarLogin/{email}, {senha}")
-	public Usuario efetuarLogin(@PathParam("email") String email, @PathParam("senha") String senha)
+	public Usuario efetuarLogin(String email, String senha)
 	{
 		DAOFactory.abrir();
 		usuarioDAO = DAOFactory.getUsuarioDAO();
 		Usuario user = usuarioDAO.efetuarLogin(email, senha);
 		DAOFactory.close();
-		if(user == null)
+		if (user == null)
 		{
 			return null;
 		}

@@ -19,6 +19,7 @@ import br.com.marketedelivery.camada.classesBasicas.Usuario;
  * @author Audry Martins
  *
  */
+@Path("/usuario")
 public interface IControladorUsuario
 {
 	// Métodos

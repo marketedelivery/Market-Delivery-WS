@@ -19,6 +19,7 @@ import br.com.marketedelivery.camada.classesBasicas.Pedido;
  * @author Audry Martins
  *
  */
+@Path("/pedido")
 public interface IControladorPedido
 {
 	// Métodos

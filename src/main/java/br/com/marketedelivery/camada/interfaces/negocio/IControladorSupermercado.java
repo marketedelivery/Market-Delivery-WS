@@ -19,6 +19,7 @@ import br.com.marketedelivery.camada.classesBasicas.Supermercado;
  * @author Audry Martins
  *
  */
+@Path("/supermercado")
 public interface IControladorSupermercado
 {
 	// Métodos
