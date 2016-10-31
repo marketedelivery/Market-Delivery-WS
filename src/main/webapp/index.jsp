@@ -1,6 +1,6 @@
 <html>
 <body>
-	<h2>Market & Delivery</h2>
+	<h2>Market &amp; Delivery</h2>
 
 	<div class="fb-like" data-share="true" data-width="450"
 		data-show-faces="true"></div>
