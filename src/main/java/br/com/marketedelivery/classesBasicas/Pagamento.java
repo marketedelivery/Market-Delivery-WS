@@ -2,10 +2,12 @@ package br.com.marketedelivery.classesBasicas;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,13 +26,13 @@ public class Pagamento implements Serializable
 	@Column(name = "codigo")
 	private int codigo;
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
 	private Usuario usuario;
 
 	@Enumerated(EnumType.STRING)
 	private StatusPagamento status;
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
 	private Pedido pedido;
 
 	// Construtores

@@ -17,7 +17,7 @@ import br.com.marketedelivery.interfaces.dados.IPagamentoDAO;
 import br.com.marketedelivery.interfaces.negocio.IControladorPagamento;
 import br.com.marketedelivery.util.Mensagens;
 
-@Path("pagamento")
+@Path("/pagamento")
 public class ControladorPagamento implements IControladorPagamento
 {
 	// Atributos

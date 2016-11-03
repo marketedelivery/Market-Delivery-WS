@@ -15,6 +15,11 @@
 			<url>https://maven.java.net/content/repositories/snapshots/</url>
 			<layout>default</layout>
 		</repository>
+
+		<repository>
+			<id>mercadopago</id>
+			<url>https://github.com/mercadopago/sdk-java/raw/master/releases</url>
+		</repository>
 	</repositories>
 
 	<properties>
@@ -104,6 +109,12 @@
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
 			<version>2.3.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.mercadopago</groupId>
+			<artifactId>sdk</artifactId>
+			<version>0.3.4</version>
 		</dependency>
 	</dependencies>
 

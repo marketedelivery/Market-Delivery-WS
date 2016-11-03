@@ -58,7 +58,7 @@ public class ControladorPedido implements IControladorPedido
 		String mensagem = "";
 		try
 		{
-			pedidoDAO.inserir(pedido);
+			pedidoDAO.alterar(pedido);
 			mensagem = msg.getMsg_pedido_alterado_com_sucesso();
 		}
 		catch (Exception e)

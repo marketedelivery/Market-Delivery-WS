@@ -25,7 +25,7 @@ public class Item implements Serializable
 	@Column(name = "codigo")
 	private int codigo;
 
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
 	private Produto produto;
 
 	@Column(name = "precoTotal", length = 12)
@@ -34,7 +34,7 @@ public class Item implements Serializable
 	@Column(name = "qtdProduto", length = 12)
 	private int qtdProduto;
 
-	@ManyToOne(cascade = CascadeType.REFRESH)
+	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
 	private ListaCompras lista;
 
 	// Construtores
