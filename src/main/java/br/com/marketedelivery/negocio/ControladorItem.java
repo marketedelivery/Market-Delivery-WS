@@ -104,6 +104,10 @@ public class ControladorItem implements IControladorItem
 		return i;
 	}
 
+	@GET
+	@Produces("application/json; charset=UTF-8")
+	@Consumes("application/json; charset=UTF-8")
+	@Path("/consultarItensPorLista/{lista}")
 	@Override
 	public List<Item> consultarItensPorLista(ListaCompras lista)
 	{
