@@ -9,12 +9,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "tb_produto")
 public class Produto implements Serializable
 {
-	// Atributos
+	// atributos
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -34,11 +35,17 @@ public class Produto implements Serializable
 	@Column(name = "valorUnitario", length = 12)
 	private Double valorUnitario;
 
+	@Column(name = "tipo", length = 50)
+	private String tipo;
+
 	@ManyToOne
 	private Supermercado supermercado;
 
-	@Column(name = "tipo", length = 80)
-	private String tipo;
+	@Column(name = "image")
+	private String imagem;
+
+	@Transient // não gera coluna, guarda informa��es temporaria
+	private String caminhoImagem;
 
 	// Construtores
 	public Produto()
@@ -47,11 +54,11 @@ public class Produto implements Serializable
 		this.nome = "";
 		this.marca = "";
 		this.supermercado = new Supermercado();
-		this.tipo = "";
+		this.imagem = "";
 	}
 
 	public Produto(int codigo, String nome, String marca, int qtdEstoque, Double valorUnitario,
-			Supermercado supermercado, String tipo)
+			Supermercado supermercado, String tipo, String imagem)
 	{
 		super();
 		this.codigo = codigo;
@@ -61,6 +68,7 @@ public class Produto implements Serializable
 		this.valorUnitario = valorUnitario;
 		this.supermercado = supermercado;
 		this.tipo = tipo;
+		this.imagem = imagem;
 	}
 
 	// Gets e Sets
@@ -132,5 +140,25 @@ public class Produto implements Serializable
 	public void setTipo(String tipo)
 	{
 		this.tipo = tipo;
+	}
+
+	public String getCaminhoImagem()
+	{
+		return caminhoImagem;
+	}
+
+	public void setCaminhoImagem(String caminhoImagem)
+	{
+		this.caminhoImagem = caminhoImagem;
+	}
+
+	public String getImagem()
+	{
+		return imagem;
+	}
+
+	public void setImagem(String imagem)
+	{
+		this.imagem = imagem;
 	}
 }

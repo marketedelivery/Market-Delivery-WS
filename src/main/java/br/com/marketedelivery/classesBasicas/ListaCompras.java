@@ -12,7 +12,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "tb_lista")
@@ -40,6 +42,10 @@ public class ListaCompras implements Serializable
 
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Usuario usuario;
+
+	@OneToMany(cascade = CascadeType.ALL)
+	@Transient
+	private Item item;
 
 	// Construtores
 	public ListaCompras()

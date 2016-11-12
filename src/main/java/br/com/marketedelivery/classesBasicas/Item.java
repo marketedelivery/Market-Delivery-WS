@@ -13,6 +13,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 @Entity
 @Table(name = "tb_item")
 public class Item implements Serializable
@@ -35,6 +38,7 @@ public class Item implements Serializable
 	private int qtdProduto;
 
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+	@Fetch(FetchMode.JOIN)
 	private ListaCompras lista;
 
 	// Construtores

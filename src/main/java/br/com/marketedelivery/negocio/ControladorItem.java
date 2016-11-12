@@ -11,6 +11,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
 import br.com.marketedelivery.classesBasicas.Item;
+import br.com.marketedelivery.classesBasicas.ListaCompras;
 import br.com.marketedelivery.dados.factory.DAOFactory;
 import br.com.marketedelivery.interfaces.dados.IItemDAO;
 import br.com.marketedelivery.interfaces.negocio.IControladorItem;
@@ -101,5 +102,19 @@ public class ControladorItem implements IControladorItem
 			return null;
 		}
 		return i;
+	}
+
+	@Override
+	public List<Item> consultarItensPorLista(ListaCompras lista)
+	{
+		DAOFactory.abrir();
+		itemDAO = DAOFactory.getItemDAO();
+		List<Item> resultado = itemDAO.consultarItensPorLista(lista);
+		DAOFactory.close();
+		if (!resultado.isEmpty())
+		{
+			return resultado;
+		}
+		return null;
 	}
 }
