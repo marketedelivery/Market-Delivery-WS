@@ -40,12 +40,8 @@ public abstract class DAOFactory
 	public static IPedidoDAO pedidoDAO;
 
 	public static IProdutoDAO produtoDAO;
-	// Construtores
-	static
-	{
-		factory = Persistence.createEntityManagerFactory("bd_market");
-	}
 
+	// Construtores
 	public static void abrir()
 	{
 		if (factory == null || !factory.isOpen())

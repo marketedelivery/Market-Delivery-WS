@@ -2,7 +2,6 @@ package br.com.marketedelivery.dados;
 
 import java.util.List;
 
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
@@ -11,20 +10,10 @@ import br.com.marketedelivery.interfaces.dados.IProdutoDAO;
 
 public class ProdutoDAO extends DAOGenerico<Produto> implements IProdutoDAO
 {
-	// Atributos
-	@Inject
-	private EntityManager bd01Manager;
-
-	@Inject
-	@bd02
-	private EntityManager bd02Manager;
-
 	// Construtores
 	public ProdutoDAO(EntityManager em)
 	{
 		super(em);
-		this.setBd01Manager(em);
-		this.bd02Manager = em;
 	}
 
 	// Métodos
@@ -93,16 +82,5 @@ public class ProdutoDAO extends DAOGenerico<Produto> implements IProdutoDAO
 		{
 			return null;
 		}
-	}
-
-	// Gets e Sets
-	public EntityManager getBd01Manager()
-	{
-		return bd01Manager;
-	}
-
-	public void setBd01Manager(EntityManager bd01Manager)
-	{
-		this.bd01Manager = bd01Manager;
 	}
 }
