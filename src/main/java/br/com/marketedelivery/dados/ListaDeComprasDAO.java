@@ -11,10 +11,12 @@ import br.com.marketedelivery.interfaces.dados.IListaComprasDAO;
 
 public class ListaDeComprasDAO extends DAOGenerico<ListaCompras> implements IListaComprasDAO
 {
+	EntityManager manager;
 	// Construtores
 	public ListaDeComprasDAO(EntityManager em)
 	{
 		super(em);
+		this.manager = em;
 	}
 
 	// Métodos
@@ -32,6 +34,8 @@ public class ListaDeComprasDAO extends DAOGenerico<ListaCompras> implements ILis
 		catch (Exception e)
 		{
 			return null;
+		}finally {
+			manager.close();
 		}
 	}
 }

@@ -8,10 +8,12 @@ import br.com.marketedelivery.interfaces.dados.IEnderecoDAO;
 
 public class EnderecoDAO extends DAOGenerico<Endereco> implements IEnderecoDAO
 {
+	EntityManager manager;
 	// Construtores
 	public EnderecoDAO(EntityManager em)
 	{
 		super(em);
+		this.manager = em;
 	}
 
 	// Métodos
@@ -29,6 +31,8 @@ public class EnderecoDAO extends DAOGenerico<Endereco> implements IEnderecoDAO
 		catch (Exception e)
 		{
 			return null;
+		}finally {
+			manager.close();
 		}
 	}
 
@@ -46,6 +50,8 @@ public class EnderecoDAO extends DAOGenerico<Endereco> implements IEnderecoDAO
 		catch (Exception e)
 		{
 			return null;
+		}finally {
+			manager.close();
 		}
 	}
 }

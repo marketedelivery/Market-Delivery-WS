@@ -32,7 +32,6 @@ public class ControladorPagamento implements IControladorPagamento
 	@Path("/cadastrarPagamento")
 	public String cadastrarPagamento(Pagamento pagamento)
 	{
-		DAOFactory.abrir();
 		pagamentoDAO = DAOFactory.getPagamentoDAO();
 		String mensagem = "";
 		try
@@ -44,7 +43,6 @@ public class ControladorPagamento implements IControladorPagamento
 		{
 			e.printStackTrace();
 		}
-		DAOFactory.close();
 		return mensagem;
 	}
 
@@ -54,7 +52,6 @@ public class ControladorPagamento implements IControladorPagamento
 	@Path("/alterarPagamento")
 	public String alterarPagamento(Pagamento pagamento)
 	{
-		DAOFactory.abrir();
 		pagamentoDAO = DAOFactory.getPagamentoDAO();
 		String mensagem = "";
 		try
@@ -66,7 +63,7 @@ public class ControladorPagamento implements IControladorPagamento
 		{
 			e.printStackTrace();
 		}
-		DAOFactory.close();
+
 		return mensagem;
 	}
 
@@ -76,10 +73,8 @@ public class ControladorPagamento implements IControladorPagamento
 	@Path("/consultarTodosPagamentos")
 	public List<Pagamento> consultarTodosPagamentos()
 	{
-		DAOFactory.abrir();
 		pagamentoDAO = DAOFactory.getPagamentoDAO();
 		List<Pagamento> lista = pagamentoDAO.consultarTodos();
-		DAOFactory.close();
 		if (!lista.isEmpty())
 		{
 			return lista;
@@ -93,10 +88,8 @@ public class ControladorPagamento implements IControladorPagamento
 	@Path("/pesquisarPagamentoPorId/{codigo}")
 	public Pagamento pesquisarPagamentoPorCodigo(@PathParam("codigo") int codigo)
 	{
-		DAOFactory.abrir();
 		pagamentoDAO = DAOFactory.getPagamentoDAO();
 		Pagamento p = pagamentoDAO.consultarPorId(codigo);
-		DAOFactory.close();
 		if (p == null)
 		{
 			return null;
@@ -110,10 +103,8 @@ public class ControladorPagamento implements IControladorPagamento
 	@Path("/pesquisarPagamentoPorStatus/{status}")
 	public Pagamento pesquisarPagamentoPorStatus(@PathParam("status") StatusPagamento status)
 	{
-		DAOFactory.abrir();
 		pagamentoDAO = DAOFactory.getPagamentoDAO();
 		Pagamento p = pagamentoDAO.pesquisarPagamentoPorStatus(status);
-		DAOFactory.close();
 		if (p == null)
 		{
 			return null;

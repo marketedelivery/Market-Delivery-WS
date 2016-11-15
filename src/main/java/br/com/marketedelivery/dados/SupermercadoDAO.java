@@ -8,10 +8,12 @@ import br.com.marketedelivery.interfaces.dados.ISupermercadoDAO;
 
 public class SupermercadoDAO extends DAOGenerico<Supermercado> implements ISupermercadoDAO
 {
+	EntityManager manager;
 	// Construtores
 	public SupermercadoDAO(EntityManager em)
 	{
 		super(em);
+		this.manager = em;
 	}
 
 	public Supermercado pesquisarSupermercadoPorCNPJ(String cnpj)
@@ -28,6 +30,8 @@ public class SupermercadoDAO extends DAOGenerico<Supermercado> implements ISuper
 		catch (Exception e)
 		{
 			return null;
+		}finally {
+			manager.close();
 		}
 	}
 
@@ -45,6 +49,8 @@ public class SupermercadoDAO extends DAOGenerico<Supermercado> implements ISuper
 		catch (Exception e)
 		{
 			return null;
+		}finally {
+			manager.close();
 		}
 	}
 
@@ -62,6 +68,8 @@ public class SupermercadoDAO extends DAOGenerico<Supermercado> implements ISuper
 		catch (Exception e)
 		{
 			return null;
+		}finally {
+			manager.close();
 		}
 	}
 }

@@ -31,7 +31,6 @@ public class ControladorPedido implements IControladorPedido
 	@Path("/cadastrarPedido")
 	public String cadastrarPedido(Pedido pedido)
 	{
-		DAOFactory.abrir();
 		pedidoDAO = DAOFactory.getPedidoDAO();
 		String mensagem = "";
 		try
@@ -43,7 +42,6 @@ public class ControladorPedido implements IControladorPedido
 		{
 			e.printStackTrace();
 		}
-		DAOFactory.close();
 		return mensagem;
 	}
 
@@ -53,7 +51,6 @@ public class ControladorPedido implements IControladorPedido
 	@Path("/alterarPedido")
 	public String alterarPedido(Pedido pedido)
 	{
-		DAOFactory.abrir();
 		pedidoDAO = DAOFactory.getPedidoDAO();
 		String mensagem = "";
 		try
@@ -65,7 +62,6 @@ public class ControladorPedido implements IControladorPedido
 		{
 			e.printStackTrace();
 		}
-		DAOFactory.close();
 		return mensagem;
 	}
 
@@ -75,10 +71,8 @@ public class ControladorPedido implements IControladorPedido
 	@Path("/consultarTodosPedidos")
 	public List<Pedido> consultarTodosPedidos()
 	{
-		DAOFactory.abrir();
 		pedidoDAO = DAOFactory.getPedidoDAO();
 		List<Pedido> lista = pedidoDAO.consultarTodos();
-		DAOFactory.close();
 		if (!lista.isEmpty())
 		{
 			return lista;
@@ -92,10 +86,8 @@ public class ControladorPedido implements IControladorPedido
 	@Path("/pesquisarPedidoPorId/{codigo}")
 	public Pedido pesquisarPedidoPorCodigo(@PathParam("codigo") int codigo)
 	{
-		DAOFactory.abrir();
 		pedidoDAO = DAOFactory.getPedidoDAO();
 		Pedido p = pedidoDAO.consultarPorId(codigo);
-		DAOFactory.close();
 		if (p == null)
 		{
 			return null;

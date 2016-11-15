@@ -32,7 +32,6 @@ public class ControladorSupermercado implements IControladorSupermercado
 	@Path("/cadastrarSupermercado")
 	public String cadastrarSupermercado(Supermercado supermercado)
 	{
-		DAOFactory.abrir();
 		supermercadoDAO = DAOFactory.getSupermercadoDAO();
 		String mensagem = "";
 		try
@@ -44,7 +43,6 @@ public class ControladorSupermercado implements IControladorSupermercado
 		{
 			e.printStackTrace();
 		}
-		DAOFactory.close();
 		return mensagem;
 	}
 
@@ -54,7 +52,6 @@ public class ControladorSupermercado implements IControladorSupermercado
 	@Path("/alterarSupermercado")
 	public String alterarSupermercado(Supermercado supermercado)
 	{
-		DAOFactory.abrir();
 		supermercadoDAO = DAOFactory.getSupermercadoDAO();
 		String mensagem = "";
 		try
@@ -66,7 +63,6 @@ public class ControladorSupermercado implements IControladorSupermercado
 		{
 			e.printStackTrace();
 		}
-		DAOFactory.close();
 		return mensagem;
 	}
 
@@ -76,11 +72,9 @@ public class ControladorSupermercado implements IControladorSupermercado
 	@Path("/consultarTodosSupermercados")
 	public List<Supermercado> consultarTodosSupermercados()
 	{
-		DAOFactory.abrir();
 		supermercadoDAO = DAOFactory.getSupermercadoDAO();
 		List<Supermercado> lista = new ArrayList<>();
 		lista = supermercadoDAO.consultarTodos();
-		DAOFactory.close();
 		if (!lista.isEmpty())
 		{
 			return lista;
@@ -94,10 +88,8 @@ public class ControladorSupermercado implements IControladorSupermercado
 	@Path("/pesquisarSupermercadoPorNome/{nome}")
 	public Supermercado pesquisarSupermercadoPorNome(@PathParam("nome") String nome)
 	{
-		DAOFactory.abrir();
 		supermercadoDAO = DAOFactory.getSupermercadoDAO();
 		Supermercado s = supermercadoDAO.pesquisarSupermercadoPorNome(nome);
-		DAOFactory.close();
 		if (s == null)
 		{
 			return null;
@@ -111,10 +103,8 @@ public class ControladorSupermercado implements IControladorSupermercado
 	@Path("/pesquisarSupermercadoPorId/{codigo}")
 	public Supermercado pesquisarSupermercadoPorCodigo(@PathParam("codigo") int codigo)
 	{
-		DAOFactory.abrir();
 		supermercadoDAO = DAOFactory.getSupermercadoDAO();
 		Supermercado s = supermercadoDAO.consultarPorId(codigo);
-		DAOFactory.close();
 		if (s == null)
 		{
 			return null;

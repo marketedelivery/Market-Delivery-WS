@@ -32,7 +32,6 @@ public class ControladorItem implements IControladorItem
 	@Path("/cadastrarItem")
 	public String cadastrarItem(Item item)
 	{
-		DAOFactory.abrir();
 		itemDAO = DAOFactory.getItemDAO();
 		String mensagem = "";
 		try
@@ -44,7 +43,6 @@ public class ControladorItem implements IControladorItem
 		{
 			e.printStackTrace();
 		}
-		DAOFactory.close();
 		return mensagem;
 	}
 
@@ -54,7 +52,6 @@ public class ControladorItem implements IControladorItem
 	@Path("/alterarItem")
 	public String alterarItem(Item item)
 	{
-		DAOFactory.abrir();
 		itemDAO = DAOFactory.getItemDAO();
 		String mensagem = "";
 		try
@@ -66,7 +63,6 @@ public class ControladorItem implements IControladorItem
 		{
 			e.printStackTrace();
 		}
-		DAOFactory.close();
 		return mensagem;
 	}
 
@@ -76,10 +72,8 @@ public class ControladorItem implements IControladorItem
 	@Path("/consultarTodosItens")
 	public List<Item> consultarTodosItens()
 	{
-		DAOFactory.abrir();
 		itemDAO = DAOFactory.getItemDAO();
 		List<Item> lista = itemDAO.consultarTodos();
-		DAOFactory.close();
 		if (!lista.isEmpty())
 		{
 			return lista;
@@ -93,10 +87,8 @@ public class ControladorItem implements IControladorItem
 	@Path("/pesquisarItemPorId/{codigo}")
 	public Item pesquisarItemPorCodigo(@PathParam("codigo") int codigo)
 	{
-		DAOFactory.abrir();
 		itemDAO = DAOFactory.getItemDAO();
 		Item i = itemDAO.consultarPorId(codigo);
-		DAOFactory.close();
 		if (i == null)
 		{
 			return null;
@@ -111,10 +103,8 @@ public class ControladorItem implements IControladorItem
 	@Override
 	public List<Item> consultarItensPorLista(ListaCompras lista)
 	{
-		DAOFactory.abrir();
 		itemDAO = DAOFactory.getItemDAO();
 		List<Item> resultado = itemDAO.consultarItensPorLista(lista);
-		DAOFactory.close();
 		if (!resultado.isEmpty())
 		{
 			return resultado;

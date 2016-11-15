@@ -9,10 +9,12 @@ import br.com.marketedelivery.interfaces.dados.IPagamentoDAO;
 
 public class PagamentoDAO extends DAOGenerico<Pagamento> implements IPagamentoDAO
 {
+	EntityManager manager;
 	// Construtores
 	public PagamentoDAO(EntityManager em)
 	{
 		super(em);
+		this.manager = em;
 	}
 
 	// Métodos
@@ -30,6 +32,8 @@ public class PagamentoDAO extends DAOGenerico<Pagamento> implements IPagamentoDA
 		catch (Exception e)
 		{
 			return null;
+		}finally {
+			manager.close();
 		}
 	}
 }

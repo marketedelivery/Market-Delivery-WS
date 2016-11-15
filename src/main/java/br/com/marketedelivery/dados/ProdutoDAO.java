@@ -10,10 +10,12 @@ import br.com.marketedelivery.interfaces.dados.IProdutoDAO;
 
 public class ProdutoDAO extends DAOGenerico<Produto> implements IProdutoDAO
 {
+	EntityManager manager;
 	// Construtores
 	public ProdutoDAO(EntityManager em)
 	{
 		super(em);
+		this.manager = em;
 	}
 
 	// Métodos
@@ -31,6 +33,8 @@ public class ProdutoDAO extends DAOGenerico<Produto> implements IProdutoDAO
 		catch (Exception e)
 		{
 			return null;
+		}finally {
+			manager.close();
 		}
 	}
 
@@ -49,6 +53,8 @@ public class ProdutoDAO extends DAOGenerico<Produto> implements IProdutoDAO
 		catch (Exception e)
 		{
 			return null;
+		}finally {
+			manager.close();
 		}
 	}
 
@@ -65,6 +71,8 @@ public class ProdutoDAO extends DAOGenerico<Produto> implements IProdutoDAO
 		catch (Exception e)
 		{
 			return null;
+		}finally {
+			manager.close();
 		}
 	}
 
@@ -81,6 +89,8 @@ public class ProdutoDAO extends DAOGenerico<Produto> implements IProdutoDAO
 		catch (Exception e)
 		{
 			return null;
+		}finally {
+			manager.close();
 		}
 	}
 }

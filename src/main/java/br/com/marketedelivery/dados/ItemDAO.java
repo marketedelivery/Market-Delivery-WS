@@ -11,9 +11,12 @@ import br.com.marketedelivery.interfaces.dados.IItemDAO;
 
 public class ItemDAO extends DAOGenerico<Item> implements IItemDAO
 {
+	EntityManager manager;
+	
 	public ItemDAO(EntityManager em)
 	{
 		super(em);
+		this.manager = em;
 	}
 
 	@Override
@@ -30,6 +33,8 @@ public class ItemDAO extends DAOGenerico<Item> implements IItemDAO
 		catch (Exception e)
 		{
 			return null;
+		}finally {
+			manager.close();
 		}
 	}
 }

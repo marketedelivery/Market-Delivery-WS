@@ -31,7 +31,6 @@ public class ControladorListaCompras implements IControladorListaCompras
 	@Path("/cadastrarLista")
 	public String cadastrarLista(ListaCompras lista)
 	{
-		DAOFactory.abrir();
 		listaDAO = DAOFactory.getListaDAO();
 		String mensagem = "";
 		try
@@ -43,7 +42,6 @@ public class ControladorListaCompras implements IControladorListaCompras
 		{
 			e.printStackTrace();
 		}
-		DAOFactory.close();
 		return mensagem;
 	}
 
@@ -53,7 +51,6 @@ public class ControladorListaCompras implements IControladorListaCompras
 	@Path("/alterarLista")
 	public String alterarLista(ListaCompras lista)
 	{
-		DAOFactory.abrir();
 		listaDAO = DAOFactory.getListaDAO();
 		String mensagem = "";
 		try
@@ -65,7 +62,6 @@ public class ControladorListaCompras implements IControladorListaCompras
 		{
 			e.printStackTrace();
 		}
-		DAOFactory.close();
 		return mensagem;
 	}
 
@@ -75,10 +71,8 @@ public class ControladorListaCompras implements IControladorListaCompras
 	@Path("/consultarTodasListas")
 	public List<ListaCompras> consultarTodasListas()
 	{
-		DAOFactory.abrir();
 		listaDAO = DAOFactory.getListaDAO();
 		List<ListaCompras> lista = listaDAO.consultarTodos();
-		DAOFactory.close();
 		if (!lista.isEmpty())
 		{
 			return lista;
@@ -92,10 +86,8 @@ public class ControladorListaCompras implements IControladorListaCompras
 	@Path("/pesquisarListaPorId/{codigo}")
 	public ListaCompras pesquisarListaPorCodigo(@PathParam("codigo") int codigo)
 	{
-		DAOFactory.abrir();
 		listaDAO = DAOFactory.getListaDAO();
 		ListaCompras l = listaDAO.consultarPorId(codigo);
-		DAOFactory.close();
 		if (l == null)
 		{
 			return null;

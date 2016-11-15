@@ -31,7 +31,6 @@ public class ControladorEndereco implements IControladorEndereco
 	@Path("/cadastrarEndereco")
 	public String cadastrarEndereco(Endereco endereco)
 	{
-		DAOFactory.abrir();
 		enderecoDAO = DAOFactory.getEnderecoDAO();
 		String mensagem = "";
 		try
@@ -43,7 +42,6 @@ public class ControladorEndereco implements IControladorEndereco
 		{
 			e.printStackTrace();
 		}
-		DAOFactory.close();
 		return mensagem;
 	}
 
@@ -53,7 +51,6 @@ public class ControladorEndereco implements IControladorEndereco
 	@Path("/alterarEndereco")
 	public String alterarEndereco(Endereco endereco)
 	{
-		DAOFactory.abrir();
 		enderecoDAO = DAOFactory.getEnderecoDAO();
 		String mensagem = "";
 		try
@@ -65,7 +62,6 @@ public class ControladorEndereco implements IControladorEndereco
 		{
 			e.printStackTrace();
 		}
-		DAOFactory.close();
 		return mensagem;
 	}
 
@@ -75,10 +71,8 @@ public class ControladorEndereco implements IControladorEndereco
 	@Path("/consultarTodosEnderecos")
 	public List<Endereco> consultarTodosEnderecos()
 	{
-		DAOFactory.abrir();
 		enderecoDAO = DAOFactory.getEnderecoDAO();
 		List<Endereco> lista = enderecoDAO.consultarTodos();
-		DAOFactory.close();
 		if (!lista.isEmpty())
 		{
 			return lista;
@@ -92,10 +86,8 @@ public class ControladorEndereco implements IControladorEndereco
 	@Path("/pesquisarEnderecoPorCEP/{cep}")
 	public Endereco pesquisarEnderecoPorCEP(@PathParam("cep") String cep)
 	{
-		DAOFactory.abrir();
 		enderecoDAO = DAOFactory.getEnderecoDAO();
 		Endereco e = enderecoDAO.pesquisarEnderecoCEP(cep);
-		DAOFactory.close();
 		if (e == null)
 		{
 			return null;
@@ -109,10 +101,8 @@ public class ControladorEndereco implements IControladorEndereco
 	@Path("/pesquisarEnderecoPorLogradouro/{logradouro}")
 	public Endereco pesquisarEnderecoPorLogradouro(@PathParam("logradouro") String logradouro)
 	{
-		DAOFactory.abrir();
 		enderecoDAO = DAOFactory.getEnderecoDAO();
 		Endereco e = enderecoDAO.pesquisarEnderecoLogradouro(logradouro);
-		DAOFactory.close();
 		if (e == null)
 		{
 			return null;

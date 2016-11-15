@@ -8,9 +8,12 @@ import br.com.marketedelivery.interfaces.dados.IUsuarioDAO;
 
 public class UsuarioDAO extends DAOGenerico<Usuario> implements IUsuarioDAO
 {
+	EntityManager manager;
+	
 	public UsuarioDAO(EntityManager em)
 	{
 		super(em);
+		this.manager = em;
 	}
 
 	public Usuario pesquisarUsuarioPorEmail(String email)
@@ -27,6 +30,8 @@ public class UsuarioDAO extends DAOGenerico<Usuario> implements IUsuarioDAO
 		catch (Exception e)
 		{
 			return null;
+		}finally {
+			manager.close();
 		}
 	}
 
@@ -44,6 +49,8 @@ public class UsuarioDAO extends DAOGenerico<Usuario> implements IUsuarioDAO
 		catch (Exception e)
 		{
 			return null;
+		}finally {
+			manager.close();
 		}
 	}
 
@@ -61,6 +68,8 @@ public class UsuarioDAO extends DAOGenerico<Usuario> implements IUsuarioDAO
 		catch (Exception e)
 		{
 			return null;
+		}finally {
+			manager.close();
 		}
 	}
 
@@ -80,6 +89,8 @@ public class UsuarioDAO extends DAOGenerico<Usuario> implements IUsuarioDAO
 		catch (Exception e)
 		{
 			return null;
+		}finally {
+			manager.close();
 		}
 	}
 }

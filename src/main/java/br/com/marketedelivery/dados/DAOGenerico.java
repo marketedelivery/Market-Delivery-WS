@@ -50,6 +50,8 @@ public abstract class DAOGenerico<Entidade> implements IDAOGenerico<Entidade>
 			{
 				tx.rollback();
 			}
+		}finally {
+			entityManager.close();
 		}
 	}
 
@@ -76,6 +78,9 @@ public abstract class DAOGenerico<Entidade> implements IDAOGenerico<Entidade>
 			{
 				tx.rollback();
 			}
+		}
+		finally {
+			entityManager.close();
 		}
 	}
 
@@ -106,6 +111,9 @@ public abstract class DAOGenerico<Entidade> implements IDAOGenerico<Entidade>
 				tx.rollback();
 			}
 		}
+		finally {
+			entityManager.close();
+		}
 	}
 
 	/**
@@ -133,6 +141,9 @@ public abstract class DAOGenerico<Entidade> implements IDAOGenerico<Entidade>
 				tx.rollback();
 			}
 		}
+		finally {
+			entityManager.close();
+		}
 	}
 
 	/**
@@ -152,6 +163,9 @@ public abstract class DAOGenerico<Entidade> implements IDAOGenerico<Entidade>
 		catch (RuntimeException re)
 		{
 			re.printStackTrace();
+		}
+		finally {
+			entityManager.close();
 		}
 		return instance;
 	}
@@ -183,6 +197,8 @@ public abstract class DAOGenerico<Entidade> implements IDAOGenerico<Entidade>
 		catch (Exception e)
 		{
 			e.printStackTrace();
+		}finally {
+			entityManager.close();
 		}
 		return null;
 	}
