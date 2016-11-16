@@ -32,7 +32,6 @@ public class ControladorUsuario implements IControladorUsuario
 	@Path("/cadastrarUsuario")
 	public String cadastrarUsuario(Usuario usuario)
 	{
-		DAOFactory.abrir();
 		usuarioDAO = DAOFactory.getUsuarioDAO();
 		String mensagem = "";
 		try
@@ -44,7 +43,6 @@ public class ControladorUsuario implements IControladorUsuario
 		{
 			e.printStackTrace();
 		}
-		DAOFactory.close();
 		return mensagem;
 	}
 
@@ -54,7 +52,6 @@ public class ControladorUsuario implements IControladorUsuario
 	@Path("/alterarUsuario")
 	public String alterarUsuario(Usuario usuario)
 	{
-		DAOFactory.abrir();
 		usuarioDAO = DAOFactory.getUsuarioDAO();
 		String mensagem = "";
 		try
@@ -66,7 +63,6 @@ public class ControladorUsuario implements IControladorUsuario
 		{
 			e.printStackTrace();
 		}
-		DAOFactory.close();
 		return mensagem;
 	}
 
@@ -76,10 +72,8 @@ public class ControladorUsuario implements IControladorUsuario
 	@Path("/consultarTodosUsuarios")
 	public List<Usuario> consultarTodosUsuarios()
 	{
-		DAOFactory.abrir();
 		usuarioDAO = DAOFactory.getUsuarioDAO();
 		List<Usuario> lista = usuarioDAO.consultarTodos();
-		DAOFactory.close();
 		if (!lista.isEmpty())
 		{
 			return lista;
@@ -93,10 +87,8 @@ public class ControladorUsuario implements IControladorUsuario
 	@Path("/pesquisarUsuarioPorCPF/{cpf}")
 	public Usuario pesquisarUsuarioPorCPF(@PathParam("cpf") String cpf)
 	{
-		DAOFactory.abrir();
 		usuarioDAO = DAOFactory.getUsuarioDAO();
 		Usuario u = usuarioDAO.pesquisarUsuarioPorCPF(cpf);
-		DAOFactory.close();
 		if (u == null)
 		{
 			return null;
@@ -110,10 +102,8 @@ public class ControladorUsuario implements IControladorUsuario
 	@Path("/pesquisarUsuarioPorNome/{nome}")
 	public Usuario pesquisarUsuarioPorNome(@PathParam("nome") String nome)
 	{
-		DAOFactory.abrir();
 		usuarioDAO = DAOFactory.getUsuarioDAO();
 		Usuario u = usuarioDAO.pesquisarUsuarioPorNome(nome);
-		DAOFactory.close();
 		if (u == null)
 		{
 			return null;
@@ -127,10 +117,8 @@ public class ControladorUsuario implements IControladorUsuario
 	@Path("/pesquisarUsuarioPorId/{codigo}")
 	public Usuario pesquisarUsuarioPorCodigo(@PathParam("codigo") int codigo)
 	{
-		DAOFactory.abrir();
 		usuarioDAO = DAOFactory.getUsuarioDAO();
 		Usuario u = usuarioDAO.consultarPorId(codigo);
-		DAOFactory.close();
 		if (u == null)
 		{
 			return null;
@@ -144,10 +132,8 @@ public class ControladorUsuario implements IControladorUsuario
 	@Path("/pesquisarUsuarioPorEmail/{email}")
 	public Usuario pesquisarUsuarioPorEmail(@PathParam("email") String email)
 	{
-		DAOFactory.abrir();
 		usuarioDAO = DAOFactory.getUsuarioDAO();
 		Usuario u = usuarioDAO.pesquisarUsuarioPorEmail(email);
-		DAOFactory.close();
 		if (u == null)
 		{
 			return null;
@@ -176,7 +162,6 @@ public class ControladorUsuario implements IControladorUsuario
 	@Path("/alterarSenhaUsuario/{email}")
 	public String alterarSenhaUsuario(@PathParam("email") String email)
 	{
-		DAOFactory.abrir();
 		usuarioDAO = DAOFactory.getUsuarioDAO();
 		String mensagem = "";
 		String senhaGerada = "";
@@ -195,7 +180,6 @@ public class ControladorUsuario implements IControladorUsuario
 				e.printStackTrace();
 			}
 		}
-		DAOFactory.close();
 		return mensagem;
 	}
 
@@ -205,10 +189,8 @@ public class ControladorUsuario implements IControladorUsuario
 	@Path("/efetuarLogin/{email}, {senha}")
 	public Usuario efetuarLogin(@PathParam("email") String email, @PathParam("senha") String senha)
 	{
-		DAOFactory.abrir();
 		usuarioDAO = DAOFactory.getUsuarioDAO();
 		Usuario user = usuarioDAO.efetuarLogin(email, senha);
-		DAOFactory.close();
 		if (user == null)
 		{
 			return null;
