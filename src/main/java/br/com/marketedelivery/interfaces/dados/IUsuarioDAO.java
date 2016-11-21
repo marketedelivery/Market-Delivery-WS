@@ -11,4 +11,6 @@ public interface IUsuarioDAO extends IDAOGenerico<Usuario>
 	public Usuario pesquisarUsuarioPorNome(String nome);
 
 	public Usuario efetuarLogin(String email, String senha);
+
+	Usuario pesquisarUsuarioPorIdFacebook(Usuario usuario);
 }

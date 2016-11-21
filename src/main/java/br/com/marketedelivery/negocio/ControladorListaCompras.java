@@ -11,6 +11,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
 import br.com.marketedelivery.classesBasicas.ListaCompras;
+import br.com.marketedelivery.classesBasicas.Usuario;
 import br.com.marketedelivery.dados.factory.DAOFactory;
 import br.com.marketedelivery.interfaces.dados.IListaComprasDAO;
 import br.com.marketedelivery.interfaces.negocio.IControladorListaCompras;
@@ -88,6 +89,21 @@ public class ControladorListaCompras implements IControladorListaCompras
 	{
 		listaDAO = DAOFactory.getListaDAO();
 		ListaCompras l = listaDAO.consultarPorId(codigo);
+		if (l == null)
+		{
+			return null;
+		}
+		return l;
+	}
+	
+	@GET
+	@Produces("application/json; charset=UTF-8")
+	@Consumes("application/json; charset=UTF-8")
+	@Path("/consultarListasComprasPorUsuario")
+	public List<ListaCompras> consultarListasComprasPorUsuario(Usuario usuario)
+	{
+		listaDAO = DAOFactory.getListaDAO();
+		List<ListaCompras> l = listaDAO.consultarListasComprasPorUsuario(usuario);
 		if (l == null)
 		{
 			return null;

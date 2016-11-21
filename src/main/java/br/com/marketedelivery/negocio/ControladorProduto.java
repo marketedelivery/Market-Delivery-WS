@@ -124,4 +124,20 @@ public class ControladorProduto implements IControladorProduto
 		}
 		return null;
 	}
+	
+	
+	@GET
+	@Produces("application/json; charset=UTF-8")
+	@Consumes("application/json; charset=UTF-8")
+	@Path("retornarProdutoPorNome/{nome}")
+	public List<Produto> retornarProdutoPorNome(String nome)
+	{
+		produtoDAO = DAOFactory.getProdutoDAO();
+		List<Produto> lista = produtoDAO.retornarProdutoPorNome(nome);
+		if (!lista.isEmpty())
+		{
+			return lista;
+		}
+		return null;
+	}
 }

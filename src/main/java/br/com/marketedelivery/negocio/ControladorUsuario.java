@@ -30,20 +30,20 @@ public class ControladorUsuario implements IControladorUsuario
 	@Consumes("application/json; charset=UTF-8")
 	@Produces("application/json; charset=UTF-8")
 	@Path("/cadastrarUsuario")
-	public String cadastrarUsuario(Usuario usuario)
+	public Usuario cadastrarUsuario(Usuario usuario)
 	{
 		usuarioDAO = DAOFactory.getUsuarioDAO();
-		String mensagem = "";
+		//String mensagem = "";
 		try
 		{
 			usuarioDAO.inserir(usuario);
-			mensagem = msg.getMsg_usuario_cadastrado_com_sucesso();
+			//mensagem = msg.getMsg_usuario_cadastrado_com_sucesso();
 		}
 		catch (Exception e)
 		{
 			e.printStackTrace();
 		}
-		return mensagem;
+		return usuario;
 	}
 
 	@PUT
@@ -191,6 +191,21 @@ public class ControladorUsuario implements IControladorUsuario
 	{
 		usuarioDAO = DAOFactory.getUsuarioDAO();
 		Usuario user = usuarioDAO.efetuarLogin(email, senha);
+		if (user == null)
+		{
+			return null;
+		}
+		return user;
+	}
+	
+	@GET
+	@Produces("application/json; charset=UTF-8")
+	@Consumes("application/json; charset=UTF-8")
+	@Path("/pesquisarUsuarioPorIdFacebook")
+	Usuario pesquisarUsuarioPorIdFacebook(Usuario usuario)
+	{
+		usuarioDAO = DAOFactory.getUsuarioDAO();
+		Usuario user = usuarioDAO.pesquisarUsuarioPorIdFacebook(usuario);
 		if (user == null)
 		{
 			return null;

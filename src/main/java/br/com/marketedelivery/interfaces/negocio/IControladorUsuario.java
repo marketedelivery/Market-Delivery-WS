@@ -14,7 +14,7 @@ import br.com.marketedelivery.classesBasicas.Usuario;
 public interface IControladorUsuario
 {
 	// Métodos
-	public String cadastrarUsuario(Usuario usuario);
+	public Usuario cadastrarUsuario(Usuario usuario);
 
 	public String alterarUsuario(Usuario usuario);
 
