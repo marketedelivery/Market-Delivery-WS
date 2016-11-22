@@ -33,4 +33,6 @@ public interface IControladorUsuario
 	public String alterarSenhaUsuario(String email);
 
 	public Usuario efetuarLogin(String email, String senha);
+
+	public Usuario pesquisarUsuarioPorIdFacebook(long idFacebook);
 }

@@ -1,5 +1,6 @@
 package br.com.marketedelivery.negocio;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -77,7 +78,7 @@ public class ControladorPedido implements IControladorPedido
 		{
 			return lista;
 		}
-		return null;
+		return new ArrayList<>();
 	}
 
 	@GET
@@ -90,7 +91,7 @@ public class ControladorPedido implements IControladorPedido
 		Pedido p = pedidoDAO.consultarPorId(codigo);
 		if (p == null)
 		{
-			return null;
+			return new Pedido();
 		}
 		return p;
 	}

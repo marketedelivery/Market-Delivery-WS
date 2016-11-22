@@ -33,50 +33,212 @@ public class Pedido implements Serializable
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Item> itens;
 
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private List<Item> itensDisponiveis;
+
+	private String qtdDisponiveis;
+
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private List<Item> itensIndisponiveis;
+
+	private String qtdIndisponiveis;
+
+	@Column(length = 10, name = "valorTotalPedido")
+	private double valorTotalPedido;
+
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private Supermercado supermercado;
+
 	// Construtores
 	public Pedido()
 	{
 		super();
 		this.lista = new ListaCompras();
-		this.itens = new ArrayList<>();
+		this.itens = new ArrayList<Item>();
+		this.itensDisponiveis = new ArrayList<Item>();
+		this.qtdDisponiveis = "";
+		this.itensIndisponiveis = new ArrayList<Item>();
+		this.qtdIndisponiveis = "";
+		this.supermercado = new Supermercado();
 	}
 
-	public Pedido(int codigo, ListaCompras lista, List<Item> itens)
+	/**
+	 * @param codigo
+	 * @param lista
+	 * @param itens
+	 * @param itensDisponiveis
+	 * @param qtdDisponiveis
+	 * @param itensIndisponiveis
+	 * @param qtdIndisponiveis
+	 * @param valorTotalPedido
+	 * @param supermercado
+	 */
+	public Pedido(int codigo, ListaCompras lista, List<Item> itens, List<Item> itensDisponiveis, String qtdDisponiveis,
+			List<Item> itensIndisponiveis, String qtdIndisponiveis, double valorTotalPedido, Supermercado supermercado)
 	{
 		super();
 		this.codigo = codigo;
 		this.lista = lista;
 		this.itens = itens;
+		this.itensDisponiveis = itensDisponiveis;
+		this.qtdDisponiveis = qtdDisponiveis;
+		this.itensIndisponiveis = itensIndisponiveis;
+		this.qtdIndisponiveis = qtdIndisponiveis;
+		this.valorTotalPedido = valorTotalPedido;
+		this.supermercado = supermercado;
 	}
 
 	// Gets e Sets
+	/**
+	 * @return the codigo
+	 */
 	public int getCodigo()
 	{
 		return codigo;
 	}
 
+	/**
+	 * @param codigo
+	 *            the codigo to set
+	 */
 	public void setCodigo(int codigo)
 	{
 		this.codigo = codigo;
 	}
 
+	/**
+	 * @return the lista
+	 */
 	public ListaCompras getLista()
 	{
 		return lista;
 	}
 
+	/**
+	 * @param lista
+	 *            the lista to set
+	 */
 	public void setLista(ListaCompras lista)
 	{
 		this.lista = lista;
 	}
 
+	/**
+	 * @return the itens
+	 */
 	public List<Item> getItens()
 	{
 		return itens;
 	}
 
+	/**
+	 * @param itens
+	 *            the itens to set
+	 */
 	public void setItens(List<Item> itens)
 	{
 		this.itens = itens;
+	}
+
+	/**
+	 * @return the itensDisponiveis
+	 */
+	public List<Item> getItensDisponiveis()
+	{
+		return itensDisponiveis;
+	}
+
+	/**
+	 * @param itensDisponiveis
+	 *            the itensDisponiveis to set
+	 */
+	public void setItensDisponiveis(List<Item> itensDisponiveis)
+	{
+		this.itensDisponiveis = itensDisponiveis;
+	}
+
+	/**
+	 * @return the qtdDisponiveis
+	 */
+	public String getQtdDisponiveis()
+	{
+		return qtdDisponiveis;
+	}
+
+	/**
+	 * @param qtdDisponiveis
+	 *            the qtdDisponiveis to set
+	 */
+	public void setQtdDisponiveis(String qtdDisponiveis)
+	{
+		this.qtdDisponiveis = qtdDisponiveis;
+	}
+
+	/**
+	 * @return the itensIndisponiveis
+	 */
+	public List<Item> getItensIndisponiveis()
+	{
+		return itensIndisponiveis;
+	}
+
+	/**
+	 * @param itensIndisponiveis
+	 *            the itensIndisponiveis to set
+	 */
+	public void setItensIndisponiveis(List<Item> itensIndisponiveis)
+	{
+		this.itensIndisponiveis = itensIndisponiveis;
+	}
+
+	/**
+	 * @return the qtdIndisponiveis
+	 */
+	public String getQtdIndisponiveis()
+	{
+		return qtdIndisponiveis;
+	}
+
+	/**
+	 * @param qtdIndisponiveis
+	 *            the qtdIndisponiveis to set
+	 */
+	public void setQtdIndisponiveis(String qtdIndisponiveis)
+	{
+		this.qtdIndisponiveis = qtdIndisponiveis;
+	}
+
+	/**
+	 * @return the valorTotalPedido
+	 */
+	public double getValorTotalPedido()
+	{
+		return valorTotalPedido;
+	}
+
+	/**
+	 * @param valorTotalPedido
+	 *            the valorTotalPedido to set
+	 */
+	public void setValorTotalPedido(double valorTotalPedido)
+	{
+		this.valorTotalPedido = valorTotalPedido;
+	}
+
+	/**
+	 * @return the supermercado
+	 */
+	public Supermercado getSupermercado()
+	{
+		return supermercado;
+	}
+
+	/**
+	 * @param supermercado
+	 *            the supermercado to set
+	 */
+	public void setSupermercado(Supermercado supermercado)
+	{
+		this.supermercado = supermercado;
 	}
 }

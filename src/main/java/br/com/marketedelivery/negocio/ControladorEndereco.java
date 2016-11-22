@@ -1,5 +1,6 @@
 package br.com.marketedelivery.negocio;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -77,7 +78,7 @@ public class ControladorEndereco implements IControladorEndereco
 		{
 			return lista;
 		}
-		return null;
+		return new ArrayList<>();
 	}
 
 	@GET
@@ -90,7 +91,7 @@ public class ControladorEndereco implements IControladorEndereco
 		Endereco e = enderecoDAO.pesquisarEnderecoCEP(cep);
 		if (e == null)
 		{
-			return null;
+			return new Endereco();
 		}
 		return e;
 	}
@@ -105,7 +106,23 @@ public class ControladorEndereco implements IControladorEndereco
 		Endereco e = enderecoDAO.pesquisarEnderecoLogradouro(logradouro);
 		if (e == null)
 		{
-			return null;
+			return new Endereco();
+		}
+		return e;
+	}
+
+	@GET
+	@Produces("application/json; charset=UTF-8")
+	@Consumes("application/json; charset=UTF-8")
+	@Path("/consultarEnderecoPorId/{codigo}")
+	@Override
+	public Endereco consultarEnderecoPorId(@PathParam("codigo") int codigo)
+	{
+		enderecoDAO = DAOFactory.getEnderecoDAO();
+		Endereco e = enderecoDAO.consultarPorId(codigo);
+		if (e == null)
+		{
+			return new Endereco();
 		}
 		return e;
 	}

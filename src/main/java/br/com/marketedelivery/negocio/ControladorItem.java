@@ -1,5 +1,6 @@
 package br.com.marketedelivery.negocio;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -11,7 +12,6 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
 import br.com.marketedelivery.classesBasicas.Item;
-import br.com.marketedelivery.classesBasicas.ListaCompras;
 import br.com.marketedelivery.dados.factory.DAOFactory;
 import br.com.marketedelivery.interfaces.dados.IItemDAO;
 import br.com.marketedelivery.interfaces.negocio.IControladorItem;
@@ -78,7 +78,7 @@ public class ControladorItem implements IControladorItem
 		{
 			return lista;
 		}
-		return null;
+		return new ArrayList<>();
 	}
 
 	@GET
@@ -91,7 +91,7 @@ public class ControladorItem implements IControladorItem
 		Item i = itemDAO.consultarPorId(codigo);
 		if (i == null)
 		{
-			return null;
+			return new Item();
 		}
 		return i;
 	}
@@ -99,16 +99,32 @@ public class ControladorItem implements IControladorItem
 	@GET
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
-	@Path("/consultarItensPorLista/{lista}")
+	@Path("/consultarItensPorLista/{codigo}")
 	@Override
-	public List<Item> consultarItensPorLista(ListaCompras lista)
+	public List<Item> consultarItensPorLista(@PathParam("codigo") int codigoLista)
 	{
 		itemDAO = DAOFactory.getItemDAO();
-		List<Item> resultado = itemDAO.consultarItensPorLista(lista);
+		List<Item> resultado = itemDAO.consultarItensPorLista(codigoLista);
 		if (!resultado.isEmpty())
 		{
 			return resultado;
 		}
-		return null;
+		return new ArrayList<>();
+	}
+
+	@GET
+	@Produces("application/json; charset=UTF-8")
+	@Consumes("application/json; charset=UTF-8")
+	@Path("/pesquisarItemPorProduto/{codigo}")
+	@Override
+	public Item pesquisarItemPorProduto(@PathParam("codigo") int codigoProduto)
+	{
+		itemDAO = DAOFactory.getItemDAO();
+		Item i = itemDAO.pesquisarItemPorProduto(codigoProduto);
+		if (i == null)
+		{
+			return new Item();
+		}
+		return i;
 	}
 }

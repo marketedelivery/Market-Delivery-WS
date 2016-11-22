@@ -11,6 +11,10 @@ public interface IProdutoDAO extends IDAOGenerico<Produto>
 	public List<Produto> pesquisarProdutoPorSupermercado(int supermercado);
 
 	public List<Produto> consultarProdutosPorTipo(String tipo);
-	
+
 	public List<Produto> retornarProdutoPorNome(String nome);
+
+	public Produto pesquisarProdutoComParametros(String nome, String tipo, String marca);
+
+	public List<Produto> pesquisarProdutoComParametrosLista(String nome, String tipo, String marca);
 }

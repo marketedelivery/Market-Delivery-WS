@@ -1,5 +1,6 @@
 package br.com.marketedelivery.negocio;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -63,7 +64,6 @@ public class ControladorPagamento implements IControladorPagamento
 		{
 			e.printStackTrace();
 		}
-
 		return mensagem;
 	}
 
@@ -79,7 +79,7 @@ public class ControladorPagamento implements IControladorPagamento
 		{
 			return lista;
 		}
-		return null;
+		return new ArrayList<>();
 	}
 
 	@GET
@@ -92,7 +92,7 @@ public class ControladorPagamento implements IControladorPagamento
 		Pagamento p = pagamentoDAO.consultarPorId(codigo);
 		if (p == null)
 		{
-			return null;
+			return new Pagamento();
 		}
 		return p;
 	}
@@ -107,7 +107,7 @@ public class ControladorPagamento implements IControladorPagamento
 		Pagamento p = pagamentoDAO.pesquisarPagamentoPorStatus(status);
 		if (p == null)
 		{
-			return null;
+			return new Pagamento();
 		}
 		return p;
 	}

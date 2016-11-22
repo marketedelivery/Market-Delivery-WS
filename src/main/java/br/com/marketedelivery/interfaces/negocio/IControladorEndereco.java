@@ -20,6 +20,8 @@ public interface IControladorEndereco
 
 	public List<Endereco> consultarTodosEnderecos();
 
+	public Endereco consultarEnderecoPorId(int codigo);
+
 	public Endereco pesquisarEnderecoPorCEP(String cep);
 
 	public Endereco pesquisarEnderecoPorLogradouro(String logradouro);

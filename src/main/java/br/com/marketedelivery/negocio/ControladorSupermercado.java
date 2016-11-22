@@ -3,12 +3,12 @@ package br.com.marketedelivery.negocio;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.websocket.server.PathParam;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
 import br.com.marketedelivery.classesBasicas.Supermercado;
@@ -79,7 +79,7 @@ public class ControladorSupermercado implements IControladorSupermercado
 		{
 			return lista;
 		}
-		return null;
+		return new ArrayList<>();
 	}
 
 	@GET
@@ -92,7 +92,7 @@ public class ControladorSupermercado implements IControladorSupermercado
 		Supermercado s = supermercadoDAO.pesquisarSupermercadoPorNome(nome);
 		if (s == null)
 		{
-			return null;
+			return new Supermercado();
 		}
 		return s;
 	}
@@ -107,7 +107,23 @@ public class ControladorSupermercado implements IControladorSupermercado
 		Supermercado s = supermercadoDAO.consultarPorId(codigo);
 		if (s == null)
 		{
-			return null;
+			return new Supermercado();
+		}
+		return s;
+	}
+
+	@GET
+	@Produces("application/json; charset=UTF-8")
+	@Consumes("application/json; charset=UTF-8")
+	@Path("/pesquisarSupermercadoPorCNPJ/{cnpj}")
+	@Override
+	public Supermercado pesquisarSupermercadoPorCNPJ(@PathParam("cnpj") String cnpj)
+	{
+		supermercadoDAO = DAOFactory.getSupermercadoDAO();
+		Supermercado s = supermercadoDAO.pesquisarSupermercadoPorCNPJ(cnpj);
+		if (s == null)
+		{
+			return new Supermercado();
 		}
 		return s;
 	}

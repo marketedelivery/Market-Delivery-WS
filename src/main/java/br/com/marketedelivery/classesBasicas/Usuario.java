@@ -54,9 +54,9 @@ public class Usuario implements Serializable
 
 	@Column(name = "Senha", length = 10)
 	private String senha;
-	
+
 	@Column(name = "codigoFacebook")
-	private String codigoFacebook;
+	private long codigoFacebook;
 
 	// Construtores
 	public Usuario()
@@ -70,11 +70,10 @@ public class Usuario implements Serializable
 		this.perfil = Perfil.Usuário;
 		this.email = "";
 		this.senha = "";
-		this.codigoFacebook ="";
 	}
 
 	public Usuario(Integer codigo, String nome, String cpf, Endereco endereco, String telefoneWhatsapp, String telefone,
-			Perfil perfil, String email, String senha, String codigoFacebook)
+			Perfil perfil, String email, String senha, long codigoFacebook)
 	{
 		super();
 		this.codigo = codigo;
@@ -179,12 +178,13 @@ public class Usuario implements Serializable
 	{
 		this.senha = senha;
 	}
-	
-	public String getCodigoFacebook()
+
+	public long getCodigoFacebook()
 	{
 		return codigoFacebook;
 	}
-	 void setCodigoFacebook(String codigoFacebook)
+
+	void setCodigoFacebook(long codigoFacebook)
 	{
 		this.codigoFacebook = codigoFacebook;
 	}

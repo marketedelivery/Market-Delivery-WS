@@ -9,7 +9,7 @@ import br.com.marketedelivery.interfaces.dados.IUsuarioDAO;
 public class UsuarioDAO extends DAOGenerico<Usuario> implements IUsuarioDAO
 {
 	EntityManager manager;
-	
+
 	public UsuarioDAO(EntityManager em)
 	{
 		super(em);
@@ -30,7 +30,9 @@ public class UsuarioDAO extends DAOGenerico<Usuario> implements IUsuarioDAO
 		catch (Exception e)
 		{
 			return null;
-		}finally {
+		}
+		finally
+		{
 			manager.close();
 		}
 	}
@@ -49,7 +51,9 @@ public class UsuarioDAO extends DAOGenerico<Usuario> implements IUsuarioDAO
 		catch (Exception e)
 		{
 			return null;
-		}finally {
+		}
+		finally
+		{
 			manager.close();
 		}
 	}
@@ -68,17 +72,19 @@ public class UsuarioDAO extends DAOGenerico<Usuario> implements IUsuarioDAO
 		catch (Exception e)
 		{
 			return null;
-		}finally {
+		}
+		finally
+		{
 			manager.close();
 		}
 	}
 
 	@Override
-	public Usuario pesquisarUsuarioPorIdFacebook(Usuario usuario)
+	public Usuario pesquisarUsuarioPorIdFacebook(long idFacebook)
 	{
 		String consulta = "SELECT u FROM Usuario u WHERE u.codigoFacebook =:codigoFacebook";
 		TypedQuery<Usuario> retorno = getEntityManager().createQuery(consulta, Usuario.class);
-		retorno.setParameter("codigoFacebook", usuario.getCodigoFacebook());
+		retorno.setParameter("codigoFacebook", idFacebook);
 		Usuario resultado;
 		try
 		{
@@ -88,11 +94,13 @@ public class UsuarioDAO extends DAOGenerico<Usuario> implements IUsuarioDAO
 		catch (Exception e)
 		{
 			return null;
-		}finally {
+		}
+		finally
+		{
 			manager.close();
 		}
 	}
-	
+
 	public Usuario efetuarLogin(String email, String senha)
 	{
 		String consulta = "SELECT u FROM Usuario u WHERE u.email =:email AND u.senha = :senha";
@@ -108,7 +116,9 @@ public class UsuarioDAO extends DAOGenerico<Usuario> implements IUsuarioDAO
 		catch (Exception e)
 		{
 			return null;
-		}finally {
+		}
+		finally
+		{
 			manager.close();
 		}
 	}

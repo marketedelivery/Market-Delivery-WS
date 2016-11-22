@@ -21,4 +21,6 @@ public interface IControladorListaCompras
 	public List<ListaCompras> consultarTodasListas();
 
 	public ListaCompras pesquisarListaPorCodigo(int codigo);
+
+	public List<ListaCompras> consultarListasComprasPorUsuario(int codigoUsuario);
 }

@@ -5,7 +5,7 @@ import javax.persistence.Persistence;
 
 import br.com.marketedelivery.dados.EnderecoDAO;
 import br.com.marketedelivery.dados.ItemDAO;
-import br.com.marketedelivery.dados.ListaDeComprasDAO;
+import br.com.marketedelivery.dados.ListaComprasDAO;
 import br.com.marketedelivery.dados.PagamentoDAO;
 import br.com.marketedelivery.dados.PedidoDAO;
 import br.com.marketedelivery.dados.ProdutoDAO;
@@ -62,7 +62,7 @@ public abstract class DAOFactory
 
 	public static IListaComprasDAO getListaDAO()
 	{
-		listaDAO = new ListaDeComprasDAO(factory.createEntityManager());
+		listaDAO = new ListaComprasDAO(factory.createEntityManager());
 		return listaDAO;
 	}
 

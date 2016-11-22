@@ -1,6 +1,7 @@
 package br.com.marketedelivery.classesBasicas;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -14,6 +15,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 @Entity
@@ -31,8 +34,8 @@ public class ListaCompras implements Serializable
 	@Column(name = "nome")
 	private String nome;
 
-	@Column(name = "dataCriacao")
-	private String dataCriacao;
+	@Temporal(TemporalType.DATE)
+	private Date dataCriacao;
 
 	@Enumerated(EnumType.STRING)
 	private TipoLista tipo;
@@ -56,7 +59,7 @@ public class ListaCompras implements Serializable
 		this.usuario = new Usuario();
 	}
 
-	public ListaCompras(int codigo, String nome, String dataCriacao, TipoLista tipo, int qtd, Usuario usuario)
+	public ListaCompras(int codigo, String nome, Date dataCriacao, TipoLista tipo, int qtd, Usuario usuario)
 	{
 		super();
 		this.codigo = codigo;
@@ -88,12 +91,12 @@ public class ListaCompras implements Serializable
 		this.nome = nome;
 	}
 
-	public String getDataCriacao()
+	public Date getDataCriacao()
 	{
 		return dataCriacao;
 	}
 
-	public void setDataCriacao(String dataCriacao)
+	public void setDataCriacao(Date dataCriacao)
 	{
 		this.dataCriacao = dataCriacao;
 	}

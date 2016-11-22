@@ -23,4 +23,6 @@ public interface IControladorSupermercado
 	public Supermercado pesquisarSupermercadoPorNome(String nome);
 
 	public Supermercado pesquisarSupermercadoPorCodigo(int codigo);
+
+	public Supermercado pesquisarSupermercadoPorCNPJ(String cnpj);
 }

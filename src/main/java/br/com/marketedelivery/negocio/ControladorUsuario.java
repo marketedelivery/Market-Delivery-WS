@@ -1,5 +1,6 @@
 package br.com.marketedelivery.negocio;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -33,11 +34,9 @@ public class ControladorUsuario implements IControladorUsuario
 	public Usuario cadastrarUsuario(Usuario usuario)
 	{
 		usuarioDAO = DAOFactory.getUsuarioDAO();
-		//String mensagem = "";
 		try
 		{
 			usuarioDAO.inserir(usuario);
-			//mensagem = msg.getMsg_usuario_cadastrado_com_sucesso();
 		}
 		catch (Exception e)
 		{
@@ -78,7 +77,7 @@ public class ControladorUsuario implements IControladorUsuario
 		{
 			return lista;
 		}
-		return null;
+		return new ArrayList<>();
 	}
 
 	@GET
@@ -91,7 +90,7 @@ public class ControladorUsuario implements IControladorUsuario
 		Usuario u = usuarioDAO.pesquisarUsuarioPorCPF(cpf);
 		if (u == null)
 		{
-			return null;
+			return new Usuario();
 		}
 		return u;
 	}
@@ -106,7 +105,7 @@ public class ControladorUsuario implements IControladorUsuario
 		Usuario u = usuarioDAO.pesquisarUsuarioPorNome(nome);
 		if (u == null)
 		{
-			return null;
+			return new Usuario();
 		}
 		return u;
 	}
@@ -121,7 +120,7 @@ public class ControladorUsuario implements IControladorUsuario
 		Usuario u = usuarioDAO.consultarPorId(codigo);
 		if (u == null)
 		{
-			return null;
+			return new Usuario();
 		}
 		return u;
 	}
@@ -136,7 +135,7 @@ public class ControladorUsuario implements IControladorUsuario
 		Usuario u = usuarioDAO.pesquisarUsuarioPorEmail(email);
 		if (u == null)
 		{
-			return null;
+			return new Usuario();
 		}
 		return u;
 	}
@@ -179,6 +178,9 @@ public class ControladorUsuario implements IControladorUsuario
 			{
 				e.printStackTrace();
 			}
+		} else
+		{
+			mensagem = "Usuário Inválido";
 		}
 		return mensagem;
 	}
@@ -193,22 +195,23 @@ public class ControladorUsuario implements IControladorUsuario
 		Usuario user = usuarioDAO.efetuarLogin(email, senha);
 		if (user == null)
 		{
-			return null;
+			return new Usuario();
 		}
 		return user;
 	}
-	
+
 	@GET
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
-	@Path("/pesquisarUsuarioPorIdFacebook")
-	Usuario pesquisarUsuarioPorIdFacebook(Usuario usuario)
+	@Path("/pesquisarUsuarioPorIdFacebook/{codigo}")
+	@Override
+	public Usuario pesquisarUsuarioPorIdFacebook(@PathParam("codigo") long idFacebook)
 	{
 		usuarioDAO = DAOFactory.getUsuarioDAO();
-		Usuario user = usuarioDAO.pesquisarUsuarioPorIdFacebook(usuario);
+		Usuario user = usuarioDAO.pesquisarUsuarioPorIdFacebook(idFacebook);
 		if (user == null)
 		{
-			return null;
+			return new Usuario();
 		}
 		return user;
 	}
