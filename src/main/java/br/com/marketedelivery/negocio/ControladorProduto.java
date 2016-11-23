@@ -223,6 +223,11 @@ public class ControladorProduto implements IControladorProduto
 		List<Item> disponiveis = new ArrayList<>();
 		List<Item> indisponiveis = new ArrayList<>();
 		double valorLista = 0;
+		/*
+		 * Verifica se o supermercado passado como parâmetro existe no banco se
+		 * não existir ele instancia um novo supermercado com os valores vazios.
+		 */
+		if (s == null) s = new Supermercado();
 		for (int i = 0; i < itens.size(); i++)
 		{
 			Item it = itens.get(i);
@@ -230,7 +235,7 @@ public class ControladorProduto implements IControladorProduto
 			{
 				lista.add(pesquisarProdutoComParametrosExtra(it.getProduto().getNome(), it.getProduto().getTipo(),
 						it.getProduto().getMarca()));
-				if (lista.get(i) != null && !lista.get(i).getNome().equals(""))
+				if (lista.get(i) != null && !lista.get(i).getNome().equals("") && lista.get(i).getQtdEstoque() != 0)
 				{
 					valorLista += it.getPrecoTotal();
 					disponiveis.add(it);
@@ -244,7 +249,7 @@ public class ControladorProduto implements IControladorProduto
 				{
 					lista.add(pesquisarProdutoComParametrosCarrefour(it.getProduto().getNome(),
 							it.getProduto().getTipo(), it.getProduto().getMarca()));
-					if (lista.get(i) != null && !lista.get(i).getNome().equals(""))
+					if (lista.get(i) != null && !lista.get(i).getNome().equals("") && lista.get(i).getQtdEstoque() != 0)
 					{
 						valorLista += it.getPrecoTotal();
 						disponiveis.add(it);
@@ -258,7 +263,8 @@ public class ControladorProduto implements IControladorProduto
 					{
 						lista.add(pesquisarProdutoComParametrosBompreco(it.getProduto().getNome(),
 								it.getProduto().getTipo(), it.getProduto().getMarca()));
-						if (lista.get(i) != null && !lista.get(i).getNome().equals(""))
+						if (lista.get(i) != null && !lista.get(i).getNome().equals("")
+								&& lista.get(i).getQtdEstoque() != 0)
 						{
 							valorLista += it.getPrecoTotal();
 							disponiveis.add(it);
@@ -367,18 +373,25 @@ public class ControladorProduto implements IControladorProduto
 		double valorListaBompreco = 0;
 		for (int i = 0; i < supermercados.size(); i++)
 		{
-			Supermercado s = supermercados.get(i);
-			if (s.getNome().equals(SUPERMERCADO_EXTRA))
+			Supermercado s;
+			if (supermercados.isEmpty())
 			{
-				supermercado_extra = s;
-			}
-			if (s.getNome().equals(SUPERMERCADO_CARREFOUR))
+				s = new Supermercado();
+			} else
 			{
-				supermercado_carrefour = s;
-			}
-			if (s.getNome().equals(SUPERMERCADO_BOMPRECO))
-			{
-				supermercado_bompreco = s;
+				s = supermercados.get(i);
+				if (s.getNome().equals(SUPERMERCADO_EXTRA))
+				{
+					supermercado_extra = s;
+				}
+				if (s.getNome().equals(SUPERMERCADO_CARREFOUR))
+				{
+					supermercado_carrefour = s;
+				}
+				if (s.getNome().equals(SUPERMERCADO_BOMPRECO))
+				{
+					supermercado_bompreco = s;
+				}
 			}
 		}
 		for (int i = 0; i < itens.size(); i++)
@@ -386,7 +399,8 @@ public class ControladorProduto implements IControladorProduto
 			Item it = itens.get(i);
 			listaExtra.add(pesquisarProdutoComParametrosExtra(it.getProduto().getNome(), it.getProduto().getTipo(),
 					it.getProduto().getMarca()));
-			if (listaExtra.get(i) != null && !listaExtra.get(i).getNome().equals(""))
+			if (listaExtra.get(i) != null && !listaExtra.get(i).getNome().equals("")
+					&& listaExtra.get(i).getQtdEstoque() != 0)
 			{
 				valorListaExtra += it.getPrecoTotal();
 				disponiveisExtra.add(it);
@@ -396,7 +410,8 @@ public class ControladorProduto implements IControladorProduto
 			}
 			listaCarrefour.add(pesquisarProdutoComParametrosCarrefour(it.getProduto().getNome(),
 					it.getProduto().getTipo(), it.getProduto().getMarca()));
-			if (listaCarrefour.get(i) != null && !listaCarrefour.get(i).getNome().equals(""))
+			if (listaCarrefour.get(i) != null && !listaCarrefour.get(i).getNome().equals("")
+					&& listaCarrefour.get(i).getQtdEstoque() != 0)
 			{
 				valorListaCarrefour += it.getPrecoTotal();
 				disponiveisCarrefour.add(it);
@@ -406,7 +421,8 @@ public class ControladorProduto implements IControladorProduto
 			}
 			listaBompreco.add(pesquisarProdutoComParametrosBompreco(it.getProduto().getNome(),
 					it.getProduto().getTipo(), it.getProduto().getMarca()));
-			if (listaBompreco.get(i) != null && !listaBompreco.get(i).getNome().equals(""))
+			if (listaBompreco.get(i) != null && !listaBompreco.get(i).getNome().equals("")
+					&& listaBompreco.get(i).getQtdEstoque() != 0)
 			{
 				valorListaBompreco += it.getPrecoTotal();
 				disponiveisBompreco.add(it);
