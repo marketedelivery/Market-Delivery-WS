@@ -14,9 +14,9 @@ import br.com.marketedelivery.classesBasicas.Supermercado;
 public interface IControladorSupermercado
 {
 	// Métodos
-	public String cadastrarSupermercado(Supermercado supermercado);
+	public Supermercado cadastrarSupermercado(Supermercado supermercado);
 
-	public String alterarSupermercado(Supermercado supermercado);
+	public Supermercado alterarSupermercado(Supermercado supermercado);
 
 	public List<Supermercado> consultarTodosSupermercados();
 

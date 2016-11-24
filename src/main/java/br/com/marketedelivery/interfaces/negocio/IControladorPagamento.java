@@ -15,9 +15,9 @@ import br.com.marketedelivery.classesBasicas.StatusPagamento;
 public interface IControladorPagamento
 {
 	// Métodos
-	public String cadastrarPagamento(Pagamento pagamento);
+	public Pagamento cadastrarPagamento(Pagamento pagamento);
 
-	public String alterarPagamento(Pagamento pagamento);
+	public Pagamento alterarPagamento(Pagamento pagamento);
 
 	public List<Pagamento> consultarTodosPagamentos();
 

@@ -14,9 +14,9 @@ import br.com.marketedelivery.classesBasicas.ListaCompras;
 public interface IControladorListaCompras
 {
 	// Métodos
-	public String cadastrarLista(ListaCompras lista);
+	public ListaCompras cadastrarLista(ListaCompras lista);
 
-	public String alterarLista(ListaCompras lista);
+	public ListaCompras alterarLista(ListaCompras lista);
 
 	public List<ListaCompras> consultarTodasListas();
 

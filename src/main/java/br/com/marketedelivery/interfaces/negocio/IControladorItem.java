@@ -14,9 +14,9 @@ import br.com.marketedelivery.classesBasicas.Item;
 public interface IControladorItem
 {
 	// Métodos
-	public String cadastrarItem(Item item);
+	public Item cadastrarItem(Item item);
 
-	public String alterarItem(Item item);
+	public Item alterarItem(Item item);
 
 	public List<Item> consultarTodosItens();
 

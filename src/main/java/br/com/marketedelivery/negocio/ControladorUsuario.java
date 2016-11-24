@@ -9,22 +9,19 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 
 import br.com.marketedelivery.classesBasicas.Usuario;
 import br.com.marketedelivery.dados.factory.DAOFactory;
 import br.com.marketedelivery.interfaces.dados.IUsuarioDAO;
 import br.com.marketedelivery.interfaces.negocio.IControladorUsuario;
-import br.com.marketedelivery.util.Mensagens;
 
 @Path("/usuario")
 public class ControladorUsuario implements IControladorUsuario
 {
 	// Atributos
 	private IUsuarioDAO usuarioDAO;
-
-	Mensagens msg = new Mensagens();
 
 	// Métodos
 	@POST
@@ -49,20 +46,18 @@ public class ControladorUsuario implements IControladorUsuario
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
 	@Path("/alterarUsuario")
-	public String alterarUsuario(Usuario usuario)
+	public Usuario alterarUsuario(Usuario usuario)
 	{
 		usuarioDAO = DAOFactory.getUsuarioDAO();
-		String mensagem = "";
 		try
 		{
 			usuarioDAO.alterar(usuario);
-			mensagem = msg.getMsg_usuario_alterado_com_sucesso();
 		}
 		catch (Exception e)
 		{
 			e.printStackTrace();
 		}
-		return mensagem;
+		return usuario;
 	}
 
 	@GET
@@ -83,8 +78,8 @@ public class ControladorUsuario implements IControladorUsuario
 	@GET
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
-	@Path("/pesquisarUsuarioPorCPF/{cpf}")
-	public Usuario pesquisarUsuarioPorCPF(@PathParam("cpf") String cpf)
+	@Path("/pesquisarUsuarioPorCPF")
+	public Usuario pesquisarUsuarioPorCPF(@QueryParam("cpf") String cpf)
 	{
 		usuarioDAO = DAOFactory.getUsuarioDAO();
 		Usuario u = usuarioDAO.pesquisarUsuarioPorCPF(cpf);
@@ -98,8 +93,8 @@ public class ControladorUsuario implements IControladorUsuario
 	@GET
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
-	@Path("/pesquisarUsuarioPorNome/{nome}")
-	public Usuario pesquisarUsuarioPorNome(@PathParam("nome") String nome)
+	@Path("/pesquisarUsuarioPorNome")
+	public Usuario pesquisarUsuarioPorNome(@QueryParam("nome") String nome)
 	{
 		usuarioDAO = DAOFactory.getUsuarioDAO();
 		Usuario u = usuarioDAO.pesquisarUsuarioPorNome(nome);
@@ -113,8 +108,8 @@ public class ControladorUsuario implements IControladorUsuario
 	@GET
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
-	@Path("/pesquisarUsuarioPorId/{codigo}")
-	public Usuario pesquisarUsuarioPorCodigo(@PathParam("codigo") int codigo)
+	@Path("/pesquisarUsuarioPorId")
+	public Usuario pesquisarUsuarioPorCodigo(@QueryParam("codigo") int codigo)
 	{
 		usuarioDAO = DAOFactory.getUsuarioDAO();
 		Usuario u = usuarioDAO.consultarPorId(codigo);
@@ -128,8 +123,8 @@ public class ControladorUsuario implements IControladorUsuario
 	@GET
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
-	@Path("/pesquisarUsuarioPorEmail/{email}")
-	public Usuario pesquisarUsuarioPorEmail(@PathParam("email") String email)
+	@Path("/pesquisarUsuarioPorEmail")
+	public Usuario pesquisarUsuarioPorEmail(@QueryParam("email") String email)
 	{
 		usuarioDAO = DAOFactory.getUsuarioDAO();
 		Usuario u = usuarioDAO.pesquisarUsuarioPorEmail(email);
@@ -158,38 +153,30 @@ public class ControladorUsuario implements IControladorUsuario
 	@GET
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
-	@Path("/alterarSenhaUsuario/{email}")
-	public String alterarSenhaUsuario(@PathParam("email") String email)
+	@Path("/alterarSenhaUsuario")
+	public Usuario alterarSenhaUsuario(@QueryParam("email") String email)
 	{
 		usuarioDAO = DAOFactory.getUsuarioDAO();
-		String mensagem = "";
 		String senhaGerada = "";
 		Usuario u = usuarioDAO.pesquisarUsuarioPorEmail(email);
-		if (u != null)
+		try
 		{
-			try
-			{
-				senhaGerada = gerarSenhaUsuario();
-				u.setSenha(senhaGerada);
-				usuarioDAO.alterar(u);
-				mensagem = msg.getMsg_senha_usuario_alterada_com_sucesso();
-			}
-			catch (Exception e)
-			{
-				e.printStackTrace();
-			}
-		} else
-		{
-			mensagem = "Usuário Inválido";
+			senhaGerada = gerarSenhaUsuario();
+			u.setSenha(senhaGerada);
+			usuarioDAO.alterar(u);
 		}
-		return mensagem;
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		return u;
 	}
 
 	@GET
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
-	@Path("/efetuarLogin/{email}, {senha}")
-	public Usuario efetuarLogin(@PathParam("email") String email, @PathParam("senha") String senha)
+	@Path("/efetuarLogin")
+	public Usuario efetuarLogin(@QueryParam("email") String email, @QueryParam("senha") String senha)
 	{
 		usuarioDAO = DAOFactory.getUsuarioDAO();
 		Usuario user = usuarioDAO.efetuarLogin(email, senha);
@@ -203,9 +190,9 @@ public class ControladorUsuario implements IControladorUsuario
 	@GET
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
-	@Path("/pesquisarUsuarioPorIdFacebook/{codigo}")
+	@Path("/pesquisarUsuarioPorIdFacebook")
 	@Override
-	public Usuario pesquisarUsuarioPorIdFacebook(@PathParam("codigo") long idFacebook)
+	public Usuario pesquisarUsuarioPorIdFacebook(@QueryParam("codigo") long idFacebook)
 	{
 		usuarioDAO = DAOFactory.getUsuarioDAO();
 		Usuario user = usuarioDAO.pesquisarUsuarioPorIdFacebook(idFacebook);

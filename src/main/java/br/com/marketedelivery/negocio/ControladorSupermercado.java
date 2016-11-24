@@ -3,19 +3,18 @@ package br.com.marketedelivery.negocio;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.websocket.server.PathParam;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 
 import br.com.marketedelivery.classesBasicas.Supermercado;
 import br.com.marketedelivery.dados.factory.DAOFactory;
 import br.com.marketedelivery.interfaces.dados.ISupermercadoDAO;
 import br.com.marketedelivery.interfaces.negocio.IControladorSupermercado;
-import br.com.marketedelivery.util.Mensagens;
 
 @Path("/supermercado")
 public class ControladorSupermercado implements IControladorSupermercado
@@ -23,47 +22,41 @@ public class ControladorSupermercado implements IControladorSupermercado
 	// Atributos
 	private ISupermercadoDAO supermercadoDAO;
 
-	Mensagens msg = new Mensagens();
-
 	// Métodos
 	@POST
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
 	@Path("/cadastrarSupermercado")
-	public String cadastrarSupermercado(Supermercado supermercado)
+	public Supermercado cadastrarSupermercado(Supermercado supermercado)
 	{
 		supermercadoDAO = DAOFactory.getSupermercadoDAO();
-		String mensagem = "";
 		try
 		{
 			supermercadoDAO.inserir(supermercado);
-			mensagem = msg.getMsg_supermercado_cadastrado_com_sucesso();
 		}
 		catch (Exception e)
 		{
 			e.printStackTrace();
 		}
-		return mensagem;
+		return supermercado;
 	}
 
 	@PUT
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
 	@Path("/alterarSupermercado")
-	public String alterarSupermercado(Supermercado supermercado)
+	public Supermercado alterarSupermercado(Supermercado supermercado)
 	{
 		supermercadoDAO = DAOFactory.getSupermercadoDAO();
-		String mensagem = "";
 		try
 		{
 			supermercadoDAO.alterar(supermercado);
-			mensagem = msg.getMsg_supermercado_alterado_com_sucesso();
 		}
 		catch (Exception e)
 		{
 			e.printStackTrace();
 		}
-		return mensagem;
+		return supermercado;
 	}
 
 	@GET
@@ -85,8 +78,8 @@ public class ControladorSupermercado implements IControladorSupermercado
 	@GET
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
-	@Path("/pesquisarSupermercadoPorNome/{nome}")
-	public Supermercado pesquisarSupermercadoPorNome(@PathParam("nome") String nome)
+	@Path("/pesquisarSupermercadoPorNome")
+	public Supermercado pesquisarSupermercadoPorNome(@QueryParam("nome") String nome)
 	{
 		supermercadoDAO = DAOFactory.getSupermercadoDAO();
 		Supermercado s = supermercadoDAO.pesquisarSupermercadoPorNome(nome);
@@ -100,8 +93,8 @@ public class ControladorSupermercado implements IControladorSupermercado
 	@GET
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
-	@Path("/pesquisarSupermercadoPorId/{codigo}")
-	public Supermercado pesquisarSupermercadoPorCodigo(@PathParam("codigo") int codigo)
+	@Path("/pesquisarSupermercadoPorId")
+	public Supermercado pesquisarSupermercadoPorCodigo(@QueryParam("codigo") int codigo)
 	{
 		supermercadoDAO = DAOFactory.getSupermercadoDAO();
 		Supermercado s = supermercadoDAO.consultarPorId(codigo);
@@ -115,9 +108,9 @@ public class ControladorSupermercado implements IControladorSupermercado
 	@GET
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
-	@Path("/pesquisarSupermercadoPorCNPJ/{cnpj}")
+	@Path("/pesquisarSupermercadoPorCNPJ")
 	@Override
-	public Supermercado pesquisarSupermercadoPorCNPJ(@PathParam("cnpj") String cnpj)
+	public Supermercado pesquisarSupermercadoPorCNPJ(@QueryParam("cnpj") String cnpj)
 	{
 		supermercadoDAO = DAOFactory.getSupermercadoDAO();
 		Supermercado s = supermercadoDAO.pesquisarSupermercadoPorCNPJ(cnpj);

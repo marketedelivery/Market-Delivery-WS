@@ -14,9 +14,9 @@ import br.com.marketedelivery.classesBasicas.Endereco;
 public interface IControladorEndereco
 {
 	// Métodos
-	public String cadastrarEndereco(Endereco endereco);
+	public Endereco cadastrarEndereco(Endereco endereco);
 
-	public String alterarEndereco(Endereco endereco);
+	public Endereco alterarEndereco(Endereco endereco);
 
 	public List<Endereco> consultarTodosEnderecos();
 

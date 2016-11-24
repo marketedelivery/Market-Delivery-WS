@@ -14,11 +14,15 @@ import br.com.marketedelivery.classesBasicas.Pedido;
 public interface IControladorPedido
 {
 	// Métodos
-	public String cadastrarPedido(Pedido pedido);
+	public Pedido cadastrarPedido(Pedido pedido);
 
-	public String alterarPedido(Pedido pedido);
+	public Pedido alterarPedido(Pedido pedido);
 
 	public List<Pedido> consultarTodosPedidos();
 
 	public Pedido pesquisarPedidoPorCodigo(int codigo);
+
+	public List<Pedido> compararPrecosPorLista(int codigoListaCompras);
+
+	public Pedido compararPrecosPorListaSupermercado(int codigoListaCompras, int codigoSupermercado);
 }

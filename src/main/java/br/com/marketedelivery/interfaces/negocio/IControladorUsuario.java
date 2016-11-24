@@ -16,7 +16,7 @@ public interface IControladorUsuario
 	// Métodos
 	public Usuario cadastrarUsuario(Usuario usuario);
 
-	public String alterarUsuario(Usuario usuario);
+	public Usuario alterarUsuario(Usuario usuario);
 
 	public List<Usuario> consultarTodosUsuarios();
 
@@ -30,7 +30,7 @@ public interface IControladorUsuario
 
 	public String gerarSenhaUsuario();
 
-	public String alterarSenhaUsuario(String email);
+	public Usuario alterarSenhaUsuario(String email);
 
 	public Usuario efetuarLogin(String email, String senha);
 

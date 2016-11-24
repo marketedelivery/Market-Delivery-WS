@@ -8,14 +8,13 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 
 import br.com.marketedelivery.classesBasicas.ListaCompras;
 import br.com.marketedelivery.dados.factory.DAOFactory;
 import br.com.marketedelivery.interfaces.dados.IListaComprasDAO;
 import br.com.marketedelivery.interfaces.negocio.IControladorListaCompras;
-import br.com.marketedelivery.util.Mensagens;
 
 @Path("/listaCompras")
 public class ControladorListaCompras implements IControladorListaCompras
@@ -23,47 +22,41 @@ public class ControladorListaCompras implements IControladorListaCompras
 	// Atrinutos
 	private IListaComprasDAO listaDAO;
 
-	Mensagens msg = new Mensagens();
-
 	// Métodos
 	@POST
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
 	@Path("/cadastrarLista")
-	public String cadastrarLista(ListaCompras lista)
+	public ListaCompras cadastrarLista(ListaCompras lista)
 	{
 		listaDAO = DAOFactory.getListaDAO();
-		String mensagem = "";
 		try
 		{
 			listaDAO.inserir(lista);
-			mensagem = msg.getMsg_lista_compras_cadastrada_com_sucesso();
 		}
 		catch (Exception e)
 		{
 			e.printStackTrace();
 		}
-		return mensagem;
+		return lista;
 	}
 
 	@PUT
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
 	@Path("/alterarLista")
-	public String alterarLista(ListaCompras lista)
+	public ListaCompras alterarLista(ListaCompras lista)
 	{
 		listaDAO = DAOFactory.getListaDAO();
-		String mensagem = "";
 		try
 		{
 			listaDAO.alterar(lista);
-			mensagem = msg.getMsg_lista_compras_alterada_com_sucesso();
 		}
 		catch (Exception e)
 		{
 			e.printStackTrace();
 		}
-		return mensagem;
+		return lista;
 	}
 
 	@GET
@@ -84,8 +77,8 @@ public class ControladorListaCompras implements IControladorListaCompras
 	@GET
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
-	@Path("/pesquisarListaPorId/{codigo}")
-	public ListaCompras pesquisarListaPorCodigo(@PathParam("codigo") int codigo)
+	@Path("/pesquisarListaPorId")
+	public ListaCompras pesquisarListaPorCodigo(@QueryParam("codigo") int codigo)
 	{
 		listaDAO = DAOFactory.getListaDAO();
 		ListaCompras l = listaDAO.consultarPorId(codigo);
@@ -99,8 +92,8 @@ public class ControladorListaCompras implements IControladorListaCompras
 	@GET
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
-	@Path("/consultarListasComprasPorUsuario/{codigo}")
-	public List<ListaCompras> consultarListasComprasPorUsuario(@PathParam("codigo") int codigoUsuario)
+	@Path("/consultarListasComprasPorUsuario")
+	public List<ListaCompras> consultarListasComprasPorUsuario(@QueryParam("codigo") int codigoUsuario)
 	{
 		listaDAO = DAOFactory.getListaDAO();
 		List<ListaCompras> l = listaDAO.consultarListasComprasPorUsuario(codigoUsuario);
