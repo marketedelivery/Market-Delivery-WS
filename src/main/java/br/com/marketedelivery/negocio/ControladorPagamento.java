@@ -10,6 +10,12 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Response;
+
+import com.paypal.api.payments.Payment;
+import com.paypal.base.rest.APIContext;
+import com.paypal.base.rest.OAuthTokenCredential;
+import com.paypal.base.rest.PayPalRESTException;
 
 import br.com.marketedelivery.classesBasicas.Pagamento;
 import br.com.marketedelivery.classesBasicas.StatusPagamento;
@@ -20,6 +26,8 @@ import br.com.marketedelivery.interfaces.negocio.IControladorPagamento;
 @Path("/pagamento")
 public class ControladorPagamento implements IControladorPagamento
 {
+	private static final String CLIENT_ID = "AarPUH3FeaEsjghwSfoz17lPiFoV-Ruc6pSNc2eYKyXC7NE0KAygdVUl8Kzr5GBHXeMFB9w6ASAvZLP_";
+	private static final String CLIENT_SECRET = "EKbMV-RsHpw06efM43Zw9dvv1F2gxr2morGTGsw2pHraA6h_3DMsu1P7_K1fNpNbhLXYeR85zf_YISom" 	;
 	// Atributos
 	private IPagamentoDAO pagamentoDAO;
 
@@ -103,5 +111,25 @@ public class ControladorPagamento implements IControladorPagamento
 			return new Pagamento();
 		}
 		return p;
+	}
+	
+	@POST
+	@Produces("application/json; charset=UTF-8")
+	@Consumes("application/json; charset=UTF-8")
+	@Path("/verificarStatus")
+	public Response verificarStatus(Pagamento pagamento)
+	{		
+		try
+		{
+			OAuthTokenCredential tokenCredential = Payment.initConfig(getClass().getClassLoader().getResourceAsStream("sdk_config.properties"));
+			String accessToken = tokenCredential.getAccessToken();
+			APIContext apiContext = new APIContext(CLIENT_ID,CLIENT_SECRET, "sandbok");
+			Payment pagto = Payment.get(apiContext, "1");
+		}
+		catch (PayPalRESTException e)
+		{
+			e.printStackTrace();
+		}
+		return Response.ok().build();
 	}
 }
