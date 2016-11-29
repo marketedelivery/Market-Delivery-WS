@@ -40,9 +40,9 @@ public class ProdutoDAO extends DAOGenerico<Produto> implements IProdutoDAO
 	
 	public List<Produto> retornarProdutoPorNome(String nome)
 	{
-		String consulta = "SELECT p FROM Produto p WHERE p.nome = :%N%";
+		String consulta = "SELECT p FROM Produto p WHERE p.nome LIKE :N";
 		TypedQuery<Produto> retorno = getEntityManager().createQuery(consulta, Produto.class);
-		retorno.setParameter("N", nome);
+		retorno.setParameter("N","%"+ nome+"%");
 		List<Produto> resultado;
 		try
 		{

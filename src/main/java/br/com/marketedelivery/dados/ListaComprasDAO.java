@@ -22,7 +22,7 @@ public class ListaComprasDAO extends DAOGenerico<ListaCompras> implements ILista
 	// Métodos
 	public List<ListaCompras> consultarListasComprasPorUsuario(int codigoUsuario)
 	{
-		String consulta = "SELECT lista FROM ListaDeCompras lista WHERE lista.usuario.codigo = :N";
+		String consulta = "SELECT lista FROM ListaCompras lista WHERE lista.usuario.codigo = :N";
 		TypedQuery<ListaCompras> retorno = getEntityManager().createQuery(consulta, ListaCompras.class);
 		retorno.setParameter("N", codigoUsuario);
 		List<ListaCompras> resultado;

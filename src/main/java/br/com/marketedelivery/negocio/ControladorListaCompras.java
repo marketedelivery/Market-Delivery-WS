@@ -93,10 +93,10 @@ public class ControladorListaCompras implements IControladorListaCompras
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
 	@Path("/consultarListasComprasPorUsuario")
-	public List<ListaCompras> consultarListasComprasPorUsuario(@QueryParam("codigo") int codigoUsuario)
+	public List<ListaCompras> consultarListasComprasPorUsuario(@QueryParam("codigo") int codigo)
 	{
 		listaDAO = DAOFactory.getListaDAO();
-		List<ListaCompras> l = listaDAO.consultarListasComprasPorUsuario(codigoUsuario);
+		List<ListaCompras> l = listaDAO.consultarListasComprasPorUsuario(codigo);
 		if (l == null)
 		{
 			return new ArrayList<>();

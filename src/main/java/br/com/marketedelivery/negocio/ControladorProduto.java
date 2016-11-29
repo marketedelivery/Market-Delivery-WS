@@ -122,7 +122,7 @@ public class ControladorProduto implements IControladorProduto
 	@GET
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
-	@Path("retornarProdutoPorNome")
+	@Path("/retornarProdutoPorNome")
 	public List<Produto> retornarProdutoPorNome(@QueryParam("nome") String nome)
 	{
 		produtoDAO = DAOFactory.getProdutoDAO();
