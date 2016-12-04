@@ -25,4 +25,6 @@ public interface IControladorItem
 	public List<Item> consultarItensPorLista(int codigoLista);
 
 	public Item pesquisarItemPorProduto(int codigoProduto);
+
+	List<Item> retonarPesquisaItemPorProduto(int codigoProduto);
 }

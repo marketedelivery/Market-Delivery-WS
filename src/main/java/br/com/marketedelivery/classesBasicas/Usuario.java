@@ -62,6 +62,7 @@ public class Usuario implements Serializable
 	public Usuario()
 	{
 		super();
+		this.codigo=0;
 		this.nome = "";
 		this.cpf = "";
 		this.endereco = new Endereco();

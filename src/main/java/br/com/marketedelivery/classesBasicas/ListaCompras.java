@@ -43,7 +43,7 @@ public class ListaCompras implements Serializable
 	@Column(name = "qtdItens", length = 12)
 	private int qtd;
 
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
 	private Usuario usuario;
 
 	@OneToMany(cascade = CascadeType.ALL)

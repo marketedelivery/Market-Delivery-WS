@@ -59,4 +59,25 @@ public class ItemDAO extends DAOGenerico<Item> implements IItemDAO
 			manager.close();
 		}
 	}
+	
+	public List<Item>retonarPesquisaItemPorProduto(int codigoProduto)
+	{
+		String consulta = "SELECT i FROM Item i WHERE i.produto.codigo = :N";
+		TypedQuery<Item> retorno = getEntityManager().createQuery(consulta, Item.class);
+		retorno.setParameter("N", codigoProduto);
+		List<Item> resultado;
+		try
+		{
+			resultado = retorno.getResultList();
+			return resultado;
+		}
+		catch (Exception e)
+		{
+			return null;
+		}
+		finally
+		{
+			manager.close();
+		}
+	}
 }

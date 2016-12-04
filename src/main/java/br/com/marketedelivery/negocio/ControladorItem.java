@@ -120,4 +120,21 @@ public class ControladorItem implements IControladorItem
 		}
 		return i;
 	}
+	
+	@GET
+	@Produces("application/json; charset=UTF-8")
+	@Consumes("application/json; charset=UTF-8")
+	@Path("/retornaPesquisaItemPorProduto")
+	@Override
+	public List<Item>retonarPesquisaItemPorProduto(@QueryParam("codigo")int codigoProduto)
+	{
+		itemDAO = DAOFactory.getItemDAO();
+		List<Item> resultado = itemDAO.retonarPesquisaItemPorProduto(codigoProduto);
+		if (!resultado.isEmpty())
+		{
+			return resultado;
+		}
+		return new ArrayList<>();
+		
+	}
 }

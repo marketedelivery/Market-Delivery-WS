@@ -10,4 +10,6 @@ public interface IItemDAO extends IDAOGenerico<Item>
 	public List<Item> consultarItensPorLista(int codigoLista);
 
 	public Item pesquisarItemPorProduto(int codigoProduto);
+	
+	public List<Item>retonarPesquisaItemPorProduto(int codigoProduto);
 }
