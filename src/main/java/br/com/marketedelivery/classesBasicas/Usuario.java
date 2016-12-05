@@ -68,7 +68,7 @@ public class Usuario implements Serializable
 		this.endereco = new Endereco();
 		this.telefoneWhatsapp = "";
 		this.telefone = "";
-		this.perfil = Perfil.Usuário;
+		this.perfil = Perfil.Usuario;
 		this.email = "";
 		this.senha = "";
 	}

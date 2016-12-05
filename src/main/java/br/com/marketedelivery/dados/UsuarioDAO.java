@@ -103,10 +103,10 @@ public class UsuarioDAO extends DAOGenerico<Usuario> implements IUsuarioDAO
 
 	public Usuario efetuarLogin(String email, String senha)
 	{
-		String consulta = "SELECT u FROM Usuario u WHERE u.email =:email AND u.senha = :senha";
+		String consulta = "SELECT c FROM Usuario c WHERE c.email = :N AND c.senha = :M" ;
 		TypedQuery<Usuario> retorno = getEntityManager().createQuery(consulta, Usuario.class);
-		retorno.setParameter("email", email);
-		retorno.setParameter("senha", senha);
+		retorno.setParameter("N", email);
+		retorno.setParameter("M", senha);
 		Usuario resultado;
 		try
 		{
